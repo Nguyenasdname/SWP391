@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.ServiceDao;
 import java.util.ArrayList;
-import models.Service;
+import model.Service;
 
 /**
  *

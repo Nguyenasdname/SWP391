@@ -24,7 +24,7 @@
                                 registered. Enter that code below.
                             </li>
                         </c:if>
-                            
+
                         <c:if test="${param.action eq 'forgotPassword'}">
                             <li>
                                 You will recieve a verification code on your email to verify that is
@@ -32,10 +32,12 @@
                             </li>
                         </c:if>
 
+
                         <li>
                             If somehow, you did not recieve the verification email then
-                            <a href="register">resend the verification email</a>
+                            <a href="resendVerifyOTP?action=${param.action}">resend the verification email</a>
                         </li>
+
 
                         <h5 style="color: red">${verifyError}</h5>
 
@@ -43,7 +45,7 @@
                     <form action="VerifyOTP?action=${param.action}" method="post">
 
                         <!--Get attribute from servlet-->
-                        
+
                         <div class="main-verification-input fl-wrap">
                             <div class="main-verification-input-item">
                                 <input

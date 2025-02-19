@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.User;
+import model.User;
 
 /**
  *
@@ -100,7 +100,7 @@ public class VerifyOTP extends HttpServlet {
             case "forgotPassword":
                 if (verifyCode.equals(newUser.getUserCode())) {
 
-                    request.getRequestDispatcher("resetPass.jsp").forward(request, response);
+                    request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
 
                 } else {
 

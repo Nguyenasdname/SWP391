@@ -2,10 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package googleHandle;
+package control;
 
-import dao.UserDao;
-import dao.imp.UserDaoImp;
+import emailService.JavaMail;
+import emailService.JavaMailImp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -20,8 +20,8 @@ import model.User;
  *
  * @author Admin
  */
-@WebServlet("/loginViaGoogle")
-public class LoginViaGoogle extends HttpServlet {
+@WebServlet("/resendVerifyOTP")
+public class ResendVerifyOTP extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,32 +35,18 @@ public class LoginViaGoogle extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String code = request.getParameter("code");
-        GoogleLogin gg = new GoogleLogin();
-        String accessToken = gg.getToken(code);
-        GoogleAccount acc = gg.getUserInfor(accessToken);
-        
-        
-        UserDao userDao = new UserDaoImp();
-
-        User user = userDao.isUserExists(acc.getName(), acc.getEmail());
-        HttpSession session = request.getSession();
-
-        if (user != null) {
-
-            session.setAttribute("user", user);
-            response.sendRedirect("index.jsp?RoleId=" + user.getRoleId());
-        } else {
-            String userName = acc.getEmail().split("@")[0];
-            User newUser = new User(1, userName, acc.getEmail(), null, null, null, "Active", 2, null, null, null, null);
-            userDao.addUser(newUser);
-
-            user = userDao.getUserByUserName(newUser.getUserName());
-            session.setAttribute("user", user);
-            response.sendRedirect("index.jsp?RoleId=" + user.getRoleId());
-
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SendAgainVerifyOTP</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SendAgainVerifyOTP at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,7 +61,29 @@ public class LoginViaGoogle extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        JavaMail jvm = new JavaMailImp();
+
+        user.setUserCode(jvm.generatedOTP());
+
+        switch (action) {
+            case "register":
+                boolean sendRegisterMail = jvm.send(user.getUserEmail(), "Verify YourEmail", user.getUserCode(), "Verify_OTP", user);
+                if (sendRegisterMail) {
+                    response.sendRedirect("verify.jsp?action=register");
+                }
+                break;
+            case "forgotPassword":
+                boolean sendForgotMail = jvm.send(user.getUserEmail(), "Change Your Password", user.getUserCode(), "Forgot_Password", user);
+                if (sendForgotMail) {
+                    response.sendRedirect("verify.jsp?action=forgotPassword");
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -89,7 +97,7 @@ public class LoginViaGoogle extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
     }
 
     /**

@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.WishlistDao;
 import java.util.ArrayList;
-import models.Wishlist;
+import model.Wishlist;
 
 /**
  *

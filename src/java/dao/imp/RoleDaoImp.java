@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.RoleDao;
 import java.util.ArrayList;
-import models.Role;
+import model.Role;
 
 /**
  *

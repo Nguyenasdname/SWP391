@@ -10,7 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import models.User;
+import model.User;
 
 /**
  *
@@ -140,7 +140,7 @@ public class UserDaoImp implements UserDao {
 
     @Override
     public void updateUser(User user) {
-        String sql = "UPDATE Users SET UserName = ?, UserEmail = ?, UserPass = ?, UserPhone = ?, UserIMG = ?, UserStatus = ?, RoleID = ? WHERE UserID = ?";
+        String sql = "UPDATE Users SET UserName = ?, UserEmail = ?, UserPass = ?, UserPhone = ?, UserIMG = ?, UserStatus = ?, RoleID = ?, UserAddress = ?, UserFirstName = ?, UserLastName = ? WHERE UserID = ?";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
             preStatement.setString(1, user.getUserName());
@@ -150,7 +150,10 @@ public class UserDaoImp implements UserDao {
             preStatement.setString(5, user.getUserIMG());
             preStatement.setString(6, user.getUserStatus());
             preStatement.setInt(7, user.getRoleId());
-            preStatement.setInt(8, user.getUserId());
+            preStatement.setString(8, user.getUserAddress());
+            preStatement.setString(9, user.getUserFirstName());
+            preStatement.setString(10, user.getUserLastName());
+            preStatement.setInt(11, user.getUserId());
 
             preStatement.executeUpdate();
         } catch (Exception e) {

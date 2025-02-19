@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.BookingCancelDao;
 import java.util.ArrayList;
-import models.BookingCancel;
+import model.BookingCancel;
 
 /**
  *

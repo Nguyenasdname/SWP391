@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.VillaDao;
 import java.util.ArrayList;
-import models.Villa;
+import model.Villa;
 
 /**
  *

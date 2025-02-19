@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.FeedbackDao;
 import java.util.ArrayList;
-import models.Feedback;
+import model.Feedback;
 
 /**
  *

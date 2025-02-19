@@ -6,7 +6,7 @@ package test;
 
 import dao.UserDao;
 import dao.imp.UserDaoImp;
-import models.User;
+import model.User;
 
 /**
  *

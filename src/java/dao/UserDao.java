@@ -5,7 +5,7 @@
 package dao;
 
 import java.util.ArrayList;
-import models.User;
+import model.User;
 
 /**
  *

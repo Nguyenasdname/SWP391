@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.PromotionDao;
 import java.util.ArrayList;
-import models.Promotion;
+import model.Promotion;
 
 /**
  *

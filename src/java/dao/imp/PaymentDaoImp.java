@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.PaymentDao;
 import java.util.ArrayList;
-import models.Payment;
+import model.Payment;
 
 /**
  *

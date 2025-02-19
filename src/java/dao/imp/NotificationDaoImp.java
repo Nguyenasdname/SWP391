@@ -6,7 +6,7 @@ package dao.imp;
 
 import dao.NotificationDao;
 import java.util.ArrayList;
-import models.Notification;
+import model.Notification;
 
 /**
  *

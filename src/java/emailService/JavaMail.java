@@ -4,7 +4,7 @@
  */
 package emailService;
 
-import models.User;
+import model.User;
 
 /**
  *

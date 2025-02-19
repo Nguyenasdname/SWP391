@@ -153,7 +153,7 @@
                                     <img src="${sessionScope.user.userIMG}" alt="${sessionScope.user.userIMG}" class="avatar" id="avatar" />
 
                                     <div class="dropdownmenu" id="dropdownmenu">
-                                        <a href="informationaccount.jsp">Profile</a>
+                                        <a href="profile.jsp">Profile</a>
                                         <a href="BookingHistoryServlet">Booking History</a>
                                         <a href="logout">Logout</a>
                                     </div>

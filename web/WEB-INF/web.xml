@@ -20,6 +20,14 @@
         <servlet-name>LoginViaGoogle</servlet-name>
         <servlet-class>googleHandle.LoginViaGoogle</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResendVerifyOTP</servlet-name>
+        <servlet-class>emailService.ResendVerifyOTP</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditProfile</servlet-name>
+        <servlet-class>control.profile.EditProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>LoginViaGoogle</servlet-name>
         <url-pattern>/LoginViaGoogle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResendVerifyOTP</servlet-name>
+        <url-pattern>/ResendVerifyOTP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditProfile</servlet-name>
+        <url-pattern>/EditProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
