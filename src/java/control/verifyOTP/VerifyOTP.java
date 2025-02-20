@@ -100,7 +100,7 @@ public class VerifyOTP extends HttpServlet {
             case "forgotPassword":
                 if (verifyCode.equals(newUser.getUserCode())) {
 
-                    request.getRequestDispatcher("resetPassword.jsp").forward(request, response);
+                    request.getRequestDispatcher("resetPassword.jsp?action=nullPass").forward(request, response);
 
                 } else {
 

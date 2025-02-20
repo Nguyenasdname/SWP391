@@ -95,7 +95,7 @@
         <section class="checkout spad">
             <div class="container">
                 <h3 style="color: red">${error}</h3>
-                
+
 
 
                 <form action="editProfile" class="checkout__form" method="post" enctype="multipart/form-data">
@@ -134,9 +134,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <img class="avatar" src="${sessionScope.user.userIMG}" alt=""/>
-                            <input  id="avatar" name="image" type="file"  onchange="changeAvatar()">
+
+                        <div style="width: 300px; height: 300px; border-radius: 300px; overflow: hidden; position: relative; background-color: #f0f0f0; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="document.querySelector('#avatar').click()">
+                            <img id="preview" style="width: 300px; height: 300px; object-fit: cover; border-radius: 50%; display: none;" src="" alt=""/>
+                            <span id="placeholder" style="position: absolute; font-size: 24px; border-radius: 50px; color: #aaa;">📷</span>
+                            <input id="avatar" name="image" type="file" style="display: none;" onchange="changeAvatar()">
                             <input type="hidden" id="avatarValue" name="avatar">    
                         </div>
 
@@ -151,21 +153,33 @@
         <!-- Checkout Section End -->
 
         <script>
-            function  changeAvatar() {
+//         
+            document.addEventListener("DOMContentLoaded", function () {
+                var imageUrl = "${sessionScope.user.userIMG}";
+                var preview = document.getElementById("preview");
+                var placeholder = document.getElementById("placeholder");
+
+                if (imageUrl) {
+                    preview.src = imageUrl;
+                    preview.style.display = "block";
+                    placeholder.style.display = "none";
+                }
+            });
+
+            function changeAvatar() {
                 var input = document.querySelector("#avatar");
-                var image = document.querySelector(".avatar");
+                var preview = document.querySelector("#preview");
+                var placeholder = document.querySelector("#placeholder");
                 var avatarValue = document.querySelector("#avatarValue");
-                console.log("File selected: ", input.files[0]);
-                image.src = URL.createObjectURL(input.files[0]);
-                avatarValue.value = "img/" + input.files[0].name;
-                console.log(avatarValue.value);
+
+                if (input.files && input.files[0]) {
+                    preview.src = URL.createObjectURL(input.files[0]);
+                    preview.style.display = "block";
+                    placeholder.style.display = "none";
+                    avatarValue.value = "img/" + input.files[0].name;
+                }
             }
-            function changePassword() {
-                window.location.href = ("changepassword?status=user");
-            }
-            function logout() {
-                window.location.href = ("logout");
-            }
+            
         </script>
     </body>
 </html> 

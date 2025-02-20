@@ -106,6 +106,13 @@
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="checkout__form__input">
+                                        <p>Username<span></span></p>
+                                        <input style="border: none; outline: none; width: 500px" type="text" name="name" value="${sessionScope.user.userName}" readonly/>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <div class="checkout__form__input">
                                         <p>First Name <span></span></p>
                                         <input style="border: none; outline: none; width: 500px" type="text" name="name" value="${sessionScope.user.userFirstName}" readonly/>
                                     </div>
@@ -140,15 +147,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <img class="avatar" src="${sessionScope.user.userIMG}" alt=""/>  
+                        <div style="width: 300px;height: 300px;border-radius: 50px; overflow:hidden" class="col-lg-4">
+                            <img style="width: 300px; height: 300px; object-fit: cover;" class="avatar" src="${sessionScope.user.userIMG}" alt=""/>  
                         </div>
 
                     </div>
                 </form>
 
                 <a href="editProfile.jsp" style="" class="site-btn mb-5">Edit Profile</a>   
-
+                
+                
             </div>
         </section>
         <!-- Checkout Section End -->
@@ -164,7 +172,12 @@
                 console.log(avatarValue.value);
             }
             function changePassword() {
-                window.location.href = ("changepassword?status=user");
+                
+                if(${sessionScope.user.userPass} === null) {
+                    window.location.href = ("resetPassword.jsp?action=nullPass");
+                } else {
+                    window.location.href = ("resetPassword.jsp?action=notNullPass");
+                }
             }
             function logout() {
                 window.location.href = ("logout");

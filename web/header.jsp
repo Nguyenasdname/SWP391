@@ -60,12 +60,18 @@
             .inner-header .main-menu ul li a{
                 font-size: 20px;
             }
-
-            .avatar-container img{
-                display: inline-block;
+            
+            .avatar-container{
                 width: 68px;
                 height: 68px;
-                border-radius: 50%;
+                border-radius: 50px;
+                overflow: hidden
+            }
+            
+            .avatar-container img{
+                width: 68px;
+                height: 68px; 
+                object-fit: cover;
                 cursor: pointer;
             }
 

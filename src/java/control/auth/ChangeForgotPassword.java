@@ -77,23 +77,58 @@ public class ChangeForgotPassword extends HttpServlet {
             throws ServletException, IOException {
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
+        String action = request.getParameter("action");
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-
         UserDao userDao = new UserDaoImp();
 
-        if (newPassword.equals(confirmPassword)) {
+        switch (action) {
+            case "nullPass":
 
-            user.setUserPass(newPassword);
+                if (newPassword.equals(confirmPassword)) {
 
-            userDao.updateUser(user);
+                    user.setUserPass(newPassword);
 
-            session.removeAttribute("user");
-            response.sendRedirect("login.jsp");
+                    userDao.updateUser(user);
 
-        } else {
-            request.setAttribute("errorMessage", "Not Correct Password!");
-            request.getRequestDispatcher("resetPass.jsp").forward(request, response);
+                    session.removeAttribute("user");
+                    response.sendRedirect("login.jsp");
+
+                } else {
+                    request.setAttribute("errorMessage", "Not Correct Password!");
+                    request.getRequestDispatcher("resetPass.jsp?action=" + action).forward(request, response);
+                }
+
+                break;
+            case "notNullPass":
+                String currentPass = request.getParameter("currentPass");
+
+                if (currentPass.equals(user.getUserPass())) {
+                    
+                    if (newPassword.equals(confirmPassword)) {
+
+                        user.setUserPass(newPassword);
+
+                        userDao.updateUser(user);
+
+                        session.removeAttribute("user");
+                        response.sendRedirect("profile.jsp");
+
+                    } else {
+                        request.setAttribute("errorMessage", "Not Correct Password!");
+                        request.getRequestDispatcher("resetPassword.jsp?action=" + action).forward(request, response);
+                    }
+                    
+                } else {
+                    
+                    request.setAttribute("errorMessage", "Not Correct Current Password!");
+                    request.getRequestDispatcher("resetPassword.jsp?action=" + action).forward(request, response);
+                }
+                
+
+                break;
+            default:
+                break;
         }
     }
 

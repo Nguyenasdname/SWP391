@@ -81,7 +81,7 @@ public class Login extends HttpServlet {
 
         UserDao userDao = new UserDaoImp();
 
-        User user = userDao.validateUser(userName, userPass);
+        User user = userDao.validateUser(userName.toLowerCase(), userPass);
 
         if (user == null) {
             request.setAttribute("accountMessage", "Wrong Username or Password");
