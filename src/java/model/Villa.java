@@ -19,8 +19,9 @@ public class Villa {
     private String villaStatus;
     private String villaIMG;
     private Date createDate;
+    private int villaCapacity;
 
-    public Villa(int villaId, String villaName, String villaDescription, Double villaPrice, String villaLocation, String villaStatus, String villaIMG, Date createDate) {
+    public Villa(int villaId, String villaName, String villaDescription, Double villaPrice, String villaLocation, String villaStatus, String villaIMG, Date createDate, int villaCapacity) {
         this.villaId = villaId;
         this.villaName = villaName;
         this.villaDescription = villaDescription;
@@ -29,11 +30,20 @@ public class Villa {
         this.villaStatus = villaStatus;
         this.villaIMG = villaIMG;
         this.createDate = createDate;
+        this.villaCapacity = villaCapacity;
     }
 
     public Villa() {
     }
 
+    public int getVillaCapacity() {
+        return villaCapacity;
+    }
+
+    public void setVillaCapacity(int villaCapacity) {
+        this.villaCapacity = villaCapacity;
+    }
+    
     public int getVillaId() {
         return villaId;
     }

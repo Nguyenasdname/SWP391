@@ -84,7 +84,7 @@ public class Login extends HttpServlet {
         User user = userDao.validateUser(userName.toLowerCase(), userPass);
 
         if (user == null) {
-            request.setAttribute("accountMessage", "Wrong Username or Password");
+            request.setAttribute("accountMessage", "Wrong Username or Password!");
             request.getRequestDispatcher("login.jsp").forward(request, response);
         } else {
             

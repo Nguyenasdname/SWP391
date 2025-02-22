@@ -18,11 +18,12 @@ public class Payment {
     private String paymentMethod;
     private String paymentStatus;
     private Date createDate;
+    private int promotionId;
 
     public Payment() {
     }
 
-    public Payment(int paymentId, Integer userId, Integer bookingId, Double paymentAmount, String paymentMethod, String paymentStatus, Date createDate) {
+    public Payment(int paymentId, Integer userId, Integer bookingId, Double paymentAmount, String paymentMethod, String paymentStatus, Date createDate, int promotionId) {
         this.paymentId = paymentId;
         this.userId = userId;
         this.bookingId = bookingId;
@@ -30,6 +31,7 @@ public class Payment {
         this.paymentMethod = paymentMethod;
         this.paymentStatus = paymentStatus;
         this.createDate = createDate;
+        this.promotionId = promotionId;
     }
 
     public int getPaymentId() {
@@ -86,6 +88,19 @@ public class Payment {
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+
+    public int getPromotionId() {
+        return promotionId;
+    }
+
+    public void setPromotionId(int promotionId) {
+        this.promotionId = promotionId;
+    }
+
+    @Override
+    public String toString() {
+        return "Payment{" + "paymentId=" + paymentId + ", userId=" + userId + ", bookingId=" + bookingId + ", paymentAmount=" + paymentAmount + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + ", createDate=" + createDate + ", promotionId=" + promotionId + '}';
     }
     
     

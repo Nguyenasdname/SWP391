@@ -56,7 +56,7 @@
         </style>
     </head>
     <body>
-        
+
         <jsp:include page="header.jsp"></jsp:include>
             <!-- Hero Slider Begin -->
             <div class="hero-slider">
@@ -155,7 +155,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-6 p-0 mb-2">
-                                
+
                                 <div class="facilities-img set-bg" data-setbg="${item.image}" style="background-image: url(&quot;${item.image}&quot;);"></div>
                             </div>
                         </c:forEach>
@@ -315,7 +315,11 @@
         </c:if>
         <!-- Footer Room Pic Section End -->
         <jsp:include page="footer.jsp"></jsp:include>
-        <script>
+            <script>
+            var alertMessage = "${param.alertMessage}";
+            if (alertMessage !== null && alertMessage !=="") {
+                alert(alertMessage);
+            }
 
             window.onload = function () {
                 const currentDateInput = document.querySelector(".date1");
