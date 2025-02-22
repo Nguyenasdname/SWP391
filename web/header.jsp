@@ -171,9 +171,9 @@
                     <div class="container">
                         <nav class="main-menu mobile-menu">
                             <ul style="margin: 28px">
-                                <li><a href="./home">Home</a></li>
+                                <li><a href="./index.jsp">Home</a></li>
                                 
-                                <li><a href="./roomavailable">Villas</a></li>
+                                <li><a href="./roomAvailable?action=listAll">Villas</a></li>
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 3}">
                                     <li>
                                         <a href="#">Employee</a>

@@ -17,4 +17,5 @@ public interface VillaDao {
     void addVilla(Villa villa); 
     void updateVilla(Villa villa); 
     void removeVillaById(int id); 
+    ArrayList<Villa> getAllVillaAvailable(int VillaCapacity);
 }

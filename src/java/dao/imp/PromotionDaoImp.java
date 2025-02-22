@@ -5,6 +5,10 @@
 package dao.imp;
 
 import dao.PromotionDao;
+import database.ConnectionDatabase;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Promotion;
 
@@ -21,7 +25,28 @@ public class PromotionDaoImp implements PromotionDao{
 
     @Override
     public ArrayList<Promotion> getAllPromotionList() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        ArrayList<Promotion> promotionList = new ArrayList();
+        String sql = "Select * From Promotions";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Promotion p = new Promotion(resultSet.getInt("PromotionID"),
+                            resultSet.getString("PromotionCode"),
+                            resultSet.getDouble("DiscountPercent"),
+                            resultSet.getDate("StartDate"),
+                            resultSet.getDate("EndDate"),
+                            resultSet.getString("PromotionStatus")
+                    );
+                    promotionList.add(p);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return promotionList;
     }
 
     @Override

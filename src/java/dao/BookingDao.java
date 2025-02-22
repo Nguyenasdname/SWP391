@@ -14,7 +14,8 @@ import model.Booking;
 public interface BookingDao {
     Booking getBookingByID(int id);
     ArrayList<Booking> getAllBookingList();
-    void addBooking(Booking booking);
+    boolean addBooking(Booking booking);
     void updateBooking(Booking booking);
     void removeBookingById(int id);
+    Booking getUserBookingPending(int userId, int villaId, String bookingStatus);
 }

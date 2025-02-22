@@ -16,18 +16,28 @@ public class Service {
     private String serviceDescription;
     private Double servicePrice;
     private Date createDate;
+    private String serviceIMG;
 
-    public Service(int serviceId, String serviceName, String serviceDescription, Double servicePrice, Date createDate) {
+    public Service(int serviceId, String serviceName, String serviceDescription, Double servicePrice, Date createDate,String serviceIMG) {
         this.serviceId = serviceId;
         this.serviceName = serviceName;
         this.serviceDescription = serviceDescription;
         this.servicePrice = servicePrice;
         this.createDate = createDate;
+        this.serviceIMG = serviceIMG;
     }
 
     public Service() {
     }
 
+    public String getServiceIMG() {
+        return serviceIMG;
+    }
+
+    public void setServiceIMG(String serviceIMG) {
+        this.serviceIMG = serviceIMG;
+    }
+    
     public int getServiceId() {
         return serviceId;
     }

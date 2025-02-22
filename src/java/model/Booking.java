@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -17,18 +18,19 @@ public class Booking {
     private Date checkIn;
     private Date checkOut;
     private String bookingStatus;
-    private int promotionId;
     private Date createDate;
+    private double bookingTotal;
+    private ArrayList<BookingService> bookingService;
 
-    public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, int promotionId, Date createDate) {
+    public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.villaId = villaId;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.bookingStatus = bookingStatus;
-        this.promotionId = promotionId;
         this.createDate = createDate;
+        this.bookingTotal = bookingTotal;
     }
 
     public Booking() {
@@ -42,6 +44,14 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
+    public double getBookingTotal() {
+        return bookingTotal;
+    }
+
+    public void setBookingTotal(double bookingTotal) {
+        this.bookingTotal = bookingTotal;
+    }
+    
     public int getUserId() {
         return userId;
     }
@@ -82,14 +92,6 @@ public class Booking {
         this.bookingStatus = bookingStatus;
     }
 
-    public int getPromotionId() {
-        return promotionId;
-    }
-
-    public void setPromotionId(int promotionId) {
-        this.promotionId = promotionId;
-    }
-
     public Date getCreateDate() {
         return createDate;
     }
@@ -98,9 +100,17 @@ public class Booking {
         this.createDate = createDate;
     }
 
+    public ArrayList<BookingService> getBookingService() {
+        return bookingService;
+    }
+
+    public void setBookingService(ArrayList<BookingService> bookingService) {
+        this.bookingService = bookingService;
+    }
+
     @Override
     public String toString() {
-        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", villaId=" + villaId + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", bookingStatus=" + bookingStatus + ", promotionId=" + promotionId + ", createDate=" + createDate + '}';
+        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", villaId=" + villaId + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", bookingStatus=" + bookingStatus + ", createDate=" + createDate + ", bookingTotal= " + bookingTotal + '}';
     }
     
     
