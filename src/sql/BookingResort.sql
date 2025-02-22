@@ -141,4 +141,3 @@ Values(N'nguyen',N'nguyenkuhaku@gmail.com','123','0903210704',null, '1')
 Alter Table Users 
 Add Constraint DF_UserStatus Default 'Active' for UserStatus
 
-
