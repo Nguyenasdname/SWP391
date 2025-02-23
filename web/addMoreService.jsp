@@ -59,12 +59,12 @@
     <body>
 
         <div class="container mt-5 mb-5">
-            <form action="confirmBooking" method="post">
+            <form action="confirmAddMoreService" method="post">
                 <div class="booking-container">
                     <h2 class="text-center">Book Your Stay</h2>
-                    <p>Villa: <strong>${villa.villaName}</strong></p>
-                    <p>From: <span>${fromDate}</span> To: <span>${toDate}</span></p>
-                    <p>People: <span>${numberOfGuest}</span></p>
+                    <p>Villa: <strong>${booking.villaName}</strong></p>
+                    <p>From: <span>${booking.checkIn}</span> To: <span>${booking.checkOut}</span></p>
+                    <p>People: <span>${booking.numberOfGuest}</span></p>
                     <h4>Base Price: <span id="base-price" data-price="${basePrice}">$${villa.villaPrice}</span> per night</h4>
 
                     <div class="form-group mt-3">
@@ -92,14 +92,11 @@
                     </div>
 
                     <h4>Total Price: $<input id="total-price" type="text" readonly name="totalPrice" value="${basePrice}" class="form-control"></h4>
-                    <input type="hidden" name="villaId" value="${villa.villaId}">
-                    <input type="hidden" name="fromDate" value="${fromDate}">
-                    <input type="hidden" name="toDate" value="${toDate}">
-                    <input type="hidden" name="numberOfGuest" value="${numberOfGuest}">
+                    <input type="hidden" name="bookingId" value="${booking.bookingId}">
 
                     <div class="mt-4 d-flex justify-content-between">
-                        <button class="btn btn-danger" onclick="history.back()">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Book Now</button>
+                        <a href="cancelBooking?bookingId=${booking.bookingId}" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</a>
+                        <button type="submit" class="btn btn-success">Add More Service</button>
                     </div>
                 </div>
             </form> 

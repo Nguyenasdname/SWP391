@@ -75,25 +75,25 @@
         </style>
     </head>
     <body>
-        <!-- Breadcrumb Begin -->
-        <div class="breadcrumb-option">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="breadcrumb__links">
-                            <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
-                            <a href="profile.jsp">Your Information</a>
+
+            <div class="breadcrumb-option">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="breadcrumb__links">
+                                <a href="index.jsp"><i class="fa fa-home"></i> Home</a>
+                                <a href="profile.jsp">Your Information</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Breadcrumb End -->
+            <!-- Breadcrumb End -->
 
-        <!-- Checkout Section Begin -->
-        <section class="checkout spad">
-            <div class="container">
-                <h3 style="color: red">${error}</h3>
+            <!-- Checkout Section Begin -->
+            <section class="checkout spad">
+                <div class="container">
+                    <h3 style="color: red">${error}</h3>
                 <h3 style="color: green">${msg}</h3>
 
                 <button class="site-btn" onclick="changePassword()">Change password</button> 
@@ -155,8 +155,8 @@
                 </form>
 
                 <a href="editProfile.jsp" style="" class="site-btn mb-5">Edit Profile</a>   
-                
-                
+
+
             </div>
         </section>
         <!-- Checkout Section End -->
@@ -172,8 +172,8 @@
                 console.log(avatarValue.value);
             }
             function changePassword() {
-                
-                if(${sessionScope.user.userPass} === null) {
+
+                if (${sessionScope.user.userPass} === null) {
                     window.location.href = ("resetPassword.jsp?action=nullPass");
                 } else {
                     window.location.href = ("resetPassword.jsp?action=notNullPass");

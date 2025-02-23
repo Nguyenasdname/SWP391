@@ -4,49 +4,58 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/UserDao.java</file>
-            <file>file:/D:/code/Java/BookingResort/web/img/about-us-bg.jpg</file>
-            <file>file:/D:/code/Java/BookingResort/web/footer.jsp</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/ChangeForgotPassword.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/Logout.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/model/BookingCancel.java</file>
             <file>file:/D:/code/Java/BookingResort/web/booking.jsp</file>
             <file>file:/D:/code/Java/BookingResort/web/register.jsp</file>
-            <file>file:/D:/code/Java/BookingResort/web/editProfile.jsp</file>
-            <file>file:/D:/code/Java/BookingResort/web/WEB-INF/web.xml</file>
             <file>file:/D:/code/Java/BookingResort/web/header.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/BookingDao.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/model/Villa.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/BookingDaoImp.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/VillaDao.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/Booking.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/database/ConnectionDatabase.java</file>
             <file>file:/D:/code/Java/BookingResort/nbproject/build-impl.xml</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/ServiceDaoImp.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/database/ConnectionProperty.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/UserDaoImp.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/model/Service.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/Booking.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/test/NewMain.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/bookingDetails.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/BookingServiceDao.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/model/User.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/Payment.java</file>
             <file>file:/D:/code/Java/BookingResort/web/profile.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/auth/Login.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/ForgotPassword.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/control/verifyOTP/VerifyOTP.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/Register.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/VillaDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/service/AddService.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/ServiceDao.java</file>
-            <file>file:/D:/code/Java/BookingResort/web/forgot.jsp</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/PromotionDao.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/BookingServiceDaoImp.java</file>
             <file>file:/D:/code/Java/BookingResort/web/bookingHistory.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/PromotionDaoImp.java</file>
             <file>file:/D:/code/Java/BookingResort/web/index.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/googleHandle/Iconstant.java</file>
-            <file>file:/D:/code/Java/BookingResort/src/java/model/Promotion.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/BookingService.java</file>
-            <file>file:/D:/code/Java/BookingResort/web/login.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/booking/BookingDetails.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/ConfirmBooking.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/BookingHistory.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/img/about-us-bg.jpg</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/service/ConfirmAddMoreService.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/footer.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/web/rooms.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/ChangeForgotPassword.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/Logout.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/addMoreService.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/web/editProfile.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/web/WEB-INF/web.xml</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/model/Villa.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/BookingDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/VillaDao.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/ServiceDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/database/ConnectionProperty.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/UserDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/model/Service.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/test/NewMain.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/ForgotPassword.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/verifyOTP/VerifyOTP.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/auth/Register.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/VillaDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/forgot.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/filter/LoginFilter.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/PromotionDao.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/BookingServiceDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/model/Promotion.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/login.jsp</file>
         </group>
     </open-files>
 </project-private>

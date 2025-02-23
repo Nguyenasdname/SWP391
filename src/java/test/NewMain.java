@@ -57,10 +57,10 @@ public class NewMain {
 //        
 //        System.out.print(s);
           BookingDao bookingDao = new BookingDaoImp();
-          ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(1);
+//          ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(1);
+          BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
           
-          System.out.print(bookingList);
-          
+         System.out.print(bookingDao.getBookingDetailByID(1));
           
     }
 

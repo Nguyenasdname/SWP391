@@ -13,6 +13,7 @@ import model.Booking;
  */
 public interface BookingDao {
     Booking getBookingByID(int id);
+    Booking getBookingDetailByID(int bookingId);
     ArrayList<Booking> getAllBookingList();
     boolean addBooking(Booking booking);
     void updateBooking(Booking booking);

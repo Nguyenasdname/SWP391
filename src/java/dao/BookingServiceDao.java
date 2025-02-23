@@ -12,10 +12,11 @@ import model.BookingService;
  * @author Admin
  */
 public interface BookingServiceDao {
-    BookingService getBookingServiceByID(int id);
+    BookingService getBookingServiceByID(int bookingId, int serviceId);
     ArrayList<BookingService> getAllBookingServiceList(); 
     void addBookingService(BookingService bookingService);
     void updateBookingService(BookingService bookingService); 
     void removeBookingServiceById(int id);
     ArrayList<BookingService> getListBookingServiceByUserId(int userId);
+    ArrayList<BookingService> getListBookingServiceDetailsByBookingId(int bookingId);
 }

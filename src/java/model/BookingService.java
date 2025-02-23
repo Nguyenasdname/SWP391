@@ -13,6 +13,9 @@ public class BookingService {
     private int serviceId;
     private int quantity;
     private Double totalPrice;
+    private String serviceName;
+    private Double servicePrice;
+   
 
     public BookingService(int bookingId, int serviceId, int quantity, Double totalPrice) {
         this.bookingId = bookingId;
@@ -55,6 +58,23 @@ public class BookingService {
     public void setTotalPrice(Double totalPrice) {
         this.totalPrice = totalPrice;
     }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public Double getServicePrice() {
+        return servicePrice;
+    }
+
+    public void setServicePrice(Double servicePrice) {
+        this.servicePrice = servicePrice;
+    }
+    
 
     @Override
     public String toString() {

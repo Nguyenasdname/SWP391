@@ -20,10 +20,11 @@ public class Booking {
     private String bookingStatus;
     private Date createDate;
     private double bookingTotal;
+    private int numberOfGuest;
     private ArrayList<BookingService> bookingService;
     private String villaName; 
 
-    public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal) {
+    public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal, int numberOfGuest) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.villaId = villaId;
@@ -32,6 +33,7 @@ public class Booking {
         this.bookingStatus = bookingStatus;
         this.createDate = createDate;
         this.bookingTotal = bookingTotal;
+        this.numberOfGuest = numberOfGuest;
     }
 
     public Booking() {
@@ -115,6 +117,14 @@ public class Booking {
 
     public void setVillaName(String villaName) {
         this.villaName = villaName;
+    }
+
+    public int getNumberOfGuest() {
+        return numberOfGuest;
+    }
+
+    public void setNumberOfGuest(int numberOfGuest) {
+        this.numberOfGuest = numberOfGuest;
     }
 
     @Override

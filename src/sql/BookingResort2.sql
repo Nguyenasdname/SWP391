@@ -68,3 +68,11 @@ ALTER TABLE Payments
 ADD CONSTRAINT FK_Payments_Promotion 
 FOREIGN KEY (PromotionID) REFERENCES Promotions(PromotionID)
 
+Alter Table Booking Add NumberOfGuest INT;
+update Booking set NumberOfGuest = 1 where BookingID = 1
+
+ALTER TABLE Booking 
+ALTER COLUMN CheckIn DATETIME;
+
+ALTER TABLE Booking 
+ALTER COLUMN CheckOut DATETIME;
