@@ -95,7 +95,7 @@
                     <input type="hidden" name="bookingId" value="${booking.bookingId}">
 
                     <div class="mt-4 d-flex justify-content-between">
-                        <a href="cancelBooking?bookingId=${booking.bookingId}" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</a>
+                        <a href="bookingDetails?bookingId=${booking.bookingId}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                         <button type="submit" class="btn btn-success">Add More Service</button>
                     </div>
                 </div>
