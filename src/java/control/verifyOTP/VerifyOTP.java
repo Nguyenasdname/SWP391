@@ -88,7 +88,13 @@ public class VerifyOTP extends HttpServlet {
 
                     User user = userDao.getUserByUserName(newUser.getUserName());
                     session.setAttribute("user", user);
-                    response.sendRedirect("index.jsp");
+                    
+                    String originalURL = (String) session.getAttribute("originalURL");
+                    if (originalURL != null) {
+                        response.sendRedirect(originalURL);
+                    } else {
+                        response.sendRedirect("index.jsp");
+                    }
 
                 } else {
 

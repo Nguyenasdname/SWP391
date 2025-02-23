@@ -64,7 +64,7 @@
                     <h2 class="text-center">Book Your Stay</h2>
                     <p>Villa: <strong>${villa.villaName}</strong></p>
                     <p>From: <span>${fromDate}</span> To: <span>${toDate}</span></p>
-                    <h4>Base Price: <span id="base-price" data-price="${basePrice}">${villa.villaPrice}</span> per night</h4>
+                    <h4>Base Price: <span id="base-price" data-price="${basePrice}">$${villa.villaPrice}</span> per night</h4>
 
                     <div class="form-group mt-3">
                         <label>Select Additional Services:</label>
@@ -90,7 +90,7 @@
                         </div>
                     </div>
 
-                    <h4>Total Price: <input id="total-price" type="text" readonly name="totalPrice" value="${basePrice}" class="form-control"></h4>
+                    <h4>Total Price: $<input id="total-price" type="text" readonly name="totalPrice" value="${basePrice}" class="form-control"></h4>
                     <input type="hidden" name="villaId" value="${villa.villaId}">
                     <input type="hidden" name="fromDate" value="${fromDate}">
                     <input type="hidden" name="toDate" value="${toDate}">

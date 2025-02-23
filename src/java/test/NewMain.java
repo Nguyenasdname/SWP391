@@ -57,9 +57,9 @@ public class NewMain {
 //        
 //        System.out.print(s);
           BookingDao bookingDao = new BookingDaoImp();
-          Booking booking = bookingDao.getUserBookingPending(1, 1, "Pending");
+          ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(1);
           
-          System.out.print(booking);
+          System.out.print(bookingList);
           
           
     }

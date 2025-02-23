@@ -17,5 +17,8 @@ public interface BookingDao {
     boolean addBooking(Booking booking);
     void updateBooking(Booking booking);
     void removeBookingById(int id);
-    Booking getUserBookingPending(int userId, int villaId, String bookingStatus);
+    Booking getUserBookingVilla(int userId, int villaId, String bookingStatus);
+    Booking getBookingStatus(int userId, String bookingStatus);
+    Booking getBookingByUserId(int userId);
+    ArrayList<Booking> getListBookingByUserId(int userId);
 }

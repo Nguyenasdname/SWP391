@@ -2,27 +2,28 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package control.auth;
+package control.booking;
 
-import dao.UserDao;
-import dao.imp.UserDaoImp;
+import dao.BookingDao;
+import dao.imp.BookingDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
+import model.Booking;
 
 /**
  *
  * @author Admin
  */
-@WebServlet("/login")
-public class Login extends HttpServlet {
+@WebServlet("/bookingHistory")
+public class BookingHistory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +42,10 @@ public class Login extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet Login</title>");
+            out.println("<title>Servlet BookingHistory</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet Login at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet BookingHistory at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,7 +63,21 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        
+        if (user == null) {
+            String originalURL = request.getHeader("Referer");
+            session.setAttribute("originalURL", originalURL);
+            response.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!");
+            return;
+        }
+
+        BookingDao bookingDao = new BookingDaoImp();
+        ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(user.getUserId());
+
+        request.setAttribute("bookingList", bookingList);
+        request.getRequestDispatcher("bookingHistory.jsp").forward(request, response);
     }
 
     /**
@@ -76,57 +91,14 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userName = request.getParameter("userName");
-        String userPass = request.getParameter("userPass");
-
-        UserDao userDao = new UserDaoImp();
-
-        User user = userDao.validateUser(userName.toLowerCase(), userPass);
-
-        if (user == null) {
-            request.setAttribute("accountMessage", "Wrong Username or Password!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        } else {
-
-            if (user.getUserStatus() == "Banned") {
-                request.setAttribute("accountMessage", "Your Account Has Been Banned!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else {
-
-                HttpSession session = request.getSession();
-                session.setAttribute("user", user);
-
-                String remember = request.getParameter("remember");
-
-                Cookie cUser = new Cookie("cUser", userName);
-                Cookie cPass = new Cookie("cPass", userPass);
-                Cookie cRem = new Cookie("cRem", remember);
-
-                if (remember != null) {
-
-                    cUser.setMaxAge(60 * 60 * 24); //1 day
-                    cPass.setMaxAge(60 * 60 * 24);
-                    cRem.setMaxAge(60 * 60 * 24);
-                } else {
-                    cUser.setMaxAge(0);
-                    cPass.setMaxAge(0);
-                    cRem.setMaxAge(0);
-                }
-                response.addCookie(cUser);
-                response.addCookie(cPass);
-                response.addCookie(cRem);
-
-                String originalURL = (String) session.getAttribute("originalURL");
-                if (originalURL != null) {
-                    response.sendRedirect(originalURL);
-                } else {
-                    response.sendRedirect("index.jsp");
-                }
-            }
-        }
-
+        processRequest(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";

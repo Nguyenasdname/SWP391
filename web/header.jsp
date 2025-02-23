@@ -160,7 +160,7 @@
 
                                     <div class="dropdownmenu" id="dropdownmenu">
                                         <a href="profile.jsp">Profile</a>
-                                        <a href="BookingHistoryServlet">Booking History</a>
+                                        <a href="bookingHistory">Booking History</a>
                                         <a href="logout">Logout</a>
                                     </div>
                                 </div>

@@ -136,6 +136,11 @@
                                         const goToHome = () => {
                                             window.location = "home";
                                         };
+                                        
+            var alertMessage = "${param.alertMessage}";
+            if (alertMessage !== null && alertMessage !=="") {
+                alert(alertMessage);
+            }
         </script>
     </body>
 </html>
