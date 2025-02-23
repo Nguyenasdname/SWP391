@@ -66,12 +66,6 @@ public class BookingHistory extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         
-        if (user == null) {
-            String originalURL = request.getHeader("Referer");
-            session.setAttribute("originalURL", originalURL);
-            response.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!");
-            return;
-        }
 
         BookingDao bookingDao = new BookingDaoImp();
         ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(user.getUserId());

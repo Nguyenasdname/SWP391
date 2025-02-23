@@ -90,12 +90,7 @@ public class ConfirmBooking extends HttpServlet {
         User user = (User) session.getAttribute("user");
         JavaMail jvm = new JavaMailImp();
         
-        if (user == null) {
-            String originalURL = request.getHeader("Referer");
-            session.setAttribute("originalURL", originalURL);
-            response.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!");
-            return;
-        }
+        
 
         BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
         BookingDao bookingDao = new BookingDaoImp();
@@ -106,7 +101,8 @@ public class ConfirmBooking extends HttpServlet {
         if (checkBooking == null) {
 
             try {
-
+                
+                
                 int villaId = Integer.parseInt(request.getParameter("villaId"));
 
                 SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -115,10 +111,12 @@ public class ConfirmBooking extends HttpServlet {
                 Date toDate = inputFormat.parse(request.getParameter("toDate"));
 
                 double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
+                
+                int numberOfGuest = Integer.parseInt(request.getParameter("numberOfGuest"));
 
                 String[] selectedServices = request.getParameterValues("selectedServices");
 
-                Booking newbooking = new Booking(1, user.getUserId(), villaId, fromDate, toDate, "Pending", null, totalPrice);
+                Booking newbooking = new Booking(1, user.getUserId(), villaId, fromDate, toDate, "Pending", null, totalPrice, numberOfGuest);
 
                 boolean bookingCheck = bookingDao.addBooking(newbooking);
 

@@ -196,7 +196,7 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <span class="form-label"> People</span>
-                                                    <select class="form-control" name="numofpeople">
+                                                    <select id="numberOfGuest" class="form-control" name="numofpeople">
                                                         <option value="1" ${numofpeople == 1 ? "selected" : ""}>1</option>
                                                         <option value="2" ${numofpeople == 2 ? "selected" : ""}>2</option>
                                                         <option value="3" ${numofpeople == 3 ? "selected" : ""}>3</option>
@@ -309,14 +309,15 @@
             function redirectToPage(link, baseUrl) {
                 var fromDate = document.getElementById("fromDate").value;
                 var toDate = document.getElementById("toDate").value;
-
+                var numberOfGuest = document.getElementById("numberOfGuest").value;
+                
                 if (!fromDate || !toDate) {
                     alert("Please select Check-in and Check-out dates before proceeding!");
                     return false; // Chặn không cho chuyển trang
                 }
 
                 // Nếu đã chọn ngày, thay đổi href và chuyển trang
-                window.location.href = baseUrl + "&fromDate=" + fromDate + "&toDate=" + toDate;
+                window.location.href = baseUrl + "&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest=" + numberOfGuest;
             }
             // Lấy thẻ h2 bằng class
             document.addEventListener("DOMContentLoaded", function () {

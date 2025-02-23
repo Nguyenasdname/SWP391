@@ -11,7 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Booking;
-import model.User;
+import java.time.LocalDate;
+import java.sql.Date;
 
 /**
  *
@@ -21,7 +22,30 @@ public class BookingDaoImp implements BookingDao {
 
     @Override
     public Booking getBookingByID(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Booking b = null;
+        String sql = "Select * From Booking Where BookingID = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, id);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    b = new Booking(resultSet.getInt("BookingID"),
+                            resultSet.getInt("UserID"),
+                            resultSet.getInt("VillaID"),
+                            resultSet.getDate("CheckIn"),
+                            resultSet.getDate("CheckOut"),
+                            resultSet.getString("BookingStatus"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
     @Override
@@ -31,7 +55,7 @@ public class BookingDaoImp implements BookingDao {
 
     @Override
     public boolean addBooking(Booking booking) {
-        String sql = "INSERT INTO Booking (UserID, VillaID, CheckIn, CheckOut, BookingStatus, BookingTotal) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Booking (UserID, VillaID, CheckIn, CheckOut, BookingStatus, BookingTotal, NumberOfGuest) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
             java.sql.Date checkInDate = new java.sql.Date(booking.getCheckIn().getTime());
@@ -43,6 +67,7 @@ public class BookingDaoImp implements BookingDao {
             preStatement.setDate(4, checkOutDate);
             preStatement.setString(5, booking.getBookingStatus());
             preStatement.setDouble(6, booking.getBookingTotal());
+            preStatement.setInt(7, booking.getNumberOfGuest());
 
             int rowsAffected = preStatement.executeUpdate();
 
@@ -55,7 +80,22 @@ public class BookingDaoImp implements BookingDao {
 
     @Override
     public void updateBooking(Booking booking) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE Booking SET UserID = ?, VillaID = ?, CheckIn = ?, CheckOut = ?, BookingTotal = ?, BookingStatus = ?, NumberOfGuest = ? WHERE BookingID = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, booking.getUserId());
+            preStatement.setInt(2, booking.getVillaId());
+            preStatement.setDate(3, new java.sql.Date(booking.getCheckIn().getTime()));
+            preStatement.setDate(4, new java.sql.Date(booking.getCheckOut().getTime()));
+            preStatement.setDouble(5, booking.getBookingTotal());
+            preStatement.setString(6, booking.getBookingStatus());
+            preStatement.setInt(7, booking.getNumberOfGuest());
+            preStatement.setInt(8, booking.getBookingId());
+
+            preStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -82,7 +122,8 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getDate("CheckOut"),
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
-                            resultSet.getDouble("BookingTotal")
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
                     );
                 }
             }
@@ -109,7 +150,8 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getDate("CheckOut"),
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
-                            resultSet.getDouble("BookingTotal")
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
                     );
                 }
             }
@@ -137,7 +179,8 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getDate("CheckOut"),
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
-                            resultSet.getDouble("BookingTotal")
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
                     );
                 }
             }
@@ -150,10 +193,10 @@ public class BookingDaoImp implements BookingDao {
     @Override
     public ArrayList<Booking> getListBookingByUserId(int userId) {
         ArrayList<Booking> bookingList = new ArrayList<>();
-        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName\n"
+        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName, b.NumberOfGuest\n"
                 + "FROM Booking b  \n"
                 + "JOIN Villas v ON b.VillaID = v.VillaID \n"
-                + "WHERE b.userId = ? ORDER BY b.CreateDate DESC";
+                + "WHERE b.UserID = ? ORDER BY b.CreateDate DESC";
 
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
@@ -169,7 +212,8 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getDate("CheckOut"),
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
-                            resultSet.getDouble("BookingTotal")
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
                     );
                     b.setVillaName(resultSet.getString("VillaName"));
                     bookingList.add(b);
@@ -179,6 +223,39 @@ public class BookingDaoImp implements BookingDao {
             e.printStackTrace();
         }
         return bookingList;
+    }
+
+    @Override
+    public Booking getBookingDetailByID(int bookingId) {
+        Booking b = null;
+        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName, b.NumberOfGuest\n"
+                + "FROM Booking b  \n"
+                + "JOIN Villas v ON b.VillaID = v.VillaID \n"
+                + "WHERE b.BookingID = ? ORDER BY b.CreateDate DESC";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, bookingId);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    b = new Booking(resultSet.getInt("BookingID"),
+                            resultSet.getInt("UserID"),
+                            resultSet.getInt("VillaID"),
+                            resultSet.getDate("CheckIn"),
+                            resultSet.getDate("CheckOut"),
+                            resultSet.getString("BookingStatus"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
+                    );
+                    b.setVillaName(resultSet.getString("VillaName"));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
     }
 
 }
