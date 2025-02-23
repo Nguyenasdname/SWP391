@@ -64,7 +64,7 @@ public class BookingDaoImp implements BookingDao {
     }
 
     @Override
-    public Booking getUserBookingPending(int userId, int villaId, String bookingStatus) {
+    public Booking getUserBookingVilla(int userId, int villaId, String bookingStatus) {
         Booking b = null;
         String sql = "Select * From Booking Where UserID = ? and VillaID = ? and BookingStatus = ?";
         try (
@@ -90,6 +90,95 @@ public class BookingDaoImp implements BookingDao {
             e.printStackTrace();
         }
         return b;
+    }
+
+    @Override
+    public Booking getBookingByUserId(int userId) {
+        Booking b = null;
+        String sql = "Select * From Booking Where UserID = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, userId);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    b = new Booking(resultSet.getInt("BookingID"),
+                            resultSet.getInt("UserID"),
+                            resultSet.getInt("VillaID"),
+                            resultSet.getDate("CheckIn"),
+                            resultSet.getDate("CheckOut"),
+                            resultSet.getString("BookingStatus"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getDouble("BookingTotal")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    @Override
+    public Booking getBookingStatus(int userId, String bookingStatus) {
+        Booking b = null;
+        String sql = "Select * From Booking Where UserID = ? and BookingStatus = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, userId);
+            preStatement.setString(2, bookingStatus);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    b = new Booking(resultSet.getInt("BookingID"),
+                            resultSet.getInt("UserID"),
+                            resultSet.getInt("VillaID"),
+                            resultSet.getDate("CheckIn"),
+                            resultSet.getDate("CheckOut"),
+                            resultSet.getString("BookingStatus"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getDouble("BookingTotal")
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return b;
+    }
+
+    @Override
+    public ArrayList<Booking> getListBookingByUserId(int userId) {
+        ArrayList<Booking> bookingList = new ArrayList<>();
+        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName\n"
+                + "FROM Booking b  \n"
+                + "JOIN Villas v ON b.VillaID = v.VillaID \n"
+                + "WHERE b.userId = ? ORDER BY b.CreateDate DESC";
+
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, userId);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Booking b = new Booking(
+                            resultSet.getInt("BookingID"),
+                            resultSet.getInt("UserID"),
+                            resultSet.getInt("VillaID"),
+                            resultSet.getDate("CheckIn"),
+                            resultSet.getDate("CheckOut"),
+                            resultSet.getString("BookingStatus"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getDouble("BookingTotal")
+                    );
+                    b.setVillaName(resultSet.getString("VillaName"));
+                    bookingList.add(b);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookingList;
     }
 
 }

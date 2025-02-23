@@ -44,6 +44,10 @@
         <servlet-name>TestServlet</servlet-name>
         <servlet-class>control.booking.TestServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BookingHistory</servlet-name>
+        <servlet-class>control.booking.BookingHistory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>TestServlet</servlet-name>
         <url-pattern>/TestServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingHistory</servlet-name>
+        <url-pattern>/BookingHistory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
