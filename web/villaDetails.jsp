@@ -93,7 +93,7 @@
             .edit-feedback{
                 font-size: 14px;
                 color: #777;
-                margin-left: 1150px;
+                margin-left: 1000px;
             }
             .edit-feedback a{
                 text-decoration: none;
@@ -218,7 +218,7 @@
                         </div>
 
                         <div class="mt-3">
-                            <label for="comment">Your Feedback:</label>
+                            <label for="comment">Your Comment:</label>
                             <textarea class="form-control" name="comment" rows="3" required></textarea>
                         </div>
 

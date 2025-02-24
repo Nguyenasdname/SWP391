@@ -22,10 +22,15 @@
                 border-radius: 10px;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             }
-            .service-item img {
-                width: 100px;
-                height: auto;
-                border-radius: 5px;
+            .service-image{
+                width: 220px;
+                height: 220px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .service-image img{
+                width: 100%;
+                height: 100%;
             }
             .qty-input {
                 display: flex;
@@ -73,7 +78,9 @@
                             <c:forEach items="${listService}" var="service">
                                 <div class="col-md-4 mb-3">
                                     <div class="card p-2 text-center">
-                                        <img src="${service.serviceIMG}" class="service-image" />
+                                        <div class="service-image">
+                                            <img src="${service.serviceIMG}"  />
+                                        </div>
                                         <input type="checkbox" class="form-check-input service-checkbox" 
                                                data-service-id="${service.serviceId}" 
                                                data-service-price="${service.servicePrice}"
