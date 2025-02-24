@@ -77,6 +77,14 @@
         <servlet-name>EditFeedback</servlet-name>
         <servlet-class>control.feedback.EditFeedback</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminDashboard</servlet-name>
+        <servlet-class>control.auth.AdminDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListAccount</servlet-name>
+        <servlet-class>control.account.ListAccount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -148,6 +156,14 @@
     <servlet-mapping>
         <servlet-name>EditFeedback</servlet-name>
         <url-pattern>/EditFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboard</servlet-name>
+        <url-pattern>/AdminDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListAccount</servlet-name>
+        <url-pattern>/ListAccount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

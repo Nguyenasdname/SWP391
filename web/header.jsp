@@ -189,7 +189,7 @@
 
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 1}">
                                     <li>
-                                        <a href="admindashboard.jsp">Admin</a>
+                                        <a href="adminDashboard">Admin</a>
                                         <ul class="drop-menu">
                                             <li><a href="managervilla?list=point">Manager Villa</a></li>
 
