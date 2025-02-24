@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <url-pattern/>
-    </filter-mapping>
+    <servlet-name>ConfirmBooking</servlet-name>
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern/>
@@ -68,6 +65,18 @@
         <servlet-name>ConfirmAddMoreService</servlet-name>
         <servlet-class>control.service.ConfirmAddMoreService</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>VillaDetails</servlet-name>
+        <servlet-class>control.villa.VillaDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LeaveFeedback</servlet-name>
+        <servlet-class>control.feedback.LeaveFeedback</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditFeedback</servlet-name>
+        <servlet-class>control.feedback.EditFeedback</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -128,6 +137,18 @@
         <servlet-name>ConfirmAddMoreService</servlet-name>
         <url-pattern>/ConfirmAddMoreService</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VillaDetails</servlet-name>
+        <url-pattern>/VillaDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LeaveFeedback</servlet-name>
+        <url-pattern>/LeaveFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditFeedback</servlet-name>
+        <url-pattern>/EditFeedback</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -144,9 +165,5 @@
             <param-name>forceEncoding</param-name>
             <param-value>true</param-value>
         </init-param>
-    </filter>
-    <filter>
-        <filter-name>LoginFilter</filter-name>
-        <filter-class>filter.LoginFilter</filter-class>
     </filter>
 </web-app>

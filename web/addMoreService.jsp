@@ -81,9 +81,9 @@
                                                value="${service.serviceId}-1" />
                                         <label>${service.serviceName} (+${service.servicePrice})</label>
                                         <div class="qty-input mt-2">
-                                            <a class="qty-count qty-count--minus" data-service-id="${service.serviceId}" disabled>-</a>
+                                            <a style="text-decoration: none" class="qty-count qty-count--minus" data-service-id="${service.serviceId}" disabled>-</a>
                                             <input type="number" class="service-quantity" data-service-id="${service.serviceId}" value="1" min="1" readonly>
-                                            <a class="qty-count qty-count--add" data-service-id="${service.serviceId}" disabled>+</a>
+                                            <a style="text-decoration: none" class="qty-count qty-count--add" data-service-id="${service.serviceId}" disabled>+</a>
                                         </div>
                                     </div>
                                 </div>
@@ -95,7 +95,7 @@
                     <input type="hidden" name="bookingId" value="${booking.bookingId}">
 
                     <div class="mt-4 d-flex justify-content-between">
-                        <a href="cancelBooking?bookingId=${booking.bookingId}" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</a>
+                        <a href="bookingDetails?bookingId=${booking.bookingId}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                         <button type="submit" class="btn btn-success">Add More Service</button>
                     </div>
                 </div>

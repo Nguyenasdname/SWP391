@@ -6,12 +6,14 @@ package test;
 
 import dao.BookingDao;
 import dao.BookingServiceDao;
+import dao.FeedbackDao;
 import dao.PromotionDao;
 import dao.ServiceDao;
 import dao.UserDao;
 import dao.VillaDao;
 import dao.imp.BookingDaoImp;
 import dao.imp.BookingServiceDaoImp;
+import dao.imp.FeedbackDaoImp;
 import dao.imp.PromotionDaoImp;
 import dao.imp.ServiceDaoImp;
 import dao.imp.UserDaoImp;
@@ -56,11 +58,15 @@ public class NewMain {
 //        Service s = serviceDao.getServiceByID(1);
 //        
 //        System.out.print(s);
-          BookingDao bookingDao = new BookingDaoImp();
+//          BookingDao bookingDao = new BookingDaoImp();
 //          ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(1);
-          BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
-          
-         System.out.print(bookingDao.getBookingDetailByID(1));
+//          BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
+//          
+//         System.out.print(bookingDao.getBookingDetailByID(1));
+
+            FeedbackDao feedbackDao = new FeedbackDaoImp();
+            
+            System.out.print(feedbackDao.getAllFeedBackListByVillaID(1));
           
     }
 
