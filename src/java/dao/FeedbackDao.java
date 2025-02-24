@@ -15,4 +15,6 @@ public interface FeedbackDao {
     void addFeedback(Feedback feedback);
     void updateFeedback(Feedback feedback);
     void removeFeedbackById(int id); 
+    ArrayList<Feedback> getAllFeedBackListByVillaID(int villaId);
+    
 }

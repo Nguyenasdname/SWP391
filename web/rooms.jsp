@@ -180,13 +180,13 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="row no-margin">
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <span class="form-label">Check In</span>
                                                     <input id="fromDate" name="fromDate" class="form-control date1" type="date" value="${fromDate}">
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="form-group">
                                                     <span class="form-label">Check out</span>
                                                     <input id="toDate" name="toDate" class="form-control date2" type="date" value="${toDate}">
@@ -254,10 +254,7 @@
                                             <sub>/night</sub>
                                         </div>
                                     </div>
-                                    <div class="room-desc">
-                                        <p>${villa.villaDescription}</p>
-                                    </div>
-                                    <div class="room-features">
+                                    <div style="margin-top: 50px" class="room-features">
                                         <div class="room-info">
                                             <i class="flaticon-019-television"></i>
                                             <span>Smart TV</span>
@@ -279,10 +276,10 @@
                                             <span>Pool</span>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div style="margin-top: 70px" class="row">
                                         <a href="javascript:void(0);" 
                                            class="primary-btn col-lg-5" 
-                                           onclick="redirectToPage(this, 'detailvilla?villaId=${villa.villaId}')">View Detail <i class="lnr lnr-arrow-right"></i></a>
+                                           onclick="redirectToPage(this, 'villaDetails?villaId=${villa.villaId}')">View Detail <i class="lnr lnr-arrow-right"></i></a>
                                         <div class="col-lg-2"></div>
                                         <a href="javascript:void(0);" 
                                            class="primary-btn col-lg-5"

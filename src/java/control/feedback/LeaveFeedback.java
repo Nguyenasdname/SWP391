@@ -2,26 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package control.rooms;
+package control.feedback;
 
-import dao.VillaDao;
-import dao.imp.VillaDaoImp;
+import dao.FeedbackDao;
+import dao.imp.FeedbackDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Villa;
+import model.Feedback;
 
 /**
  *
  * @author Admin
  */
-@WebServlet(name = "RoomAvailableServlet", urlPatterns = {"/roomAvailable"})
-public class RoomAvailable extends HttpServlet {
+@WebServlet("/leaveFeedback")
+public class LeaveFeedback extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class RoomAvailable extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet RoomAvailable</title>");
+            out.println("<title>Servlet LeaveFeedback</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet RoomAvailable at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LeaveFeedback at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,36 +60,7 @@ public class RoomAvailable extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String action = request.getParameter("action");
-
-        VillaDao villaDao = new VillaDaoImp();
-        
-        ArrayList<Villa> availableVillas = new ArrayList();
-        
-        switch (action) {
-            case "listAll":
-                
-                availableVillas = villaDao.getAllVillaList();
-                request.setAttribute("availableVillas", availableVillas);
-                request.getRequestDispatcher("rooms.jsp").forward(request, response);
-                
-                break;
-            case "listCondition":
-                String villaCapacity = request.getParameter("numofpeople");
-                String fromDate = request.getParameter("fromDate");
-                String toDate = request.getParameter("toDate");
-
-                availableVillas = villaDao.getAllVillaAvailable(Integer.parseInt(villaCapacity));
-
-                request.setAttribute("availableVillas", availableVillas);
-                request.setAttribute("fromDate", fromDate);
-                request.setAttribute("toDate", toDate);
-                request.setAttribute("numofpeople", villaCapacity);
-                request.setAttribute("action", action);
-
-                request.getRequestDispatcher("rooms.jsp").forward(request, response);
-                break;
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -104,7 +74,24 @@ public class RoomAvailable extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        int villaId = Integer.parseInt(request.getParameter("villaId"));
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int rating = Integer.parseInt(request.getParameter("rating"));
+        String comment = request.getParameter("comment");
+        String fromDate = request.getParameter("fromDate");
+        String toDate = request.getParameter("toDate");
+        String numberOfGuest = request.getParameter("numberOfGuest");
+        
+        FeedbackDao feedbackDao = new FeedbackDaoImp();
+        
+        Feedback feedback = new Feedback(1, userId, villaId, rating, comment, null);
+        
+        feedbackDao.addFeedback(feedback);
+        
+        response.sendRedirect("villaDetails?villaId=" + villaId + "&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest="+numberOfGuest);
+        
+        
+        
     }
 
     /**

@@ -4,6 +4,7 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/UserDao.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/villa/VillaDetails.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/BookingCancel.java</file>
             <file>file:/D:/code/Java/BookingResort/web/booking.jsp</file>
             <file>file:/D:/code/Java/BookingResort/web/register.jsp</file>
@@ -25,10 +26,13 @@
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/PromotionDaoImp.java</file>
             <file>file:/D:/code/Java/BookingResort/web/index.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/googleHandle/Iconstant.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/feedback/EditFeedback.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/BookingService.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/BookingDetails.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/ConfirmBooking.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/BookingHistory.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/FeedbackDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/feedback/LeaveFeedback.java</file>
             <file>file:/D:/code/Java/BookingResort/web/img/about-us-bg.jpg</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/service/ConfirmAddMoreService.java</file>
             <file>file:/D:/code/Java/BookingResort/web/footer.jsp</file>
@@ -41,12 +45,15 @@
             <file>file:/D:/code/Java/BookingResort/src/java/model/Villa.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/BookingDaoImp.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/VillaDao.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/villaDetails.jsp</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/dao/FeedbackDao.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/ServiceDaoImp.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/database/ConnectionProperty.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/UserDaoImp.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/Service.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/test/NewMain.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/auth/ForgotPassword.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/villa/VillaAvailable.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/verifyOTP/VerifyOTP.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/auth/Register.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/VillaDaoImp.java</file>
@@ -54,6 +61,7 @@
             <file>file:/D:/code/Java/BookingResort/src/java/filter/LoginFilter.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/PromotionDao.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/dao/imp/BookingServiceDaoImp.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/model/Feedback.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/Promotion.java</file>
             <file>file:/D:/code/Java/BookingResort/web/login.jsp</file>
         </group>

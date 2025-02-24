@@ -104,8 +104,9 @@
         </div>
         <script>
             var alertMessage = "${param.alertMessage}";
-            if (alertMessage !== null && alertMessage !== "") {
+            if (count == 1 && alertMessage !== null && alertMessage !== "") {
                 alert(alertMessage);
+                
             }
         </script>        
 

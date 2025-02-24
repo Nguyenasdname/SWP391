@@ -319,6 +319,7 @@
             var alertMessage = "${param.alertMessage}";
             if (alertMessage !== null && alertMessage !=="") {
                 alert(alertMessage);
+                alertMessage = null;
             }
 
             window.onload = function () {

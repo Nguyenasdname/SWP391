@@ -17,6 +17,8 @@ public class Feedback {
     private int rating;
     private String comment;
     private Date createDate;
+    private String userName;
+    private String userIMG;
 
     public Feedback(int feedbackId, int userId, int villaId, int rating, String comment, Date createDate) {
         this.feedbackId = feedbackId;
@@ -78,6 +80,22 @@ public class Feedback {
         this.createDate = createDate;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserIMG() {
+        return userIMG;
+    }
+
+    public void setUserIMG(String userIMG) {
+        this.userIMG = userIMG;
+    }
+    
     @Override
     public String toString() {
         return "FeedBack{" + "feedbackId=" + feedbackId + ", userId=" + userId + ", villaId=" + villaId + ", rating=" + rating + ", comment=" + comment + ", createDate=" + createDate + '}';
