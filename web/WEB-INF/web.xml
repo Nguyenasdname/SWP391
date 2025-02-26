@@ -113,6 +113,10 @@
         <servlet-name>CancelBooking</servlet-name>
         <servlet-class>control.booking.CancelBooking</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddToWishList</servlet-name>
+        <servlet-class>control.wishlist.AddToWishList</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -220,6 +224,10 @@
     <servlet-mapping>
         <servlet-name>CancelBooking</servlet-name>
         <url-pattern>/CancelBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddToWishList</servlet-name>
+        <url-pattern>/AddToWishList</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -11,6 +11,7 @@ import dao.PromotionDao;
 import dao.ServiceDao;
 import dao.UserDao;
 import dao.VillaDao;
+import dao.WishlistDao;
 import dao.imp.BookingDaoImp;
 import dao.imp.BookingServiceDaoImp;
 import dao.imp.FeedbackDaoImp;
@@ -18,6 +19,7 @@ import dao.imp.PromotionDaoImp;
 import dao.imp.ServiceDaoImp;
 import dao.imp.UserDaoImp;
 import dao.imp.VillaDaoImp;
+import dao.imp.WishlistDaoImp;
 import java.util.ArrayList;
 import model.Booking;
 import model.BookingService;
@@ -67,12 +69,16 @@ public class NewMain {
 //            FeedbackDao feedbackDao = new FeedbackDaoImp();
 //            
 //            System.out.print(feedbackDao.getAllFeedBackListByVillaID(1));
+//
+//            VillaDao villaDao = new VillaDaoImp();
+//            
+//            Villa listVilla = villaDao.getAvailableVilla(2, "2025-02-28", "2025-01-02");
+//            
+//            System.out.print(listVilla);
 
-            VillaDao villaDao = new VillaDaoImp();
-            
-            Villa listVilla = villaDao.getAvailableVilla(2, "2025-02-28", "2025-01-02");
-            
-            System.out.print(listVilla);
+              WishlistDao wishlistDao = new WishlistDaoImp();
+              
+              System.out.print(wishlistDao.getWishlistByUserVillaId(1, 1));
           
     }
 

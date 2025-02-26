@@ -12,9 +12,11 @@ import model.Wishlist;
  * @author Admin
  */
 public interface WishlistDao {
-    Wishlist getWishlistByID(int id); 
+    ArrayList<Wishlist> getWishlistByUserID(int userId);
+    ArrayList<Wishlist> getWishlistByVillaID(int villaId); 
     ArrayList<Wishlist> getAllWishlist();
+    Wishlist getWishlistByUserVillaId(int userId, int villaId);
     void addWishlist(Wishlist wishlist); 
     void updateWishlist(Wishlist wishlist); 
-    void removeWishlistById(int id);
+    void removeWishlistById(Wishlist wishlist);
 }
