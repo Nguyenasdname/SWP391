@@ -20,4 +20,5 @@ public interface UserDao{
     void removeUserById(int id);
     User isUserExists(String userName, String userEmail);
     User getUserByUserName(String userName);
+    ArrayList<User> getAllDetailsUserList(); 
 }

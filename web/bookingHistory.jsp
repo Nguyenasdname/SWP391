@@ -151,6 +151,13 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            var alertMessage = "${param.alertMessage}";
+            if (alertMessage !== null && alertMessage !== "" && alertMessage !== "null") {
+                alert(alertMessage);
+
+            }
+        </script>
         <div style="margin-bottom: 100px"></div>
         <jsp:include page="footer.jsp"></jsp:include>
     </body>

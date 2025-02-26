@@ -62,7 +62,7 @@ public class ListAccount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         UserDao userDao = new UserDaoImp();
-        ArrayList<User> userList = userDao.getAllUserList();
+        ArrayList<User> userList = userDao.getAllDetailsUserList();
         
         request.setAttribute("userList", userList);
         request.getRequestDispatcher("accountManagement.jsp").forward(request, response);

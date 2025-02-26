@@ -79,36 +79,43 @@ public class Booking extends HttpServlet {
 
             //lấy ra cái villa đang đc booking
             VillaDao villaDao = new VillaDaoImp();
+
+            Villa check = villaDao.getAvailableVilla(Integer.parseInt(villaId), fromDate, toDate);
+
             Villa villa = villaDao.getVillaByID(Integer.parseInt(villaId));
 
-            //tính ngày để tính giá tiền
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date checkInDate = sdf.parse(fromDate);
-            Date checkOutDate = sdf.parse(toDate);
+            if (check != null) {
+                //tính ngày để tính giá tiền
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date checkInDate = sdf.parse(fromDate);
+                Date checkOutDate = sdf.parse(toDate);
 
-            long diff = checkOutDate.getTime() - checkInDate.getTime();
-            int numOfNights = (int) (diff / (1000 * 60 * 60 * 24));
+                long diff = checkOutDate.getTime() - checkInDate.getTime();
+                int numOfNights = (int) (diff / (1000 * 60 * 60 * 24));
 
-            double basePrice = villa.getVillaPrice() * numOfNights; //giá tiền
+                double basePrice = villa.getVillaPrice() * numOfNights; //giá tiền
 
-            //lấy hết service ra tí check để mà thêm vào
-            ServiceDao serviceDao = new ServiceDaoImp();
-            ArrayList<Service> listService = serviceDao.getAllServiceList();
-            
-            //lấy hết promotion ra để tính tiền 
-            PromotionDao promotionDao = new PromotionDaoImp();
-            ArrayList<Promotion> listPromotion = promotionDao.getAllPromotionList();
+                //lấy hết service ra tí check để mà thêm vào
+                ServiceDao serviceDao = new ServiceDaoImp();
+                ArrayList<Service> listService = serviceDao.getAllServiceList();
 
-            request.setAttribute("villa", villa);
-            request.setAttribute("fromDate", fromDate);
-            request.setAttribute("toDate", toDate);
-            request.setAttribute("numberOfGuest", numberOfGuest);
-            request.setAttribute("numOfNights", numOfNights);
-            request.setAttribute("basePrice", basePrice);
-            request.setAttribute("listService", listService);
-            request.setAttribute("listPromotion", listPromotion);
+                //lấy hết promotion ra để tính tiền 
+                PromotionDao promotionDao = new PromotionDaoImp();
+                ArrayList<Promotion> listPromotion = promotionDao.getAllPromotionList();
 
-            request.getRequestDispatcher("booking.jsp").forward(request, response);
+                request.setAttribute("villa", villa);
+                request.setAttribute("fromDate", fromDate);
+                request.setAttribute("toDate", toDate);
+                request.setAttribute("numberOfGuest", numberOfGuest);
+                request.setAttribute("numOfNights", numOfNights);
+                request.setAttribute("basePrice", basePrice);
+                request.setAttribute("listService", listService);
+                request.setAttribute("listPromotion", listPromotion);
+
+                request.getRequestDispatcher("booking.jsp").forward(request, response);
+            } else {
+                response.sendRedirect("check.jsp");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

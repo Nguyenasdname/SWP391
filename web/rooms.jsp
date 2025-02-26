@@ -12,7 +12,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="https://fonts.googleapis.com/css?family=Alegreya:700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400" rel="stylesheet">
-        
+
         <title>JSP Page</title>
         <style>
             /*---------------------Time Booking Bar----------------*/
@@ -170,7 +170,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="booking-form">
-                            <form action="roomAvailable" method="get">
+                            <form action="villaAvailable" method="get">
                                 <input type="hidden" name="action" value="listCondition">
                                 <div class="row no-margin">
                                     <div class="col-md-3">
@@ -196,16 +196,16 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <span class="form-label"> People</span>
-                                                    <select id="numberOfGuest" class="form-control" name="numofpeople">
-                                                        <option value="1" ${numofpeople == 1 ? "selected" : ""}>1</option>
-                                                        <option value="2" ${numofpeople == 2 ? "selected" : ""}>2</option>
-                                                        <option value="3" ${numofpeople == 3 ? "selected" : ""}>3</option>
-                                                        <option value="4" ${numofpeople == 4 ? "selected" : ""}>4</option>
-                                                        <option value="5" ${numofpeople == 5 ? "selected" : ""}>5</option>
-                                                        <option value="6" ${numofpeople == 6 ? "selected" : ""}>6</option>
-                                                        <option value="7" ${numofpeople == 7 ? "selected" : ""}>7</option>
-                                                        <option value="8" ${numofpeople == 8 ? "selected" : ""}>8</option>
-                                                        <option value="9" ${numofpeople == 9 ? "selected" : ""}>9</option>
+                                                    <select id="numberOfGuest" class="form-control" name="numberOfGuest">
+                                                        <option value="1" ${numberOfGuest == 1 ? "selected" : ""}>1</option>
+                                                        <option value="2" ${numberOfGuest == 2 ? "selected" : ""}>2</option>
+                                                        <option value="3" ${numberOfGuest == 3 ? "selected" : ""}>3</option>
+                                                        <option value="4" ${numberOfGuest == 4 ? "selected" : ""}>4</option>
+                                                        <option value="5" ${numberOfGuest == 5 ? "selected" : ""}>5</option>
+                                                        <option value="6" ${numberOfGuest == 6 ? "selected" : ""}>6</option>
+                                                        <option value="7" ${numberOfGuest == 7 ? "selected" : ""}>7</option>
+                                                        <option value="8" ${numberOfGuest == 8 ? "selected" : ""}>8</option>
+                                                        <option value="9" ${numberOfGuest == 9 ? "selected" : ""}>9</option>
                                                     </select>
                                                     <span class="select-arrow"></span>
                                                 </div>
@@ -230,66 +230,65 @@
         <section class="room-section spad">
             <div class="container">
                 <c:forEach items="${availableVillas}" var="villa">
-                    <div class="rooms-page-item">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="room-pic-slider owl-carousel">
-                                    <!--                                    <div>
-                                                                            
-                                                                        </div>-->
-                                    <div class="single-room-pic">
-                                        <img src="${villa.villaIMG}" alt="${villa.villaIMG}"/>
+                    <c:if test="${villa.villaStatus ne 'Under Maintenance' }">
+                        <div class="rooms-page-item">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="room-pic-slider owl-carousel">
+                                        <div class="single-room-pic">
+                                            <img src="${villa.villaIMG}" alt="${villa.villaIMG}"/>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="room-text">
-                                    <div class="room-title">
-                                        <h2>${villa.villaName}</h2>
-                                        <div class="room-price">
-                                            <span style="left: -55px;" >from</span>
-                                            <h2 class="price-format">${Math.round(villa.villaPrice)}</h2> 
+                                <div class="col-lg-6">
+                                    <div class="room-text">
+                                        <div class="room-title">
+                                            <h2>${villa.villaName}</h2>
+                                            <div class="room-price">
+                                                <span style="left: -55px;" >from</span>
+                                                <h2 class="price-format">${Math.round(villa.villaPrice)}</h2> 
 
 
-                                            <sub>/night</sub>
+                                                <sub>/night</sub>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div style="margin-top: 50px" class="room-features">
-                                        <div class="room-info">
-                                            <i class="flaticon-019-television"></i>
-                                            <span>Smart TV</span>
+                                        <div style="margin-top: 50px" class="room-features">
+                                            <div class="room-info">
+                                                <i class="flaticon-019-television"></i>
+                                                <span>Smart TV</span>
+                                            </div>
+                                            <div class="room-info">
+                                                <i class="flaticon-029-wifi"></i>
+                                                <span>High Wi-fi</span>
+                                            </div>
+                                            <div class="room-info">
+                                                <i class="flaticon-003-air-conditioner"></i>
+                                                <span>AC</span>
+                                            </div>
+                                            <div class="room-info">
+                                                <i class="flaticon-036-parking"></i>
+                                                <span>Parking</span>
+                                            </div>
+                                            <div class="room-info last">
+                                                <i class="flaticon-007-swimming-pool"></i>
+                                                <span>Pool</span>
+                                            </div>
                                         </div>
-                                        <div class="room-info">
-                                            <i class="flaticon-029-wifi"></i>
-                                            <span>High Wi-fi</span>
+                                        <div style="margin-top: 70px" class="row">
+                                            <a href="villaDetails?villaId=${villa.villaId}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}" 
+                                               class="primary-btn col-lg-5" 
+                                               >View Detail <i class="lnr lnr-arrow-right"></i></a>
+                                            <div class="col-lg-2"></div>
+                                            <a href="javascript:void(0);" 
+                                               class="primary-btn col-lg-5"
+                                               onclick="redirectToPage(this, 'Booking?villaId=${villa.villaId}')">Book Now <i class="lnr lnr-arrow-right"></i></a>
                                         </div>
-                                        <div class="room-info">
-                                            <i class="flaticon-003-air-conditioner"></i>
-                                            <span>AC</span>
-                                        </div>
-                                        <div class="room-info">
-                                            <i class="flaticon-036-parking"></i>
-                                            <span>Parking</span>
-                                        </div>
-                                        <div class="room-info last">
-                                            <i class="flaticon-007-swimming-pool"></i>
-                                            <span>Pool</span>
-                                        </div>
-                                    </div>
-                                    <div style="margin-top: 70px" class="row">
-                                        <a href="javascript:void(0);" 
-                                           class="primary-btn col-lg-5" 
-                                           onclick="redirectToPage(this, 'villaDetails?villaId=${villa.villaId}')">View Detail <i class="lnr lnr-arrow-right"></i></a>
-                                        <div class="col-lg-2"></div>
-                                        <a href="javascript:void(0);" 
-                                           class="primary-btn col-lg-5"
-                                           onclick="redirectToPage(this, 'Booking?villaId=${villa.villaId}')">Book Now <i class="lnr lnr-arrow-right"></i></a>
-                                    </div>
 
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </c:forEach>
 
                 <c:if test="${empty availableVillas}">
@@ -307,7 +306,7 @@
                 var fromDate = document.getElementById("fromDate").value;
                 var toDate = document.getElementById("toDate").value;
                 var numberOfGuest = document.getElementById("numberOfGuest").value;
-                
+
                 if (!fromDate || !toDate) {
                     alert("Please select Check-in and Check-out dates before proceeding!");
                     return false; // Chặn không cho chuyển trang

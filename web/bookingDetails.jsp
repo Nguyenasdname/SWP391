@@ -95,18 +95,22 @@
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
                 <a href="bookingHistory" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
-                <div>
-                    <a href="cancelBooking?bookingId=${booking.bookingId}" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</a>
-                    <a href="addService?bookingId=${booking.bookingId}" class="btn btn-warning"><i class="fa fa-plus"></i> Add More Service</a>
-                    <a href="checkout?bookingId=${booking.bookingId}" class="btn btn-success"><i class="fa fa-credit-card"></i> Checkout</a>
-                </div>
+                <c:if test="${booking.bookingStatus ne 'Cancelled'}">
+                    <div class="d-flex gap-3">
+                        <form action="cancelBooking?bookingId=${booking.bookingId}" method="post">
+                            <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</button>
+                        </form>
+                        <a href="addService?bookingId=${booking.bookingId}" class="btn btn-warning"><i class="fa fa-plus"></i> Add More Service</a>
+                        <a href="checkout?bookingId=${booking.bookingId}" class="btn btn-success"><i class="fa fa-credit-card"></i> Checkout</a>
+                    </div>
+                </c:if>
             </div>
         </div>
         <script>
             var alertMessage = "${param.alertMessage}";
-            if (count == 1 && alertMessage !== null && alertMessage !== "") {
+            if (alertMessage !== null && alertMessage !== "") {
                 alert(alertMessage);
-                
+
             }
         </script>        
 

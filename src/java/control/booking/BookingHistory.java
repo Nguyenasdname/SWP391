@@ -66,12 +66,13 @@ public class BookingHistory extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         
-
+        String alertMessage = request.getParameter("alertMessage");
+        
         BookingDao bookingDao = new BookingDaoImp();
         ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(user.getUserId());
 
         request.setAttribute("bookingList", bookingList);
-        request.getRequestDispatcher("bookingHistory.jsp").forward(request, response);
+        request.getRequestDispatcher("bookingHistory.jsp?alertMessage="+alertMessage).forward(request, response);
     }
 
     /**

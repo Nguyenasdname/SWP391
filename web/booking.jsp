@@ -105,7 +105,7 @@
                     <input type="hidden" name="numberOfGuest" value="${numberOfGuest}">
 
                     <div class="mt-4 d-flex justify-content-between">
-                        <a class="btn btn-danger" href="roomAvailable?action=listAll">Cancel</a>
+                        <a class="btn btn-danger" href="villaAvailable?action=listAll">Cancel</a>
                         <button type="submit" class="btn btn-primary">Book Now</button>
                     </div>
                 </div>

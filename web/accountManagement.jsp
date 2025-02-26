@@ -11,35 +11,6 @@
             body {
                 display: flex;
             }
-            .sidebar {
-                width: 250px;
-                height: 100vh;
-                background: #343a40;
-                color: white;
-                padding: 20px;
-                position: fixed;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-            .sidebar h3 {
-                text-align: center;
-            }
-            .nav-item a {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                padding: 10px;
-                color: white;
-                text-decoration: none;
-                border-radius: 5px;
-                transition: 0.3s;
-            }
-            .nav-item a:hover {
-                background: rgba(255, 255, 255, 0.2);
-            }
-
-
             .content {
                 margin-left: 250px;
                 padding: 20px;
@@ -54,17 +25,7 @@
         </style>
     </head>
     <body>
-        <div class="sidebar">
-            <h3><a style="text-decoration: none; color: white" href="#"><i class="bi-shield-lock"></i> Admin</a></h3>
-            <ul class="nav flex-column">
-                <li class="nav-item"><a href="#"><i class="bi bi-house-door"></i> Home</a></li>
-                <li class="nav-item"><a href="profile.jsp"><i class="bi bi-person-circle"></i> Profile</a></li>
-                <li class="nav-item"><a href="listAccount"><i class="bi bi-people"></i> Account</a></li>
-                <li class="nav-item"><a href="#"><i class="bi bi-houses"></i> Villa</a></li>
-                <li class="nav-item"><a href="#"><i class="bi bi-cup-hot"></i> Service</a></li>
-                <li class="nav-item"><a href="#"><i class="bi bi-envelope"></i> Contact</a></li>
-            </ul>
-        </div>
+        <jsp:include page="adminSideBar.jsp"></jsp:include>
 
         <div class="content">
             <h2>Account Management</h2>
@@ -90,7 +51,7 @@
                                     <td>${user.userFirstName}</td>
                                     <td>${user.userLastName}</td>
                                     <td>${user.userEmail}</td>
-                                    <td>${user.roleId}</td>
+                                    <td>${user.roleName}</td>
                                     <c:choose>
                                         <c:when test="${user.userStatus eq 'Active'}">
                                             <td class="text-success">Active</td>

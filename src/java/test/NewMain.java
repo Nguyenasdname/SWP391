@@ -63,10 +63,16 @@ public class NewMain {
 //          BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
 //          
 //         System.out.print(bookingDao.getBookingDetailByID(1));
+//
+//            FeedbackDao feedbackDao = new FeedbackDaoImp();
+//            
+//            System.out.print(feedbackDao.getAllFeedBackListByVillaID(1));
 
-            FeedbackDao feedbackDao = new FeedbackDaoImp();
+            VillaDao villaDao = new VillaDaoImp();
             
-            System.out.print(feedbackDao.getAllFeedBackListByVillaID(1));
+            Villa listVilla = villaDao.getAvailableVilla(2, "2025-02-28", "2025-01-02");
+            
+            System.out.print(listVilla);
           
     }
 

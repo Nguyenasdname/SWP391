@@ -20,7 +20,7 @@ import model.Villa;
  *
  * @author Admin
  */
-@WebServlet(name = "RoomAvailableServlet", urlPatterns = {"/roomAvailable"})
+@WebServlet(name = "RoomAvailableServlet", urlPatterns = {"/villaAvailable"})
 public class VillaAvailable extends HttpServlet {
 
     /**
@@ -76,16 +76,17 @@ public class VillaAvailable extends HttpServlet {
                 
                 break;
             case "listCondition":
-                String villaCapacity = request.getParameter("numofpeople");
+                int villaCapacity = Integer.parseInt(request.getParameter("numberOfGuest"));
                 String fromDate = request.getParameter("fromDate");
                 String toDate = request.getParameter("toDate");
+                String numberOfGuest = request.getParameter("numberOfGuest");
 
-                availableVillas = villaDao.getAllVillaAvailable(Integer.parseInt(villaCapacity));
+                availableVillas = villaDao.getAllVillaAvailable(villaCapacity, fromDate, toDate);
 
                 request.setAttribute("availableVillas", availableVillas);
                 request.setAttribute("fromDate", fromDate);
                 request.setAttribute("toDate", toDate);
-                request.setAttribute("numofpeople", villaCapacity);
+                request.setAttribute("numberOfGuest", numberOfGuest);
                 request.setAttribute("action", action);
 
                 request.getRequestDispatcher("rooms.jsp").forward(request, response);
