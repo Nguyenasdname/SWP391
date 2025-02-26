@@ -77,6 +77,42 @@
         <servlet-name>EditFeedback</servlet-name>
         <servlet-class>control.feedback.EditFeedback</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminDashboard</servlet-name>
+        <servlet-class>control.auth.AdminDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListAccount</servlet-name>
+        <servlet-class>control.account.ListAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountDetails</servlet-name>
+        <servlet-class>control.account.AccountDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateRole</servlet-name>
+        <servlet-class>control.account.UpdateRole</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BanAccount</servlet-name>
+        <servlet-class>control.account.BanAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListVilla</servlet-name>
+        <servlet-class>control.villa.ListVilla</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddNewVilla</servlet-name>
+        <servlet-class>control.villa.AddNewVilla</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditVilla</servlet-name>
+        <servlet-class>control.villa.EditVilla</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CancelBooking</servlet-name>
+        <servlet-class>control.booking.CancelBooking</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -148,6 +184,42 @@
     <servlet-mapping>
         <servlet-name>EditFeedback</servlet-name>
         <url-pattern>/EditFeedback</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboard</servlet-name>
+        <url-pattern>/AdminDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListAccount</servlet-name>
+        <url-pattern>/ListAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountDetails</servlet-name>
+        <url-pattern>/AccountDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateRole</servlet-name>
+        <url-pattern>/UpdateRole</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BanAccount</servlet-name>
+        <url-pattern>/BanAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListVilla</servlet-name>
+        <url-pattern>/ListVilla</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddNewVilla</servlet-name>
+        <url-pattern>/AddNewVilla</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditVilla</servlet-name>
+        <url-pattern>/EditVilla</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CancelBooking</servlet-name>
+        <url-pattern>/CancelBooking</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

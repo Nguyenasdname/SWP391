@@ -132,7 +132,6 @@ public class UserDaoImp implements UserDao {
 
             preStatement.executeUpdate();
 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -238,6 +237,40 @@ public class UserDaoImp implements UserDao {
             e.printStackTrace();
         }
         return u;
+    }
+
+    @Override
+    public ArrayList<User> getAllDetailsUserList() {
+        ArrayList<User> userList = new ArrayList();
+        String sql = "Select * from Users u\n"
+                + "Join Roles r on u.RoleID = r.RoleID";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    User u = new User(resultSet.getInt("UserID"),
+                            resultSet.getString("UserName"),
+                            resultSet.getString("UserEmail"),
+                            resultSet.getString("UserPass"),
+                            resultSet.getString("UserPhone"),
+                            resultSet.getString("UserIMG"),
+                            resultSet.getString("UserStatus"),
+                            resultSet.getInt("RoleID"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getString("UserAddress"),
+                            resultSet.getString("UserFirstName"),
+                            resultSet.getString("UserLastName")
+                    );
+                    u.setRoleName(resultSet.getString("RoleName"));
+                    userList.add(u);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
 
 }

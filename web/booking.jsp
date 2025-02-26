@@ -22,10 +22,15 @@
                 border-radius: 10px;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             }
-            .service-item img {
-                width: 100px;
-                height: auto;
-                border-radius: 5px;
+            .service-image{
+                width: 220px;
+                height: 220px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            .service-image img{
+                width: 100%;
+                height: 100%;
             }
             .qty-input {
                 display: flex;
@@ -73,14 +78,16 @@
                             <c:forEach items="${listService}" var="service">
                                 <div class="col-md-4 mb-3">
                                     <div class="card p-2 text-center">
-                                        <img src="${service.serviceIMG}" class="service-image" />
+                                        <div class="service-image">
+                                            <img src="${service.serviceIMG}"  />
+                                        </div>
                                         <input type="checkbox" class="form-check-input service-checkbox" 
                                                data-service-id="${service.serviceId}" 
                                                data-service-price="${service.servicePrice}"
                                                name="selectedServices" 
                                                value="${service.serviceId}-1" />
                                         <label>${service.serviceName} (+${service.servicePrice})</label>
-                                        <div class="qty-input mt-2">
+                                        <div class="qty-input mt-2 ms-5">
                                             <a style="text-decoration: none" class="qty-count qty-count--minus" data-service-id="${service.serviceId}" disabled>-</a>
                                             <input type="number" class="service-quantity" data-service-id="${service.serviceId}" value="1" min="1" readonly>
                                             <a style="text-decoration: none" class="qty-count qty-count--add" data-service-id="${service.serviceId}" disabled>+</a>
@@ -98,7 +105,7 @@
                     <input type="hidden" name="numberOfGuest" value="${numberOfGuest}">
 
                     <div class="mt-4 d-flex justify-content-between">
-                        <a class="btn btn-danger" href="roomAvailable?action=listAll">Cancel</a>
+                        <a class="btn btn-danger" href="villaAvailable?action=listAll">Cancel</a>
                         <button type="submit" class="btn btn-primary">Book Now</button>
                     </div>
                 </div>

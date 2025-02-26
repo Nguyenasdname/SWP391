@@ -111,14 +111,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="checkout__form__input">
                                         <p>First Name <span></span></p>
                                         <input style="border: none; outline: none; width: 500px" type="text" name="name" value="${sessionScope.user.userFirstName}" readonly/>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="checkout__form__input">
                                         <p>Last Name <span></span></p>
                                         <input style="border: none; outline: none; width: 500px" type="text" name="name" value="${sessionScope.user.userLastName}"/>

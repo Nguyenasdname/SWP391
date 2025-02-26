@@ -173,7 +173,7 @@
                             <ul style="margin: 28px">
                                 <li><a href="./index.jsp">Home</a></li>
                                 
-                                <li><a href="./roomAvailable?action=listAll">Villas</a></li>
+                                <li><a href="./villaAvailable?action=listAll">Villas</a></li>
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 3}">
                                     <li>
                                         <a href="#">Employee</a>
@@ -189,15 +189,7 @@
 
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 1}">
                                     <li>
-                                        <a href="admindashboard.jsp">Admin</a>
-                                        <ul class="drop-menu">
-                                            <li><a href="managervilla?list=point">Manager Villa</a></li>
-
-                                            <li><a href="manageraccountservlet">Manager Account</a></li>
-                                            <li><a href="manageremployee">Manager Employee</a></li>
-                                            <li><a href="contactmessage">Contact Message</a></li>
-                                            <li><a href="#" class="revenue">View revenue</a></li>
-                                        </ul>
+                                        <a href="adminDashboard">Admin</a>
                                     </li>
                                 </c:if>
                                     <input type="hidden" class="revenue">

@@ -7,9 +7,11 @@ package control.booking;
 import dao.BookingDao;
 import dao.BookingServiceDao;
 import dao.ServiceDao;
+import dao.VillaDao;
 import dao.imp.BookingDaoImp;
 import dao.imp.BookingServiceDaoImp;
 import dao.imp.ServiceDaoImp;
+import dao.imp.VillaDaoImp;
 import emailService.JavaMail;
 import emailService.JavaMailImp;
 import java.io.IOException;
@@ -89,65 +91,58 @@ public class ConfirmBooking extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         JavaMail jvm = new JavaMailImp();
-        
-        
 
         BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
         BookingDao bookingDao = new BookingDaoImp();
         ServiceDao serviceDao = new ServiceDaoImp();
 
-        Booking checkBooking = bookingDao.getBookingStatus(user.getUserId(), "Pending");
+        try {
 
-        if (checkBooking == null) {
+            int villaId = Integer.parseInt(request.getParameter("villaId"));
 
-            try {
-                
-                
-                int villaId = Integer.parseInt(request.getParameter("villaId"));
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date fromDate = inputFormat.parse(request.getParameter("fromDate"));
+            Date toDate = inputFormat.parse(request.getParameter("toDate"));
 
-                Date fromDate = inputFormat.parse(request.getParameter("fromDate"));
-                Date toDate = inputFormat.parse(request.getParameter("toDate"));
+            double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
 
-                double totalPrice = Double.parseDouble(request.getParameter("totalPrice"));
-                
-                int numberOfGuest = Integer.parseInt(request.getParameter("numberOfGuest"));
+            int numberOfGuest = Integer.parseInt(request.getParameter("numberOfGuest"));
 
-                String[] selectedServices = request.getParameterValues("selectedServices");
+            String[] selectedServices = request.getParameterValues("selectedServices");
 
-                Booking newbooking = new Booking(1, user.getUserId(), villaId, fromDate, toDate, "Pending", null, totalPrice, numberOfGuest);
+            VillaDao villaDao = new VillaDaoImp();
 
-                boolean bookingCheck = bookingDao.addBooking(newbooking);
+            Booking newbooking = new Booking(1, user.getUserId(), villaId, fromDate, toDate, "Pending", null, totalPrice, numberOfGuest);
 
-                if (bookingCheck) {
-                    Booking booking = bookingDao.getUserBookingVilla(newbooking.getUserId(), newbooking.getVillaId(), newbooking.getBookingStatus());
-                    for (String serviceData : selectedServices) {
-                        String[] parts = serviceData.split("-");
-                        int serviceId = Integer.parseInt(parts[0]);
-                        int quantity = Integer.parseInt(parts[1]);
-                        Service s = serviceDao.getServiceByID(serviceId);
+            boolean bookingCheck = bookingDao.addBooking(newbooking);
 
-                        double totalServicePrice = s.getServicePrice() * quantity;
-                        BookingService bookingService = new BookingService(booking.getBookingId(), serviceId, quantity, totalServicePrice);
-                        bookingServiceDao.addBookingService(bookingService);
+            if (bookingCheck) {
+                Booking booking = bookingDao.getUserBookingVilla(newbooking.getUserId(), newbooking.getVillaId(), newbooking.getBookingStatus());
+                for (String serviceData : selectedServices) {
+                    String[] parts = serviceData.split("-");
+                    int serviceId = Integer.parseInt(parts[0]);
+                    int quantity = Integer.parseInt(parts[1]);
+                    Service s = serviceDao.getServiceByID(serviceId);
 
-                    }
-                    
-                    
-                    String alertMessage = "Booking Successfuly! Please Check Your Email Or Booking History.";
-                    response.sendRedirect("index.jsp?alertMessage=" + alertMessage);
+                    double totalServicePrice = s.getServicePrice() * quantity;
+                    BookingService bookingService = new BookingService(booking.getBookingId(), serviceId, quantity, totalServicePrice);
+                    bookingServiceDao.addBookingService(bookingService);
 
-                } else {
-                    response.getWriter().print("Đéo được bro ơi");
                 }
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                villaDao.setBookedVilla(villaId);
+                String alertMessage = "Booking Successfuly! Please Check Your Email Or Booking History.";
+                response.sendRedirect("index.jsp?alertMessage=" + alertMessage);
+
+            } else {
+                response.getWriter().print("Đéo được bro ơi");
             }
-        } else {
-            response.sendRedirect("index.jsp?alertMessage=You already have a pending booking. Please complete your current booking before making a new one.");
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override

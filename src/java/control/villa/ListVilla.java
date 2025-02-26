@@ -4,9 +4,7 @@
  */
 package control.villa;
 
-import dao.FeedbackDao;
 import dao.VillaDao;
-import dao.imp.FeedbackDaoImp;
 import dao.imp.VillaDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,15 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Feedback;
 import model.Villa;
 
 /**
  *
  * @author Admin
  */
-@WebServlet("/villaDetails")
-public class VillaDetails extends HttpServlet {
+@WebServlet("/listVilla")
+public class ListVilla extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +40,10 @@ public class VillaDetails extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VillaDetails</title>");
+            out.println("<title>Servlet ListVilla</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VillaDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListVilla at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,38 +61,12 @@ public class VillaDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int villaId = Integer.parseInt(request.getParameter("villaId"));
-        String fromDate = request.getParameter("fromDate");
-        String toDate = request.getParameter("toDate");
-        String numberOfGuest = request.getParameter("numberOfGuest");
-        String originalURL = request.getHeader("Referer");
-        
         VillaDao villaDao = new VillaDaoImp();
         
-        Villa villa = villaDao.getVillaByID(villaId);
+        ArrayList<Villa> villaList = villaDao.getAllVillaList();
         
-        FeedbackDao feedbackDao = new FeedbackDaoImp();
-        
-        ArrayList<Feedback> feedbackList = feedbackDao.getAllFeedBackListByVillaID(villaId);
-        
-        double averageRating = 0;
-        int totalStart = 0;
-        
-        for(Feedback feedback : feedbackList){
-            totalStart += feedback.getRating();
-        }
-        averageRating = (double) totalStart / feedbackList.size();
-        
-        request.setAttribute("villa", villa);
-        request.setAttribute("feedbackList", feedbackList);
-        request.setAttribute("fromDate", fromDate);
-        request.setAttribute("toDate", toDate);
-        request.setAttribute("averageRating", averageRating);
-        request.setAttribute("numberOfGuest", numberOfGuest);
-        request.setAttribute("reviews", feedbackList.size());
-        request.setAttribute("originalURL", originalURL);
-        
-        request.getRequestDispatcher("villaDetails.jsp").forward(request, response);
+        request.setAttribute("villaList", villaList);
+        request.getRequestDispatcher("villaManagement.jsp").forward(request, response);
     }
 
     /**
@@ -109,7 +80,6 @@ public class VillaDetails extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
     }
 
     /**

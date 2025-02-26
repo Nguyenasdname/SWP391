@@ -93,7 +93,7 @@
             .edit-feedback{
                 font-size: 14px;
                 color: #777;
-                margin-left: 1150px;
+                margin-left: 1000px;
             }
             .edit-feedback a{
                 text-decoration: none;
@@ -116,7 +116,9 @@
             }
             body{
                 background-image: url("img/villaDetailsBackground.jpg") !important;
-               
+                background-size: cover;
+                background-repeat: no-repeat;
+                background-attachment: fixed;
             }
         </style>
     </head>
@@ -128,7 +130,7 @@
                     <div class="row">
                         <h2 class="text-center d-flex justify-content-left">${villa.villaName}</h2>
                     <div>
-                        <h4>Rating: <span>${averageRating} / 5<i class="fa-star fas star-rating"></i></span></h4>
+                        <h4>Rating: <span>${averageRating == null ? 0 : averageRating} / 5<i class="fa-star fas star-rating"></i></span></h4>
                         <p><strong>${reviews} Reviews</strong></p>
                     </div>
                 </div>
@@ -142,29 +144,29 @@
                     <div class="col-md-3">
 
 
-                        <p><strong>Price:</strong> $${villa.villaPrice} per night</p>
-                        <p><strong>Max Guests:</strong> ${villa.villaCapacity}</p>
+                        <p class="text-dark"><strong>Price:</strong> $${villa.villaPrice} per night</p>
+                        <p class="text-dark"><strong>Max Guests:</strong> ${villa.villaCapacity}</p>
 
                         <div class="room-features">
                             <div class="room-info">
                                 <i class="flaticon-019-television"></i>
-                                
+
                             </div>
                             <div class="room-info">
                                 <i class="flaticon-029-wifi"></i>
-                                
+
                             </div>
                             <div class="room-info">
                                 <i class="flaticon-003-air-conditioner"></i>
-                                
+
                             </div>
                             <div class="room-info">
                                 <i class="flaticon-036-parking"></i>
-                                
+
                             </div>
                             <div class="room-info last">
                                 <i class="flaticon-007-swimming-pool"></i>
-                               
+
                             </div>
                         </div>
                         <div class="map-container mt-4" style="width: 250px; height: 175px; border-radius: 10px; overflow: hidden;">
@@ -182,11 +184,41 @@
                 </div>
                 <h5 class="ps-4 mt-3 text-dark"> ${villa.villaDescription}</h5>
 
+                <!-- Modal chọn ngày và số người -->
+                <div id="bookingModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;">
+                    <div style="background: white; padding: 20px; border-radius: 10px; width: 400px; text-align: center;">
+                        <h4>Select Booking Details</h4>
+                        <div>
+                            <label>Check-in Date:</label>
+                            <input id="modalFromDate" type="date" class="form-control" value="${fromDate}">
+                        </div>
+                        <div>
+                            <label>Check-out Date:</label>
+                            <input id="modalToDate" type="date" class="form-control" value="${toDate}">
+                        </div>
+                        <div>
+                            <label>Number of Guests:</label>
+                            <select id="modalNumberOfGuest" class="form-control">
+                                <c:forEach var="i" begin="1" end="${villa.villaCapacity}">
+                                    <option value="${i}" ${numberOfGuest == i ? "selected" : ""}>${i}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <br>
+                        <button onclick="confirmBookingDetails()" class="btn btn-success">Confirm</button>
+                    </div>
+                </div>
+
+
+
+
 
                 <!-- Nút Back và Book Now -->
                 <div class="mt-4 d-flex justify-content-between">
-                    <a href="roomAvailable?action=listAll" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
-                    <a href="booking?villaId=${villa.villaId}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}" class="btn btn-primary">Book Now</a>
+                    <a href="${originalURL}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
+                    <!--<a href="booking?villaId=${villa.villaId}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}" class="btn btn-primary">Book Now</a>-->
+                    <a href="javascript:void(0);" id="bookNowBtn" class="btn btn-primary">Book Now</a>
+
                 </div>
 
                 <hr class="bg-dark">
@@ -218,7 +250,7 @@
                         </div>
 
                         <div class="mt-3">
-                            <label for="comment">Your Feedback:</label>
+                            <label for="comment">Your Comment:</label>
                             <textarea class="form-control" name="comment" rows="3" required></textarea>
                         </div>
 
@@ -296,74 +328,177 @@
         <div style="margin-bottom: 100px"></div>   
         <jsp:include page="footer.jsp"></jsp:include>
 
-        <script>
-            function showEditForm(feedbackId) {
-                document.getElementById("edit-form-" + feedbackId).style.display = "block";
-                document.getElementById("comment-" + feedbackId).style.display = "none";
-            }
+            <script>
+                function showEditForm(feedbackId) {
+                    document.getElementById("edit-form-" + feedbackId).style.display = "block";
+                    document.getElementById("comment-" + feedbackId).style.display = "none";
+                }
 
-            function hideEditForm(feedbackId) {
-                document.getElementById("edit-form-" + feedbackId).style.display = "none";
-                document.getElementById("comment-" + feedbackId).style.display = "block";
-            }
+                function hideEditForm(feedbackId) {
+                    document.getElementById("edit-form-" + feedbackId).style.display = "none";
+                    document.getElementById("comment-" + feedbackId).style.display = "block";
+                }
 
-            document.addEventListener("DOMContentLoaded", function () {
-                const stars = document.querySelectorAll(".star");
-                const ratingInput = document.getElementById("rating-value");
-                const ratingEdit = document.getElementById("rating-value-edit")
+                document.addEventListener("DOMContentLoaded", function () {
+                    const stars = document.querySelectorAll(".star");
+                    const ratingInput = document.getElementById("rating-value");
+                    const ratingEdit = document.getElementById("rating-value-edit")
 
-                stars.forEach(star => {
-                    // Khi di chuột vào sao nào, làm sáng tất cả các sao trước đó
-                    star.addEventListener("mouseover", function () {
-                        resetStars();
-                        let value = this.getAttribute("data-value");
+                    stars.forEach(star => {
+                        // Khi di chuột vào sao nào, làm sáng tất cả các sao trước đó
+                        star.addEventListener("mouseover", function () {
+                            resetStars();
+                            let value = this.getAttribute("data-value");
 
-                        stars.forEach(s => {
-                            if (parseFloat(s.getAttribute("data-value")) <= parseFloat(value)) {
-                                s.classList.add("active");
-                            }
-                        });
-                    });
-
-                    // Khi chuột rời đi, nếu chưa chọn sao nào thì reset lại
-                    star.addEventListener("mouseout", function () {
-                        resetStars();
-                        let selectedValue = ratingInput.value;
-                        if (selectedValue) {
                             stars.forEach(s => {
-                                if (parseFloat(s.getAttribute("data-value")) <= parseFloat(selectedValue)) {
+                                if (parseFloat(s.getAttribute("data-value")) <= parseFloat(value)) {
                                     s.classList.add("active");
                                 }
                             });
+                        });
+
+                        // Khi chuột rời đi, nếu chưa chọn sao nào thì reset lại
+                        star.addEventListener("mouseout", function () {
+                            resetStars();
+                            let selectedValue = ratingInput.value;
+                            if (selectedValue) {
+                                stars.forEach(s => {
+                                    if (parseFloat(s.getAttribute("data-value")) <= parseFloat(selectedValue)) {
+                                        s.classList.add("active");
+                                    }
+                                });
+                            }
+                        });
+
+                        // Khi click vào sao, lưu giá trị rating
+                        star.addEventListener("click", function () {
+                            let value = this.getAttribute("data-value");
+                            ratingInput.value = value;
+                            ratingEdit.value = value;
+                            // Xóa hết class active
+                            resetStars();
+
+                            // Gán active cho các sao trước nó
+                            stars.forEach(s => {
+                                if (parseFloat(s.getAttribute("data-value")) <= parseFloat(value)) {
+                                    s.classList.add("active");
+                                }
+                            });
+                        });
+                    });
+
+                    // Hàm reset tất cả các sao
+                    function resetStars() {
+                        stars.forEach(s => s.classList.remove("active"));
+                    }
+                });
+
+            </script>
+
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Ẩn modal khi tải trang
+                    document.getElementById("bookingModal").style.display = "none";
+
+                    let today = new Date();
+                    let formattedToday = today.toISOString().split('T')[0];
+                    document.getElementById("modalFromDate").setAttribute("min", formattedToday);
+
+
+                    // Reset dữ liệu nếu quay lại trang hoặc mở lại trang
+
+                    localStorage.removeItem("fromDate");
+                    localStorage.removeItem("toDate");
+                    localStorage.removeItem("numberOfGuest");
+
+                    // Lấy dữ liệu từ trang rooms nếu có
+                    let urlParams = new URLSearchParams(window.location.search);
+                    let fromDateParam = urlParams.get("fromDate");
+                    let toDateParam = urlParams.get("toDate");
+                    let numberOfGuestParam = urlParams.get("numberOfGuest");
+
+                    if (fromDateParam && toDateParam && numberOfGuestParam) {
+                        localStorage.setItem("fromDate", fromDateParam);
+                        localStorage.setItem("toDate", toDateParam);
+                        localStorage.setItem("numberOfGuest", numberOfGuestParam);
+                    }
+
+                    document.getElementById("bookNowBtn").addEventListener("click", function (event) {
+                        let fromDate = localStorage.getItem("fromDate");
+                        let toDate = localStorage.getItem("toDate");
+                        let numberOfGuest = localStorage.getItem("numberOfGuest");
+
+                        if (!fromDate || !toDate || !numberOfGuest) {
+                            event.preventDefault(); // Ngăn chặn chuyển hướng
+                            openBookingModal();
+                        } else {
+                            window.location.href = "booking?villaId=${villa.villaId}&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest=" + numberOfGuest;
                         }
                     });
 
-                    // Khi click vào sao, lưu giá trị rating
-                    star.addEventListener("click", function () {
-                        let value = this.getAttribute("data-value");
-                        ratingInput.value = value;
-                        ratingEdit.value = value;
-                        // Xóa hết class active
-                        resetStars();
-
-                        // Gán active cho các sao trước nó
-                        stars.forEach(s => {
-                            if (parseFloat(s.getAttribute("data-value")) <= parseFloat(value)) {
-                                s.classList.add("active");
-                            }
-                        });
+                    // Đóng modal khi nhấn ra ngoài
+                    document.getElementById("bookingModal").addEventListener("click", function (event) {
+                        if (event.target === this) {
+                            closeBookingModal();
+                        }
                     });
+                    
+                    document.getElementById("modalToDate").addEventListener("change", function () {
+                        updateCheckoutDate();
+                    });
+
+
+                    // Hàm đảm bảo ngày check-out luôn sau ngày check-in ít nhất 2 ngày
+                    function updateCheckoutDate() {
+                        let fromDateInput = document.getElementById("modalFromDate");
+                        let toDateInput = document.getElementById("modalToDate");
+
+                        if (fromDateInput.value && toDateInput.value) {
+                            let fromDate = new Date(fromDateInput.value);
+                            let toDate = new Date(toDateInput.value);
+
+                            // Nếu toDate nhỏ hơn fromDate, tự động cập nhật toDate lên 2 ngày sau fromDate
+                            if (toDate <= fromDate) {
+                                toDate.setDate(fromDate.getDate() + 2);
+
+                                // Định dạng lại ngày thành yyyy-mm-dd
+                                let formattedToDate = toDate.toISOString().split('T')[0];
+                                toDateInput.value = formattedToDate;
+                            }
+                        }
+                    }
+
                 });
 
-                // Hàm reset tất cả các sao
-                function resetStars() {
-                    stars.forEach(s => s.classList.remove("active"));
+// 🛠 Đưa hàm ra phạm vi toàn cục để sử dụng được ở mọi nơi
+                function openBookingModal() {
+                    document.getElementById("bookingModal").style.display = "flex";
                 }
-            });
+
+                function closeBookingModal() {
+                    document.getElementById("bookingModal").style.display = "none";
+                }
+
+                function confirmBookingDetails() {
+                    let modalFromDate = document.getElementById("modalFromDate").value;
+                    let modalToDate = document.getElementById("modalToDate").value;
+                    let modalNumberOfGuest = document.getElementById("modalNumberOfGuest").value;
+
+                    if (!modalFromDate || !modalToDate || !modalNumberOfGuest) {
+                        alert("Please select all fields before confirming.");
+                        return;
+                    }
+
+                    // Lưu giá trị vào localStorage để sử dụng khi nhấn "Book Now"
+                    localStorage.setItem("fromDate", modalFromDate);
+                    localStorage.setItem("toDate", modalToDate);
+                    localStorage.setItem("numberOfGuest", modalNumberOfGuest);
+
+                    // Ẩn modal sau khi nhập xong
+                    closeBookingModal();
+                }
 
         </script>
-
-
 
     </body>
 </html>

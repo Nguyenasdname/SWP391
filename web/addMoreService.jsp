@@ -80,7 +80,7 @@
                                                name="selectedServices" 
                                                value="${service.serviceId}-1" />
                                         <label>${service.serviceName} (+${service.servicePrice})</label>
-                                        <div class="qty-input mt-2">
+                                        <div class="qty-input mt-2 ms-5">
                                             <a style="text-decoration: none" class="qty-count qty-count--minus" data-service-id="${service.serviceId}" disabled>-</a>
                                             <input type="number" class="service-quantity" data-service-id="${service.serviceId}" value="1" min="1" readonly>
                                             <a style="text-decoration: none" class="qty-count qty-count--add" data-service-id="${service.serviceId}" disabled>+</a>

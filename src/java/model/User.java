@@ -24,6 +24,7 @@ public class User {
     private int roleId;
     private Date createDate;
     private String userCode;
+    private String roleName;
 
     public User(int userId, String userName, String userEmail, String userPass, String userPhone, String userIMG, String userStatus, int roleId, Date createDate, String userAddress, String userFirstName, String userLastName) {
         this.userId = userId;
@@ -74,8 +75,6 @@ public class User {
     public void setUserLastName(String userLastName) {
         this.userLastName = userLastName;
     }
-    
-    
     
     public int getUserId() {
         return userId;
@@ -151,6 +150,14 @@ public class User {
     
     public String getFullName(){
         return userFirstName + " " + userLastName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
     @Override

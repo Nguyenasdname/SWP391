@@ -14,8 +14,12 @@ import model.Villa;
 public interface VillaDao {
     Villa getVillaByID(int id);
     ArrayList<Villa> getAllVillaList();
-    void addVilla(Villa villa); 
+    boolean addVilla(Villa villa); 
     void updateVilla(Villa villa); 
     void removeVillaById(int id); 
-    ArrayList<Villa> getAllVillaAvailable(int VillaCapacity);
+    ArrayList<Villa> getAllVillaAvailable(int VillaCapacity, String fromDate, String toDate);
+    void setBookedVilla(int villaId);
+    void setAvailableVilla(int villaId);
+    Villa getAvailableVilla(int villaId, String fromDate, String toDate);
 }
+    

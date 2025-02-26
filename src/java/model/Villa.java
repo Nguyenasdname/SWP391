@@ -110,7 +110,7 @@ public class Villa {
 
     @Override
     public String toString() {
-        return "Villa{" + "villaId=" + villaId + ", villaName=" + villaName + ", villaDescription=" + villaDescription + ", villaPrice=" + villaPrice + ", villaLocation=" + villaLocation + ", villaStatus=" + villaStatus + ", villaIMG=" + villaIMG + ", createDate=" + createDate + '}';
+        return "Villa{" + "villaId=" + villaId + ", villaName=" + villaName + ", villaDescription=" + villaDescription + ", villaPrice=" + villaPrice + ", villaLocation=" + villaLocation + ", villaStatus=" + villaStatus + ", villaIMG=" + villaIMG + ", createDate=" + createDate +'}' + "\n";
     }
     
 }

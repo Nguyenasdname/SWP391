@@ -258,4 +258,18 @@ public class BookingDaoImp implements BookingDao {
         return b;
     }
 
+    @Override
+    public void setBookingStatusCancel(int bookingId) {
+        String sql = "Update Booking \n"
+                + "Set BookingStatus = 'Cancelled' Where BookingID = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, bookingId);
+
+            preStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -134,7 +134,7 @@
         <script src="js/main.js"></script>
         <script>
                                         const goToHome = () => {
-                                            window.location = "home";
+                                            window.location = "index.jsp";
                                         };
                                         
             var alertMessage = "${param.alertMessage}";
