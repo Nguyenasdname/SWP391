@@ -4,7 +4,9 @@
  */
 package control.feedback;
 
+import dao.BookingDao;
 import dao.FeedbackDao;
+import dao.imp.BookingDaoImp;
 import dao.imp.FeedbackDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Booking;
 import model.Feedback;
 
 /**
@@ -76,22 +79,30 @@ public class LeaveFeedback extends HttpServlet {
             throws ServletException, IOException {
         int villaId = Integer.parseInt(request.getParameter("villaId"));
         int userId = Integer.parseInt(request.getParameter("userId"));
-        int rating = Integer.parseInt(request.getParameter("rating"));
+        int rating = request.getParameter("rating") != null ? Integer.parseInt(request.getParameter("rating")) : 0;
+        
         String comment = request.getParameter("comment");
         String fromDate = request.getParameter("fromDate");
         String toDate = request.getParameter("toDate");
         String numberOfGuest = request.getParameter("numberOfGuest");
-        
-        FeedbackDao feedbackDao = new FeedbackDaoImp();
-        
-        Feedback feedback = new Feedback(1, userId, villaId, rating, comment, null);
-        
-        feedbackDao.addFeedback(feedback);
-        
-        response.sendRedirect("villaDetails?villaId=" + villaId + "&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest="+numberOfGuest);
-        
-        
-        
+
+        BookingDao bookingDao = new BookingDaoImp();
+
+        Booking booking = bookingDao.getUserBookingVilla(userId, villaId, "Completed");
+
+        if (booking != null) {
+            FeedbackDao feedbackDao = new FeedbackDaoImp();
+
+            Feedback feedback = new Feedback(1, userId, villaId, rating, comment, null);
+
+            feedbackDao.addFeedback(feedback);
+
+            response.sendRedirect("villaDetails?villaId=" + villaId + "&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest=" + numberOfGuest);
+        } else {
+            String referer = request.getHeader("referer");
+            response.sendRedirect("check.jsp?action=feedbackHandle&url="+referer);
+        }
+
     }
 
     /**

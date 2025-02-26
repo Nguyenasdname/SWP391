@@ -15,23 +15,53 @@
                 background: #f8f9fa;
             }
             .villa-container {
-
-
                 background: white;
                 padding: 20px;
                 border-radius: 10px;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             }
-            .villa-image {
+            .villa-image{
                 width: 800px;
-                heigh: 500px;
+                height: 550px;
                 overflow: hidden;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                text-align: center;
             }
             .villa-image img{
                 width:100%;
                 height: 100%;
                 border-radius: 10px;
                 object-fit: cover;
+            }
+            .addWishlist{
+                position: absolute;
+                top: 10px; /* Điều chỉnh vị trí theo chiều dọc */
+                right: 10px; /* Điều chỉnh vị trí theo chiều ngang */
+                width: 60px;
+                height: 60px;
+                border-radius: 50px;
+                background-color: white;
+                display: flex;
+                align-items: center; /* Căn giữa icon theo chiều dọc */
+                justify-content: center; /* Căn giữa icon theo chiều ngang */
+                transition: 0.6s ease
+                
+            }
+            .addWishlist:hover{
+                box-shadow: 0 0 10px rgba(0, 0, 0, 5);
+            }
+
+            .heart-wishlish{
+                padding-top: 5px;
+                color: red;
+                font-size: 40px;
+                border-radius: 50px;
+            }
+            .iconWishlist{
+                width: 50px;
+                height: 50px;
             }
             .star-rating {
                 color: #f39c12;
@@ -128,17 +158,31 @@
             <div class="container">
                 <div class="villa-container">
                     <div class="row">
-                        <h2 class="text-center d-flex justify-content-left">${villa.villaName}</h2>
-                    <div>
-                        <h4>Rating: <span>${averageRating == null ? 0 : averageRating} / 5<i class="fa-star fas star-rating"></i></span></h4>
-                        <p><strong>${reviews} Reviews</strong></p>
+                        <div class="col-md-10">
+                            <h2 class="text-center d-flex justify-content-left">${villa.villaName}</h2>
+                        <div>
+                            <h4>Rating: <span>${averageRating == null ? 0 : averageRating} / 5 <i class="fa-star fas star-rating"></i></span></h4>
+                            <p><strong>${reviews} Reviews</strong></p>
+                        </div>
                     </div>
+
                 </div>
 
+                <c:set var="isInWishlist" value="false"/>
+                <c:forEach var="wish" items="${wishlist}">
+                    <c:if test="${wish.userId == sessionScope.user.userId}">
+                        <c:set var="isInWishlist" value="true"/>
+                    </c:if>
+                </c:forEach>
                 <div class="row">
                     <div class="col-md-9">
                         <div class="villa-image">
                             <img src="${villa.villaIMG}" alt="Villa Image">
+                            <c:if test="${sessionScope.user ne null}">
+                                <form action="addToWishlist?userId=${sessionScope.user.userId}&villaId=${villa.villaId}" method="post">
+                                    <button type="submit" class="addWishlist"><i class="iconWishlist fa-heart ${isInWishlist ? 'fas' : 'far'} heart-wishlish"></i></button>
+                                </form>
+                            </c:if>
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -442,7 +486,7 @@
                             closeBookingModal();
                         }
                     });
-                    
+
                     document.getElementById("modalToDate").addEventListener("change", function () {
                         updateCheckoutDate();
                     });
@@ -497,6 +541,21 @@
                     // Ẩn modal sau khi nhập xong
                     closeBookingModal();
                 }
+                document.addEventListener("DOMContentLoaded", function () {
+                    // Lấy form và rating input
+                    let feedbackForm = document.querySelector("form[action='leaveFeedback']");
+                    let ratingInput = document.getElementById("rating-value");
+
+                    if (feedbackForm) {
+                        feedbackForm.addEventListener("submit", function (event) {
+                            if (!ratingInput.value || ratingInput.value === "0") {
+                                event.preventDefault(); // Ngăn form gửi đi
+                                alert("Please select a rating before submitting your feedback.");
+                            }
+                        });
+                    }
+                });
+
 
         </script>
 

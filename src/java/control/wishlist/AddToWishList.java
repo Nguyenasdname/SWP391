@@ -2,36 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package control.villa;
+package control.wishlist;
 
-import dao.BookingDao;
-import dao.FeedbackDao;
-import dao.VillaDao;
 import dao.WishlistDao;
-import dao.imp.BookingDaoImp;
-import dao.imp.FeedbackDaoImp;
-import dao.imp.VillaDaoImp;
 import dao.imp.WishlistDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.Feedback;
-import model.User;
-import model.Villa;
 import model.Wishlist;
 
 /**
  *
  * @author Admin
  */
-@WebServlet("/villaDetails")
-public class VillaDetails extends HttpServlet {
+@WebServlet("/addToWishlist")
+public class AddToWishList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -50,10 +39,10 @@ public class VillaDetails extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet VillaDetails</title>");
+            out.println("<title>Servlet AddToWishList</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet VillaDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddToWishList at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -71,44 +60,7 @@ public class VillaDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        int villaId = Integer.parseInt(request.getParameter("villaId"));
-        String fromDate = request.getParameter("fromDate");
-        String toDate = request.getParameter("toDate");
-        String numberOfGuest = request.getParameter("numberOfGuest");
-        String originalURL = request.getHeader("Referer");
-        
-        VillaDao villaDao = new VillaDaoImp();
-        
-        Villa villa = villaDao.getVillaByID(villaId);
-        
-        FeedbackDao feedbackDao = new FeedbackDaoImp();
-        
-        ArrayList<Feedback> feedbackList = feedbackDao.getAllFeedBackListByVillaID(villaId);
-        
-        WishlistDao wishlistDao = new WishlistDaoImp();
-        
-        ArrayList<Wishlist> wishlist = wishlistDao.getWishlistByVillaID(villaId);
-        
-        double averageRating = 0;
-        int totalStart = 0;
-        
-        for(Feedback feedback : feedbackList){
-            totalStart += feedback.getRating();
-        }
-        averageRating = (double) totalStart / feedbackList.size();
-        
-        request.setAttribute("villa", villa);
-        request.setAttribute("feedbackList", feedbackList);
-        request.setAttribute("fromDate", fromDate);
-        request.setAttribute("toDate", toDate);
-        request.setAttribute("averageRating", averageRating);
-        request.setAttribute("numberOfGuest", numberOfGuest);
-        request.setAttribute("reviews", feedbackList.size());
-        request.setAttribute("originalURL", originalURL);
-        request.setAttribute("wishlist", wishlist);
-        
-        request.getRequestDispatcher("villaDetails.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -122,7 +74,25 @@ public class VillaDetails extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       
+        int userId = Integer.parseInt(request.getParameter("userId"));
+        int villaId = Integer.parseInt(request.getParameter("villaId"));
+        
+        String referer = request.getHeader("referer");
+        
+        WishlistDao wishlistDao = new WishlistDaoImp();
+        
+        Wishlist wishlist = wishlistDao.getWishlistByUserVillaId(userId, villaId);
+        
+        if(wishlist == null){
+            Wishlist addNew = new Wishlist(userId, villaId);
+            wishlistDao.addWishlist(addNew);
+            response.sendRedirect(referer);
+        } else {
+            wishlistDao.removeWishlistById(wishlist);
+            response.sendRedirect(referer);
+        }
+        
+        
     }
 
     /**
