@@ -17,6 +17,7 @@ import emailService.JavaMailImp;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -117,23 +118,28 @@ public class ConfirmBooking extends HttpServlet {
 
             boolean bookingCheck = bookingDao.addBooking(newbooking);
 
+            ArrayList<BookingService> bookingServiceList = new ArrayList();
+
             if (bookingCheck) {
                 Booking booking = bookingDao.getUserBookingVilla(newbooking.getUserId(), newbooking.getVillaId(), newbooking.getBookingStatus());
-                for (String serviceData : selectedServices) {
-                    String[] parts = serviceData.split("-");
-                    int serviceId = Integer.parseInt(parts[0]);
-                    int quantity = Integer.parseInt(parts[1]);
-                    Service s = serviceDao.getServiceByID(serviceId);
+                booking.setVillaName(bookingDao.getVillaNameByBookingId(booking.getBookingId()));
+                if (selectedServices != null) {
+                    for (String serviceData : selectedServices) {
+                        String[] parts = serviceData.split("-");
+                        int serviceId = Integer.parseInt(parts[0]);
+                        int quantity = Integer.parseInt(parts[1]);
+                        Service s = serviceDao.getServiceByID(serviceId);
 
-                    double totalServicePrice = s.getServicePrice() * quantity;
-                    BookingService bookingService = new BookingService(booking.getBookingId(), serviceId, quantity, totalServicePrice);
-                    bookingServiceDao.addBookingService(bookingService);
-
-                }
-
+                        double totalServicePrice = s.getServicePrice() * quantity;
+                        BookingService bookingService = new BookingService(booking.getBookingId(), serviceId, quantity, totalServicePrice);
+                        bookingServiceDao.addBookingService(bookingService);
+                    }
+                } 
                 villaDao.setBookedVilla(villaId);
-                String alertMessage = "Booking Successfuly! Please Check Your Email Or Booking History.";
-                response.sendRedirect("index.jsp?alertMessage=" + alertMessage);
+                bookingServiceList = bookingServiceDao.getListBookingServiceDetailsByBookingId(booking.getBookingId());
+                request.setAttribute("booking", booking);
+                request.setAttribute("bookingServiceList", bookingServiceList);
+                request.getRequestDispatcher("deposit.jsp").forward(request, response);
 
             } else {
                 response.getWriter().print("Đéo được bro ơi");

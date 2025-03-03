@@ -23,6 +23,7 @@ public class Booking {
     private int numberOfGuest;
     private ArrayList<BookingService> bookingService;
     private String villaName; 
+    private String userFullName;
 
     public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal, int numberOfGuest) {
         this.bookingId = bookingId;
@@ -127,9 +128,17 @@ public class Booking {
         this.numberOfGuest = numberOfGuest;
     }
 
+    public String getUserFullName() {
+        return userFullName;
+    }
+
+    public void setUserFullName(String userFullName) {
+        this.userFullName = userFullName;
+    }
+
     @Override
     public String toString() {
-        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", villaId=" + villaId + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", bookingStatus=" + bookingStatus + ", createDate=" + createDate + ", bookingTotal= " + bookingTotal + '}';
+        return "Booking{" + "bookingId=" + bookingId + ", userId=" + userId + ", villaId=" + villaId + ", checkIn=" + checkIn + ", checkOut=" + checkOut + ", bookingStatus=" + bookingStatus + ", createDate=" + createDate + ", bookingTotal= " + bookingTotal + "fullname =" + userFullName + '}' + "\n";
     }
     
     

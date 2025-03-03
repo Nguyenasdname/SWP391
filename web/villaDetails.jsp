@@ -254,9 +254,6 @@
                 </div>
 
 
-
-
-
                 <!-- Nút Back và Book Now -->
                 <div class="mt-4 d-flex justify-content-between">
                     <a href="${originalURL}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
@@ -275,9 +272,7 @@
                     <form action="leaveFeedback" method="post">
                         <input type="hidden" name="villaId" value="${villa.villaId}">
                         <input type="hidden" name="userId" value="${sessionScope.user.userId}">
-                        <input type="hidden" name="fromDate" value="${param.fromDate}">
-                        <input type="hidden" name="toDate" value="${param.toDate}">
-                        <input type="hidden" name="numberOfGuest" value="${param.numberOfGuest}">
+                        <input type="hidden" name="action" value="feedbackInVilla">
 
                         <div>
                             <label for="rating">Your Rating:</label>

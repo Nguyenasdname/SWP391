@@ -114,7 +114,8 @@ public class Booking extends HttpServlet {
 
                 request.getRequestDispatcher("booking.jsp").forward(request, response);
             } else {
-                response.sendRedirect("check.jsp");
+                String referer = "villaAvailable?action=listAll";
+                response.sendRedirect("check.jsp?action=noAvailableVilla&referer="+referer);
             }
 
         } catch (Exception e) {

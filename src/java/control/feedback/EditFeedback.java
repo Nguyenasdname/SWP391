@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Feedback;
+
 /**
  *
  * @author Admin
@@ -73,22 +74,24 @@ public class EditFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+
         int feedbackId = Integer.parseInt(request.getParameter("feedbackId"));
         int villaId = Integer.parseInt(request.getParameter("villaId"));
         int userId = Integer.parseInt(request.getParameter("userId"));
         int rating = Integer.parseInt(request.getParameter("rating"));
         String comment = request.getParameter("comment");
-        String fromDate = request.getParameter("fromDate");
-        String toDate = request.getParameter("toDate");
-        String numberOfGuest = request.getParameter("numberOfGuest");
-        
+        String referer = request.getHeader("referer");
+
         FeedbackDao feedbackDao = new FeedbackDaoImp();
-        
+
         Feedback feedback = new Feedback(feedbackId, userId, villaId, rating, comment, null);
-        
+
         feedbackDao.updateFeedback(feedback);
-        
-        response.sendRedirect("villaDetails?villaId=" + villaId + "&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest="+numberOfGuest);
+
+        response.sendRedirect(referer);
     }
 
     /**

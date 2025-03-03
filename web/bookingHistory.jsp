@@ -72,13 +72,34 @@
             }
             .status-pending {
                 color: orange;
+                font-weight: bold;
             }
+
             .status-confirmed {
-                color: green;
+                color: darkgreen;
+                font-weight: bold;
             }
+
             .status-cancelled {
                 color: red;
+                font-weight: bold;
             }
+
+            .status-checkin {
+                color: blue;
+                font-weight: bold;
+            }
+
+            .status-checkout {
+                color: purple;
+                font-weight: bold;
+            }
+
+            .status-completed {
+                color: green;
+                font-weight: bold;
+            }
+
         </style>
 
     </head>
@@ -116,31 +137,42 @@
                     </thead>
                     <tbody>
                     <c:forEach items="${bookingList}" var="booking">
-                        <tr>
-                            <td><span>${booking.villaName}</span> </td>
-                            <td>${booking.checkIn}</td>
-                            <td>${booking.checkOut}</td>
-                            <td>${booking.numberOfGuest}</td>
-                            <td>$${booking.bookingTotal}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${booking.bookingStatus == 'Pending'}">
-                                        <span class="status-pending">Pending</span>
-                                    </c:when>
-                                    <c:when test="${booking.bookingStatus == 'Confirmed'}">
-                                        <span class="status-confirmed">Confirmed</span>
-                                    </c:when>
-                                    <c:when test="${booking.bookingStatus == 'Cancelled'}">
-                                        <span class="status-cancelled">Cancelled</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span>${booking.bookingStatus}</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
-                            <td>${booking.createDate}</td>
-                            <td><a class="btn btn-warning" href="bookingDetails?bookingId=${booking.bookingId}">More Details</a></td>
-                        </tr>
+                        <c:if test="${booking.bookingStatus ne 'Pending'}">
+                            <tr>
+                                <td><span>${booking.villaName}</span> </td>
+                                <td>${booking.checkIn}</td>
+                                <td>${booking.checkOut}</td>
+                                <td>${booking.numberOfGuest}</td>
+                                <td>$${booking.bookingTotal}</td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${booking.bookingStatus == 'Pending'}">
+                                            <span class="status-pending">Pending</span>
+                                        </c:when>
+                                        <c:when test="${booking.bookingStatus == 'Confirmed'}">
+                                            <span class="status-confirmed">Confirmed</span>
+                                        </c:when>
+                                        <c:when test="${booking.bookingStatus == 'Cancelled'}">
+                                            <span class="status-cancelled">Cancelled</span>
+                                        </c:when>
+                                        <c:when test="${booking.bookingStatus == 'Check-In'}">
+                                            <span class="status-checkin">Check-In</span>
+                                        </c:when>
+                                        <c:when test="${booking.bookingStatus == 'Check-Out'}">
+                                            <span class="status-checkout">Check-Out</span>
+                                        </c:when>
+                                        <c:when test="${booking.bookingStatus == 'Completed'}">
+                                            <span class="status-completed">Completed</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span>${booking.bookingStatus}</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>${booking.createDate}</td>
+                                <td><a class="btn btn-warning" href="bookingDetails?bookingId=${booking.bookingId}">More Details</a></td>
+                            </tr>
+                        </c:if>
                     </c:forEach>
 
                 </tbody>

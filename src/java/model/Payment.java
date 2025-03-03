@@ -14,16 +14,17 @@ public class Payment {
     private int paymentId;
     private int userId;
     private int bookingId;
-    private Double paymentAmount;
+    private double paymentAmount;
     private String paymentMethod;
     private String paymentStatus;
     private Date createDate;
     private int promotionId;
+    private String paymentDescription;
 
     public Payment() {
     }
 
-    public Payment(int paymentId, Integer userId, Integer bookingId, Double paymentAmount, String paymentMethod, String paymentStatus, Date createDate, int promotionId) {
+    public Payment(int paymentId, int userId, int bookingId, double paymentAmount, String paymentMethod, String paymentStatus, Date createDate, int promotionId, String paymentDescription) {
         this.paymentId = paymentId;
         this.userId = userId;
         this.bookingId = bookingId;
@@ -32,6 +33,7 @@ public class Payment {
         this.paymentStatus = paymentStatus;
         this.createDate = createDate;
         this.promotionId = promotionId;
+        this.paymentDescription = paymentDescription;
     }
 
     public int getPaymentId() {
@@ -98,6 +100,14 @@ public class Payment {
         this.promotionId = promotionId;
     }
 
+    public String getPaymentDescription() {
+        return paymentDescription;
+    }
+
+    public void setPaymentDescription(String paymentDescription) {
+        this.paymentDescription = paymentDescription;
+    }
+    
     @Override
     public String toString() {
         return "Payment{" + "paymentId=" + paymentId + ", userId=" + userId + ", bookingId=" + bookingId + ", paymentAmount=" + paymentAmount + ", paymentMethod=" + paymentMethod + ", paymentStatus=" + paymentStatus + ", createDate=" + createDate + ", promotionId=" + promotionId + '}';

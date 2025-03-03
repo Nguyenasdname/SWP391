@@ -73,6 +73,8 @@ public class BookingDetails extends HttpServlet {
         
         ArrayList<BookingService> bookingServiceList = bookingServiceDao.getListBookingServiceDetailsByBookingId(bookingId);
         
+        String referer = request.getHeader("referer") == null ? "bookingHistory" : request.getHeader("referer").contains("addService") ? "bookingHistory" : request.getHeader("referer");
+        request.setAttribute("referer", referer);
         request.setAttribute("booking", booking);
         request.setAttribute("bookingServiceList", bookingServiceList);
         

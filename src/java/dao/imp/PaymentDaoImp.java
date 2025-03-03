@@ -4,15 +4,18 @@
  */
 package dao.imp;
 
+import com.sun.jdi.connect.spi.Connection;
 import dao.PaymentDao;
+import database.ConnectionDatabase;
 import java.util.ArrayList;
 import model.Payment;
+import java.sql.PreparedStatement;
 
 /**
  *
  * @author Admin
  */
-public class PaymentDaoImp implements PaymentDao{
+public class PaymentDaoImp implements PaymentDao {
 
     @Override
     public Payment getPaymentByID(int id) {
@@ -26,7 +29,32 @@ public class PaymentDaoImp implements PaymentDao{
 
     @Override
     public void addPayment(Payment payment) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO Payments (UserID, BookingID, PaymentAmount, PaymentMethod, PaymentStatus, PromotionID, PaymentDescription) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        try (
+                java.sql.Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, payment.getUserId());
+            preStatement.setInt(2, payment.getBookingId());
+            preStatement.setDouble(3, payment.getPaymentAmount());
+            preStatement.setString(4, payment.getPaymentMethod());
+            preStatement.setString(5, payment.getPaymentStatus());
+
+            
+            if (payment.getPromotionId() > 0) {
+                preStatement.setInt(6, payment.getPromotionId());
+            } else {
+                preStatement.setNull(6, java.sql.Types.INTEGER);
+            }
+            
+            preStatement.setString(7, payment.getPaymentDescription());
+            
+            preStatement.executeUpdate();
+            
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -38,5 +66,5 @@ public class PaymentDaoImp implements PaymentDao{
     public void removePaymentById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
 }

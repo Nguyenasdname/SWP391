@@ -54,6 +54,7 @@
                 box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
             }
         </style>
+
     </head>
     <body>
 
@@ -316,64 +317,64 @@
         <!-- Footer Room Pic Section End -->
         <jsp:include page="footer.jsp"></jsp:include>
             <script>
-            var alertMessage = "${param.alertMessage}";
-            if (alertMessage !== null && alertMessage !=="") {
-                alert(alertMessage);
-                alertMessage = null;
-            }
-
-            window.onload = function () {
-                const currentDateInput = document.querySelector(".date1");
-                const nextDateInput = document.querySelector(".date2");
-
-                const currentDate = new Date();
-                const nextDate = new Date();
-                nextDate.setDate(currentDate.getDate() + 1);
-
-                currentDateInput.value = currentDate.toISOString().split('T')[0];
-                nextDateInput.value = nextDate.toISOString().split('T')[0];
-
-                currentDateInput.addEventListener('change', checkDates);
-                nextDateInput.addEventListener('change', checkDates);
-            };
-
-            function checkDates() {
-                const currentDateInput = document.querySelector(".date1");
-                const nextDateInput = document.querySelector(".date2");
-
-                const currentDate = new Date(currentDateInput.value);
-                const nextDate = new Date(nextDateInput.value);
-
-                if (currentDate >= nextDate) {
-                    nextDate.setDate(currentDate.getDate() + 1);
-                    nextDateInput.value = nextDate.toISOString().split('T')[0];
+                var alertMessage = "${param.alertMessage}";
+                if (alertMessage !== null && alertMessage !== "") {
+                    alert(alertMessage);
+                    alertMessage = null;
                 }
-            }
-            function updateCancelRequestsCount() {
-                fetch('/swp/GetNewCancelRequestsCountServlet')
-                        .then(response => response.json())
-                        .then(data => {
-                            const badge = document.getElementById('cancel-requests-badge');
-                            if (data.count > 0) {
-                                badge.style.display = 'inline';
-                                badge.textContent = data.count;
-                            } else {
-                                badge.style.display = 'none';
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-            }
 
-            // Cập nhật số lượng yêu cầu hủy mới khi trang được tải
-            document.addEventListener('DOMContentLoaded', updateCancelRequestsCount);
+                window.onload = function () {
+                    const currentDateInput = document.querySelector(".date1");
+                    const nextDateInput = document.querySelector(".date2");
 
-            // Cập nhật số lượng yêu cầu hủy mới mỗi 10 giây
-            setInterval(updateCancelRequestsCount, 10000);
+                    const currentDate = new Date();
+                    const nextDate = new Date();
+                    nextDate.setDate(currentDate.getDate() + 1);
 
-            // Handle click event to redirect to the manage cancel booking page
-            document.getElementById('notificationButton').addEventListener('click', function () {
-                window.location.href = 'ManageCancelBookingServlet?choice=pending';
-            });
+                    currentDateInput.value = currentDate.toISOString().split('T')[0];
+                    nextDateInput.value = nextDate.toISOString().split('T')[0];
+
+                    currentDateInput.addEventListener('change', checkDates);
+                    nextDateInput.addEventListener('change', checkDates);
+                };
+
+                function checkDates() {
+                    const currentDateInput = document.querySelector(".date1");
+                    const nextDateInput = document.querySelector(".date2");
+
+                    const currentDate = new Date(currentDateInput.value);
+                    const nextDate = new Date(nextDateInput.value);
+
+                    if (currentDate >= nextDate) {
+                        nextDate.setDate(currentDate.getDate() + 1);
+                        nextDateInput.value = nextDate.toISOString().split('T')[0];
+                    }
+                }
+                function updateCancelRequestsCount() {
+                    fetch('/swp/GetNewCancelRequestsCountServlet')
+                            .then(response => response.json())
+                            .then(data => {
+                                const badge = document.getElementById('cancel-requests-badge');
+                                if (data.count > 0) {
+                                    badge.style.display = 'inline';
+                                    badge.textContent = data.count;
+                                } else {
+                                    badge.style.display = 'none';
+                                }
+                            })
+                            .catch(error => console.error('Error:', error));
+                }
+
+                // Cập nhật số lượng yêu cầu hủy mới khi trang được tải
+                document.addEventListener('DOMContentLoaded', updateCancelRequestsCount);
+
+                // Cập nhật số lượng yêu cầu hủy mới mỗi 10 giây
+                setInterval(updateCancelRequestsCount, 10000);
+
+                // Handle click event to redirect to the manage cancel booking page
+                document.getElementById('notificationButton').addEventListener('click', function () {
+                    window.location.href = 'ManageCancelBookingServlet?choice=pending';
+                });
         </script>
     </body>
 </html>

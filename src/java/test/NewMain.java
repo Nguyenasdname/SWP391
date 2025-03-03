@@ -20,6 +20,7 @@ import dao.imp.ServiceDaoImp;
 import dao.imp.UserDaoImp;
 import dao.imp.VillaDaoImp;
 import dao.imp.WishlistDaoImp;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import model.Booking;
 import model.BookingService;
@@ -60,9 +61,9 @@ public class NewMain {
 //        Service s = serviceDao.getServiceByID(1);
 //        
 //        System.out.print(s);
-//          BookingDao bookingDao = new BookingDaoImp();
+        BookingDao bookingDao = new BookingDaoImp();
 //          ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(1);
-//          BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
+        BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
 //          
 //         System.out.print(bookingDao.getBookingDetailByID(1));
 //
@@ -76,10 +77,16 @@ public class NewMain {
 //            
 //            System.out.print(listVilla);
 
-              WishlistDao wishlistDao = new WishlistDaoImp();
-              
-              System.out.print(wishlistDao.getWishlistByUserVillaId(1, 1));
-          
+        ServiceDao serviceDao = new ServiceDaoImp();
+
+        WishlistDao wishlistDao = new WishlistDaoImp();
+
+        Booking booking = bookingDao.getBookingByID(5);
+
+        PromotionDao promotionDao = new PromotionDaoImp();
+        
+        System.out.print(promotionDao.getAllPromotionList());
+
     }
 
 }

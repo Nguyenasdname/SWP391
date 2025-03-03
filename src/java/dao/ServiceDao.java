@@ -17,4 +17,5 @@ public interface ServiceDao {
     void addService(Service service);
     void updateService(Service service);
     void removeServiceById(int id);
+    String getServiceNameByServiceId(int serviceId);
 }

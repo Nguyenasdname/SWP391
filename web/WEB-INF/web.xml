@@ -46,10 +46,6 @@
         <servlet-class>control.booking.ConfirmBooking</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>TestServlet</servlet-name>
-        <servlet-class>control.booking.TestServlet</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>BookingHistory</servlet-name>
         <servlet-class>control.booking.BookingHistory</servlet-class>
     </servlet>
@@ -79,7 +75,7 @@
     </servlet>
     <servlet>
         <servlet-name>AdminDashboard</servlet-name>
-        <servlet-class>control.auth.AdminDashboard</servlet-class>
+        <servlet-class>control.auth.Dashboard</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListAccount</servlet-name>
@@ -116,6 +112,30 @@
     <servlet>
         <servlet-name>AddToWishList</servlet-name>
         <servlet-class>control.wishlist.AddToWishList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmDeposit</servlet-name>
+        <servlet-class>control.payment.ConfirmDeposit</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BookingManagement</servlet-name>
+        <servlet-class>control.booking.BookingManagement</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckInBooking</servlet-name>
+        <servlet-class>control.booking.CheckInBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CheckOutBooking</servlet-name>
+        <servlet-class>control.booking.CheckOutBooking</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Payment</servlet-name>
+        <servlet-class>control.payment.Payment</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmPayment</servlet-name>
+        <servlet-class>control.payment.ConfirmPayment</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
@@ -156,10 +176,6 @@
     <servlet-mapping>
         <servlet-name>ConfirmBooking</servlet-name>
         <url-pattern>/ConfirmBooking</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TestServlet</servlet-name>
-        <url-pattern>/TestServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>BookingHistory</servlet-name>
@@ -229,9 +245,33 @@
         <servlet-name>AddToWishList</servlet-name>
         <url-pattern>/AddToWishList</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmDeposit</servlet-name>
+        <url-pattern>/ConfirmDeposit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BookingManagement</servlet-name>
+        <url-pattern>/BookingManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckInBooking</servlet-name>
+        <url-pattern>/CheckInBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CheckOutBooking</servlet-name>
+        <url-pattern>/CheckOutBooking</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Payment</servlet-name>
+        <url-pattern>/Payment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmPayment</servlet-name>
+        <url-pattern>/ConfirmPayment</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            120
         </session-timeout>
     </session-config>
     <filter>
@@ -245,5 +285,9 @@
             <param-name>forceEncoding</param-name>
             <param-value>true</param-value>
         </init-param>
+        <filter-mapping>
+            <filter-name>CharacterEncodingFilter</filter-name>
+            <url-pattern>/*</url-pattern>
+        </filter-mapping>
     </filter>
 </web-app>

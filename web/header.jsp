@@ -176,7 +176,7 @@
                                 <li><a href="./villaAvailable?action=listAll">Villas</a></li>
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 3}">
                                     <li>
-                                        <a href="#">Employee</a>
+                                        <a href="dashboard">Employee</a>
                                         <ul class="drop-menu">
                                             <li><a href="viewcustomer">View Customer</a></li>
                                             <li><a href="managerservice">Manager Service</a></li>
@@ -189,7 +189,7 @@
 
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 1}">
                                     <li>
-                                        <a href="adminDashboard">Admin</a>
+                                        <a href="dashboard">Admin</a>
                                     </li>
                                 </c:if>
                                     <input type="hidden" class="revenue">
