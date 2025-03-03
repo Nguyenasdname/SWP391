@@ -23,4 +23,6 @@ public interface BookingDao {
     Booking getBookingByUserId(int userId);
     ArrayList<Booking> getListBookingByUserId(int userId);
     void setBookingStatusCancel(int bookingId);
+    String getVillaNameByBookingId(int bookingId);
+    ArrayList<Booking> getListBookingDetails();
 }

@@ -228,10 +228,9 @@ public class BookingDaoImp implements BookingDao {
     @Override
     public Booking getBookingDetailByID(int bookingId) {
         Booking b = null;
-        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName, b.NumberOfGuest\n"
-                + "FROM Booking b  \n"
-                + "JOIN Villas v ON b.VillaID = v.VillaID \n"
-                + "WHERE b.BookingID = ? ORDER BY b.CreateDate DESC";
+        String sql = "Select * \n"
+                + "From Villas v, Booking b, Users u\n"
+                + "Where b.VillaID = v.VillaID and u.UserID = b.VillaID and b.BookingID = ?";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
             preStatement.setInt(1, bookingId);
@@ -249,6 +248,7 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getInt("NumberOfGuest")
                     );
                     b.setVillaName(resultSet.getString("VillaName"));
+                    b.setUserFullName(resultSet.getString("UserLastName") + " " + resultSet.getString("UserFirstName"));
                 }
             }
 
@@ -270,6 +270,62 @@ public class BookingDaoImp implements BookingDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String getVillaNameByBookingId(int bookingId) {
+        String villaName = "";
+        String sql = "SELECT b.BookingID, b.VillaID, v.VillaName\n"
+                + "FROM Booking b  \n"
+                + "JOIN Villas v ON b.VillaID = v.VillaID \n"
+                + "WHERE b.BookingID = ? ORDER BY b.CreateDate DESC";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+            preStatement.setInt(1, bookingId);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    villaName = resultSet.getString("VillaName");
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return villaName;
+    }
+
+    @Override
+    public ArrayList<Booking> getListBookingDetails() {
+        ArrayList<Booking> bookingList = new ArrayList();
+        String sql = "Select * \n"
+                + "From Villas v, Booking b, Users u\n"
+                + "Where b.VillaID = v.VillaID and u.UserID = b.VillaID";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Booking b = new Booking(resultSet.getInt("BookingID"),
+                            resultSet.getInt("UserID"),
+                            resultSet.getInt("VillaID"),
+                            resultSet.getDate("CheckIn"),
+                            resultSet.getDate("CheckOut"),
+                            resultSet.getString("BookingStatus"),
+                            resultSet.getDate("CreateDate"),
+                            resultSet.getDouble("BookingTotal"),
+                            resultSet.getInt("NumberOfGuest")
+                    );
+                    b.setVillaName(resultSet.getString("VillaName"));
+                    b.setUserFullName(resultSet.getString("UserLastName") + " " + resultSet.getString("UserFirstName"));
+                    bookingList.add(b);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bookingList;
     }
 
 }

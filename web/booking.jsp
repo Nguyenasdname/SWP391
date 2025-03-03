@@ -22,13 +22,13 @@
                 border-radius: 10px;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             }
-            .service-image{
+            .service-image {
                 width: 220px;
                 height: 220px;
                 border-radius: 10px;
                 overflow: hidden;
             }
-            .service-image img{
+            .service-image img {
                 width: 100%;
                 height: 100%;
             }
@@ -64,12 +64,12 @@
     <body>
 
         <div class="container mt-5 mb-5">
-            <form action="confirmBooking" method="post">
+            <form action="confirmBooking" method="post" onsubmit="return validateTerms();">
                 <div class="booking-container">
                     <h2 class="text-center">Book Your Stay</h2>
                     <p>Villa: <strong>${villa.villaName}</strong></p>
                     <p>From: <span>${fromDate}</span> To: <span>${toDate}</span></p>
-                    <p>People: <span>${numberOfGuest}</span></p>
+                    <p>Guests: <span>${numberOfGuest}</span></p>
                     <h4>Base Price: <span id="base-price" data-price="${basePrice}">$${villa.villaPrice}</span> per night</h4>
 
                     <div class="form-group mt-3">
@@ -86,7 +86,7 @@
                                                data-service-price="${service.servicePrice}"
                                                name="selectedServices" 
                                                value="${service.serviceId}-1" />
-                                        <label>${service.serviceName} (+${service.servicePrice})</label>
+                                        <label>${service.serviceName} (+$${service.servicePrice})</label>
                                         <div class="qty-input mt-2 ms-5">
                                             <a style="text-decoration: none" class="qty-count qty-count--minus" data-service-id="${service.serviceId}" disabled>-</a>
                                             <input type="number" class="service-quantity" data-service-id="${service.serviceId}" value="1" min="1" readonly>
@@ -99,6 +99,15 @@
                     </div>
 
                     <h4>Total Price: $<input id="total-price" type="text" readonly name="totalPrice" value="${basePrice}" class="form-control"></h4>
+
+                    <!-- Terms & Conditions Checkbox -->
+                    <div class="form-check mt-3">
+                        <input type="checkbox" class="form-check-input" id="terms-checkbox">
+                        <label class="form-check-label">
+                            I agree to the <a href="terms.jsp" target="_blank">Terms & Conditions</a>
+                        </label>
+                    </div>
+
                     <input type="hidden" name="villaId" value="${villa.villaId}">
                     <input type="hidden" name="fromDate" value="${fromDate}">
                     <input type="hidden" name="toDate" value="${toDate}">
@@ -114,57 +123,65 @@
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
-                            $(document).ready(function () {
-                                function updateTotalPrice() {
-                                    let total = parseFloat($("#base-price").data("price"));
-                                    $(".service-checkbox:checked").each(function () {
-                                        let serviceId = $(this).data("service-id");
-                                        let servicePrice = parseFloat($(this).data("service-price"));
-                                        let quantity = parseInt($(".service-quantity[data-service-id='" + serviceId + "']").val());
-                                        total += servicePrice * quantity;
-                                    });
-                                    $("#total-price").val(total);
-                                }
+                $(document).ready(function () {
+                    function updateTotalPrice() {
+                        let total = parseFloat($("#base-price").data("price"));
+                        $(".service-checkbox:checked").each(function () {
+                            let serviceId = $(this).data("service-id");
+                            let servicePrice = parseFloat($(this).data("service-price"));
+                            let quantity = parseInt($(".service-quantity[data-service-id='" + serviceId + "']").val());
+                            total += servicePrice * quantity;
+                        });
+                        $("#total-price").val(total);
+                    }
 
-                                function updateCheckboxValue(serviceId) {
-                                    let quantity = $(".service-quantity[data-service-id='" + serviceId + "']").val();
-                                    $(".service-checkbox[data-service-id='" + serviceId + "']").val(serviceId + "-" + quantity);
-                                }
+                    function updateCheckboxValue(serviceId) {
+                        let quantity = $(".service-quantity[data-service-id='" + serviceId + "']").val();
+                        $(".service-checkbox[data-service-id='" + serviceId + "']").val(serviceId + "-" + quantity);
+                    }
 
-                                $(document).on("change", ".service-checkbox", function () {
-                                    let serviceId = $(this).data("service-id");
-                                    let qtyInput = $(".service-quantity[data-service-id='" + serviceId + "']");
-                                    let decrementBtn = $(".qty-count--minus[data-service-id='" + serviceId + "']");
-                                    let incrementBtn = $(".qty-count--add[data-service-id='" + serviceId + "']");
+                    $(document).on("change", ".service-checkbox", function () {
+                        let serviceId = $(this).data("service-id");
+                        let qtyInput = $(".service-quantity[data-service-id='" + serviceId + "']");
+                        let decrementBtn = $(".qty-count--minus[data-service-id='" + serviceId + "']");
+                        let incrementBtn = $(".qty-count--add[data-service-id='" + serviceId + "']");
 
-                                    if ($(this).is(":checked")) {
-                                        qtyInput.val(1).prop("readonly", false);
-                                        decrementBtn.prop("disabled", false);
-                                        incrementBtn.prop("disabled", false);
-                                    } else {
-                                        qtyInput.val(1).prop("readonly", true);
-                                        decrementBtn.prop("disabled", true);
-                                        incrementBtn.prop("disabled", true);
-                                    }
-                                    updateCheckboxValue(serviceId);
-                                    updateTotalPrice();
-                                });
+                        if ($(this).is(":checked")) {
+                            qtyInput.val(1).prop("readonly", false);
+                            decrementBtn.prop("disabled", false);
+                            incrementBtn.prop("disabled", false);
+                        } else {
+                            qtyInput.val(1).prop("readonly", true);
+                            decrementBtn.prop("disabled", true);
+                            incrementBtn.prop("disabled", true);
+                        }
+                        updateCheckboxValue(serviceId);
+                        updateTotalPrice();
+                    });
 
-                                $(document).on("click", ".qty-count", function () {
-                                    let serviceId = $(this).data("service-id");
-                                    let qtyInput = $(".service-quantity[data-service-id='" + serviceId + "']");
-                                    let qty = parseInt(qtyInput.val());
+                    $(document).on("click", ".qty-count", function () {
+                        let serviceId = $(this).data("service-id");
+                        let qtyInput = $(".service-quantity[data-service-id='" + serviceId + "']");
+                        let qty = parseInt(qtyInput.val());
 
-                                    if ($(this).hasClass("qty-count--add")) {
-                                        qty++;
-                                    } else if ($(this).hasClass("qty-count--minus") && qty > 1) {
-                                        qty--;
-                                    }
-                                    qtyInput.val(qty);
-                                    updateCheckboxValue(serviceId);
-                                    updateTotalPrice();
-                                });
-                            });
+                        if ($(this).hasClass("qty-count--add")) {
+                            qty++;
+                        } else if ($(this).hasClass("qty-count--minus") && qty > 1) {
+                            qty--;
+                        }
+                        qtyInput.val(qty);
+                        updateCheckboxValue(serviceId);
+                        updateTotalPrice();
+                    });
+                });
+
+                function validateTerms() {
+                    if (!document.getElementById("terms-checkbox").checked) {
+                        alert("You must agree to the Terms & Conditions before booking.");
+                        return false;
+                    }
+                    return true;
+                }
         </script>
 
     </body>

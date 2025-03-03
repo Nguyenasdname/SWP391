@@ -77,30 +77,48 @@ public class LeaveFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("text/html; charset=UTF-8");
+
         int villaId = Integer.parseInt(request.getParameter("villaId"));
         int userId = Integer.parseInt(request.getParameter("userId"));
-        int rating = request.getParameter("rating") != null ? Integer.parseInt(request.getParameter("rating")) : 0;
-        
+        int rating = Integer.parseInt(request.getParameter("rating"));
+
         String comment = request.getParameter("comment");
-        String fromDate = request.getParameter("fromDate");
-        String toDate = request.getParameter("toDate");
-        String numberOfGuest = request.getParameter("numberOfGuest");
-
+        String action = request.getParameter("action");
+        FeedbackDao feedbackDao = new FeedbackDaoImp();
         BookingDao bookingDao = new BookingDaoImp();
+        Feedback feedback;
 
-        Booking booking = bookingDao.getUserBookingVilla(userId, villaId, "Completed");
+        String referer = request.getHeader("referer");
 
-        if (booking != null) {
-            FeedbackDao feedbackDao = new FeedbackDaoImp();
+        switch (action) {
+            case "feedbackInVilla":
 
-            Feedback feedback = new Feedback(1, userId, villaId, rating, comment, null);
+                Booking booking = bookingDao.getUserBookingVilla(userId, villaId, "Completed");
 
-            feedbackDao.addFeedback(feedback);
+                if (booking != null) {
 
-            response.sendRedirect("villaDetails?villaId=" + villaId + "&fromDate=" + fromDate + "&toDate=" + toDate + "&numberOfGuest=" + numberOfGuest);
-        } else {
-            String referer = request.getHeader("referer");
-            response.sendRedirect("check.jsp?action=feedbackHandle&url="+referer);
+                    feedback = new Feedback(1, userId, villaId, rating, comment, null);
+
+                    feedbackDao.addFeedback(feedback);
+
+                    response.sendRedirect(referer);
+                } else {
+                    response.sendRedirect("check.jsp?action=feedbackHandle&referer=" + referer);
+                }
+                break;
+            case "feedbackAfterPayment":
+                feedback = new Feedback(1, userId, villaId, rating, comment, null);
+
+                feedbackDao.addFeedback(feedback);
+
+                response.sendRedirect("index.jsp");
+                break;
+
+            default:
+                break;
         }
 
     }

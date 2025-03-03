@@ -24,7 +24,7 @@ public class ServiceDaoImp implements ServiceDao {
         String sql = "Select * From Services Where ServiceID = ?";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
-            
+
             preStatement.setInt(1, id);
 
             try (ResultSet resultSet = preStatement.executeQuery()) {
@@ -83,6 +83,28 @@ public class ServiceDaoImp implements ServiceDao {
     @Override
     public void removeServiceById(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public String getServiceNameByServiceId(int serviceId) {
+        String serviceName = "";
+        String sql = "Select s.ServiceName\n"
+                + "From Services s\n"
+                + "Where s.ServiceID = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
+
+            preStatement.setInt(1, serviceId);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    serviceName = resultSet.getString("ServiceName");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return serviceName;
     }
 
 }

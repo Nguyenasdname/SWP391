@@ -36,6 +36,36 @@
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }
+            .status-pending {
+                color: orange;
+                font-weight: bold;
+            }
+
+            .status-confirmed {
+                color: darkgreen;
+                font-weight: bold;
+            }
+
+            .status-cancelled {
+                color: red;
+                font-weight: bold;
+            }
+
+            .status-checkin {
+                color: blue;
+                font-weight: bold;
+            }
+
+            .status-checkout {
+                color: purple;
+                font-weight: bold;
+            }
+
+            .status-completed {
+                color: green;
+                font-weight: bold;
+            }
+
         </style>
     </head>
     <body>
@@ -43,7 +73,40 @@
         <div class="container mt-5">
             <h2 class="text-center">Booking Details</h2>
             <hr>
-            <h4 class="mt-4">Booked Villa</h4>
+            <div class="row">
+                <div class="col-md-9">
+                    <h4 class="mt-4">Booked Villa</h4>
+                    <c:if test="${sessionScope.user.roleId == 3 || sessionScope.user.roleId == 1}">
+                        <h5><strong>Customer: </strong>${booking.userFullName}</h5>
+                    </c:if>
+                </div>
+                <div class="col-md-1 mt-5 ms-5 ps-5">
+                    <c:choose>
+                        <c:when test="${booking.bookingStatus == 'Pending'}">
+                            <span class="status-pending">Pending</span>
+                        </c:when>
+                        <c:when test="${booking.bookingStatus == 'Confirmed'}">
+                            <span class="status-confirmed">Confirmed</span>
+                        </c:when>
+                        <c:when test="${booking.bookingStatus == 'Cancelled'}">
+                            <span class="status-cancelled">Cancelled</span>
+                        </c:when>
+                        <c:when test="${booking.bookingStatus == 'Check-In'}">
+                            <span class="status-checkin">Check-In</span>
+                        </c:when>
+                        <c:when test="${booking.bookingStatus == 'Check-Out'}">
+                            <span class="status-checkout">Check-Out</span>
+                        </c:when>
+                        <c:when test="${booking.bookingStatus == 'Completed'}">
+                            <span class="status-completed">Completed</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span>${booking.bookingStatus}</span>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+
             <table class="table table-bordered mt-4">
                 <thead class="table-dark">
                     <tr>
@@ -94,15 +157,37 @@
             <h4 class="mt-4">Total: $${booking.bookingTotal}</h4>
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
-                <a href="bookingHistory" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
+                <a href="${referer}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                 <c:if test="${booking.bookingStatus ne 'Cancelled'}">
-                    <div class="d-flex gap-3">
-                        <form action="cancelBooking?bookingId=${booking.bookingId}" method="post">
-                            <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</button>
+                    <c:if test="${booking.bookingStatus ne 'Completed'}">
+                        <c:if test="${referer ne 'http://localhost:8080/BookingResort/bookingManagement'}">
+                            <div class="d-flex gap-3">
+                                <c:if test="${booking.bookingStatus ne 'Check-Out'}">   
+                                    <form action="cancelBooking?bookingId=${booking.bookingId}" method="post">
+                                        <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</button>
+                                    </form>
+                                    <a href="addService?bookingId=${booking.bookingId}" class="btn btn-warning"><i class="fa fa-plus"></i> Add More Service</a>
+                                </c:if>
+                                <c:if test="${booking.bookingStatus eq 'Check-Out'}">
+                                    <a href="payment?bookingId=${booking.bookingId}" class="btn btn-success"><i class="fa fa-credit-card"></i> Checkout</a>
+                                </c:if>
+                            </div>
+                        </c:if>
+                    </c:if>
+                </c:if>
+                <c:if test="${referer eq 'http://localhost:8080/BookingResort/bookingManagement'}">
+                    <c:if test="${booking.bookingStatus == 'Confirmed'}">
+                        <form action="checkIn" method="post">
+                            <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                            <button  class="btn btn-warning"><i class="fa fa-sign-in-alt"></i> Check-In</button>
                         </form>
-                        <a href="addService?bookingId=${booking.bookingId}" class="btn btn-warning"><i class="fa fa-plus"></i> Add More Service</a>
-                        <a href="checkout?bookingId=${booking.bookingId}" class="btn btn-success"><i class="fa fa-credit-card"></i> Checkout</a>
-                    </div>
+                    </c:if>
+                    <c:if test="${booking.bookingStatus == 'Check-In'}">
+                        <form action="checkOut" method="post">
+                            <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                            <button class="btn btn-success"><i class="fa fa-sign-out-alt"></i> Check-Out</button>
+                        </form>
+                    </c:if>
                 </c:if>
             </div>
         </div>

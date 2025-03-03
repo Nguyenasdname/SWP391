@@ -39,12 +39,12 @@
     </head>
     <body>
 
-        <c:if test="">
+        <c:if test="${param.action == 'noAvailableVilla'}">
             <div class="notification-card">
                 <h3 class="text-danger">Villa is not available!</h3>
                 <p>The villa has already been booked on that day. Please check villa availability before booking.</p>
                 <p>You will be redirected in <span id="countdown">10</span> seconds...</p>
-                <a href="villaAvailable?action=listAll" class="btn btn-primary mt-3">Check other available villa now</a>
+                <a href="${param.referer}" class="btn btn-primary mt-3">Check other available villa now</a>
             </div>
         </c:if>
         <c:if test="${param.action == 'feedbackHandle'}">
@@ -52,7 +52,15 @@
                 <h3 class="text-danger">Cannot Feedback!</h3>
                 <p>To ensure fair and reliable reviews, only guests who have booked and stayed at this villa can leave feedback.</p>
                 <p>You will be redirected in <span id="countdown">10</span> seconds...</p>
-                <a href="${param.url}" class="btn btn-primary mt-3">Back</a>
+                <a href="${param.referer}" class="btn btn-primary mt-3">Back</a>
+            </div>
+        </c:if>
+        <c:if test="${param.action == 'checkInHandle'}">
+            <div class="notification-card">
+                <h3 class="text-danger">Cannot Check In!</h3>
+                <p>Check-in is only allowed on the scheduled date. Please verify the booking details before proceeding.</p>
+                <p>You will be redirected in <span id="countdown">10</span> seconds...</p>
+                <a href="${param.referer}" class="btn btn-primary mt-3">Back</a>
             </div>
         </c:if>
 
@@ -62,7 +70,7 @@
             let countdown = 10;
             let countdownElement = document.getElementById("countdown");
 
-            let redirectUrl = "${param.url}" ? "${param.url}" : "villaAvailable?action=listAll";
+            let redirectUrl = "${param.referer}" ? "${param.referer}" : "index.jsp";
             
             let interval = setInterval(() => {
                 countdown--;

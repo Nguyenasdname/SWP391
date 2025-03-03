@@ -19,4 +19,5 @@ public interface BookingServiceDao {
     void removeBookingServiceById(int id);
     ArrayList<BookingService> getListBookingServiceByUserId(int userId);
     ArrayList<BookingService> getListBookingServiceDetailsByBookingId(int bookingId);
+    
 }

@@ -93,7 +93,10 @@ public class Login extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             } else {
 
-                HttpSession session = request.getSession();
+                HttpSession session = request.getSession(false);
+                if (session == null) {
+                    session = request.getSession(true);
+                }
                 session.setAttribute("user", user);
 
                 String remember = request.getParameter("remember");
