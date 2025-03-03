@@ -7,6 +7,7 @@
             <file>file:/D:/code/Java/BookingResort/web/check.jsp</file>
             <file>file:/D:/code/Java/BookingResort/web/addNewVilla.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/villa/VillaDetails.java</file>
+            <file>file:/D:/code/Java/BookingResort/web/feedback.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/BookingCancel.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/payment/Payment.java</file>
             <file>file:/D:/code/Java/BookingResort/web/booking.jsp</file>
@@ -43,6 +44,7 @@
             <file>file:/D:/code/Java/BookingResort/web/index.jsp</file>
             <file>file:/D:/code/Java/BookingResort/src/java/googleHandle/Iconstant.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/BookingManagement.java</file>
+            <file>file:/D:/code/Java/BookingResort/src/java/control/feedback/EditFeedback.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/model/BookingService.java</file>
             <file>file:/D:/code/Java/BookingResort/src/java/control/booking/BookingDetails.java</file>
             <file>file:/D:/code/Java/BookingResort/web/employeeDashboard.jsp</file>
