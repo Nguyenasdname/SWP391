@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-@WebServlet("/checkOut")
+@WebServlet("/checkOut")    
 public class CheckOutBooking extends HttpServlet {
 
     /**

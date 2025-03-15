@@ -17,13 +17,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
 import model.Booking;
-
+         
 /**
  *
  * @author Admin
  */
 @WebServlet("/bookingHistory")
-public class BookingHistory extends HttpServlet {
+public class BookingHistory extends HttpServlet  {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
