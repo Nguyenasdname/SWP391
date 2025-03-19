@@ -2,28 +2,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package control.booking;
+package control.service;
 
-import dao.BookingDao;
-import dao.imp.BookingDaoImp;
+import dao.imp.ServiceDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
-import model.Booking;
-         
+import model.Service;
+
 /**
  *
- * @author Admin
+ * @author ACER
  */
-@WebServlet("/bookingHistory")
-public class BookingHistory extends HttpServlet  {
+@WebServlet(name = "GetAllService", urlPatterns = {"/get-all-service"})
+public class GetAllService extends HttpServlet {
+
+    private ServiceDaoImp serviceDaoImp;
+
+    @Override
+    public void init() throws ServletException {
+
+        serviceDaoImp = new ServiceDaoImp();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +47,10 @@ public class BookingHistory extends HttpServlet  {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingHistory</title>");
+            out.println("<title>Servlet GetAllService</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BookingHistory at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GetAllService at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,16 +68,24 @@ public class BookingHistory extends HttpServlet  {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        
-        String alertMessage = request.getParameter("alertMessage");
-        
-        BookingDao bookingDao = new BookingDaoImp();
-        ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(user.getUserId());
+        //Get list service data from DB
+        List<Service> listService = null;
 
-        request.setAttribute("bookingList", bookingList);
-        request.getRequestDispatcher("bookingHistory.jsp?alertMessage="+alertMessage).forward(request, response);
+        try {
+            listService = serviceDaoImp.getAllServiceList();
+        } catch (Exception e) {
+            System.err.println("Has error in get all service data process..");
+            System.err.println(e.getMessage());
+
+            request.setAttribute("message", "Has error in get all service data process..");
+            request.getRequestDispatcher("service.jsp").forward(request, response);
+        }
+        
+        //Add list service and send to view jsp
+        request.setAttribute("listservice", listService);
+        System.out.println("Get all service data succeed..");
+
+        request.getRequestDispatcher("service.jsp").forward(request, response);
     }
 
     /**

@@ -121,7 +121,7 @@ public class Booking extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }     
 
     /**
      * Handles the HTTP <code>POST</code> method.
