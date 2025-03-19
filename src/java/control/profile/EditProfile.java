@@ -143,10 +143,9 @@ public class EditProfile extends HttpServlet {
 
             userDao.updateUser(user);
             
-            session.removeAttribute("user");
             session.setAttribute("user", user);
 
-            response.sendRedirect("profile.jsp");
+            response.sendRedirect("profile");
 
         } catch (Exception e) {
             e.printStackTrace();

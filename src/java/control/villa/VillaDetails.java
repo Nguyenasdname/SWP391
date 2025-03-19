@@ -78,6 +78,10 @@ public class VillaDetails extends HttpServlet {
         String numberOfGuest = request.getParameter("numberOfGuest");
         String originalURL = request.getHeader("Referer");
         
+        if(originalURL.contains("villaDetails?")){
+            originalURL = "villaAvailable?action=listAll";
+        }
+        
         VillaDao villaDao = new VillaDaoImp();
         
         Villa villa = villaDao.getVillaByID(villaId);

@@ -298,9 +298,9 @@ public class BookingDaoImp implements BookingDao {
     @Override
     public ArrayList<Booking> getListBookingDetails() {
         ArrayList<Booking> bookingList = new ArrayList();
-        String sql = "Select * \n"
-                + "From Villas v, Booking b, Users u\n"
-                + "Where b.VillaID = v.VillaID and u.UserID = b.VillaID";
+        String sql = "select *\n"
+                + "from Users u, Booking b, Villas v\n"
+                + "Where b.UserID = u.UserID and b.VillaID = v.VillaID";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
 
@@ -318,6 +318,7 @@ public class BookingDaoImp implements BookingDao {
                     );
                     b.setVillaName(resultSet.getString("VillaName"));
                     b.setUserFullName(resultSet.getString("UserLastName") + " " + resultSet.getString("UserFirstName"));
+                    b.setUserName(resultSet.getString("UserName"));
                     bookingList.add(b);
                 }
             }

@@ -66,6 +66,32 @@
                 font-weight: bold;
             }
 
+            .popup-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            .popup-content {
+                background: white;
+                padding: 20px;
+                border-radius: 10px;
+                text-align: center;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                width: 400px;
+            }
+            .popup-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+            }
+
         </style>
     </head>
     <body>
@@ -163,9 +189,9 @@
                         <c:if test="${referer ne 'http://localhost:8080/BookingResort/bookingManagement'}">
                             <div class="d-flex gap-3">
                                 <c:if test="${booking.bookingStatus ne 'Check-Out'}">   
-                                    <form action="cancelBooking?bookingId=${booking.bookingId}" method="post">
-                                        <button type="submit" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</button>
-                                    </form>
+
+                                    <button type="button" onclick="openCancelPopup()" class="btn btn-danger"><i class="fa fa-times"></i> Cancel Booking</button>
+
                                     <a href="addService?bookingId=${booking.bookingId}" class="btn btn-warning"><i class="fa fa-plus"></i> Add More Service</a>
                                 </c:if>
                                 <c:if test="${booking.bookingStatus eq 'Check-Out'}">
@@ -191,11 +217,95 @@
                 </c:if>
             </div>
         </div>
+
+
+        <!--        <div id="cancelPopup" class="popup-overlay">
+                    <div class="popup-content">
+                        <h4><i class="fa fa-exclamation-triangle text-danger"></i> Cancel Booking</h4>
+                        <p>
+                            Are you sure you want to cancel this booking?<br>
+                            If you cancel now, you will only receive <strong>70% of your deposit back</strong>.
+                        </p>
+                        <div class="popup-buttons">
+                            <button class="btn btn-secondary" onclick="closeCancelPopup()">Back</button>
+                            <form action="cancelBooking?bookingId=${booking.bookingId}" method="post">
+                                <button type="submit" class="btn btn-danger"><i class="fa fa-check"></i> Confirm</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>-->
+
+        <div id="cancelPopup" class="popup-overlay">
+            <div class="popup-content">
+                <h4><i class="fa fa-exclamation-triangle text-danger"></i> Cancel Booking</h4>
+                <p>
+                    Are you sure you want to cancel this booking?<br>
+                    <span id="cancelMessage"></span>
+                </p>
+
+                <!-- Input lý do hủy -->
+                <div class="mb-3">
+                    <label for="cancelReason" class="form-label"><strong>Reason for cancellation:</strong></label>
+                    <textarea id="cancelReason" name="cancelReason" class="form-control" rows="3" placeholder="Please enter your reason..." required></textarea>
+                    <small class="text-danger d-none" id="cancelError">You must enter a reason before confirming.</small>
+                </div>
+
+                <div class="popup-buttons">
+                    <button class="btn btn-secondary" onclick="closeCancelPopup()">Back</button>
+                    <form id="cancelForm" action="cancelBooking" method="post">
+                        <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                        <input type="hidden" id="reasonInput" name="reason">
+                        <input id="actionInput" type="hidden" name="action" value="">
+                        <button type="button" class="btn btn-danger" onclick="submitCancelForm()"><i class="fa fa-check"></i> Confirm</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script>
             var alertMessage = "${param.alertMessage}";
             if (alertMessage !== null && alertMessage !== "") {
                 alert(alertMessage);
 
+            }
+
+            function openCancelPopup() {
+                let checkInDate = new Date("${booking.checkIn}");
+                let currentDate = new Date();
+                let timeDiff = checkInDate - currentDate;
+                let daysDiff = Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); // Chuyển đổi sang số ngày
+
+                let message = "";
+                let actionValue = "";
+
+                if (daysDiff >= 3) {
+                    message = "If you cancel now, you will receive <strong>70% of your deposit back</strong>.";
+                    actionValue = "refund";
+                } else {
+                    message = "<span>If you cancel now, you will <strong class='text-danger'>lose your entire deposit</strong>.</span>";
+                    actionValue = "lose all";
+                }
+
+                document.getElementById("cancelMessage").innerHTML = message;
+                document.getElementById("actionInput").value = actionValue; // Cập nhật giá trị action
+                document.getElementById("cancelPopup").style.display = "flex";
+            }
+
+            function closeCancelPopup() {
+                document.getElementById("cancelPopup").style.display = "none";
+            }
+
+            function submitCancelForm() {
+                let reason = document.getElementById("cancelReason").value.trim();
+                let errorText = document.getElementById("cancelError");
+
+                if (reason === "") {
+                    errorText.classList.remove("d-none");
+                } else {
+                    errorText.classList.add("d-none");
+                    document.getElementById("reasonInput").value = reason;
+                    document.getElementById("cancelForm").submit();
+                }
             }
         </script>        
 

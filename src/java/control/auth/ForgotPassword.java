@@ -92,7 +92,7 @@ public class ForgotPassword extends HttpServlet {
 
         checkUser.setUserCode(jvm.generatedOTP());
 
-        boolean sendMail = jvm.send(userEmail, "Change Your Password", checkUser.getUserCode(), "Forgot_Password", checkUser);
+        boolean sendMail = jvm.sendForgotPassword(checkUser);
 
         if (sendMail) {
             HttpSession session = request.getSession();

@@ -141,7 +141,76 @@
                 font-style: normal;
             }
 
+            /* Pagination Styles */
+            .pagination-section {
+                text-align: center;
+                margin-top: 40px;
+                padding-bottom: 20px;
+            }
 
+            .pagination-buttons {
+                display: inline-flex;
+                align-items: center;
+                gap: 20px;
+            }
+
+            .pagination-btn {
+                display: inline-block;
+                padding: 12px 25px;
+                background: #9a8067;
+                color: #fff;
+                text-transform: uppercase;
+                font-family: 'Alegreya', serif;
+                font-size: 14px;
+                font-weight: 700;
+                text-decoration: none;
+                border-radius: 5px;
+                transition: background 0.3s ease;
+            }
+
+            .pagination-btn:hover {
+                background: #7e6754;
+                color: #fff;
+                text-decoration: none;
+            }
+
+            .previous-btn i {
+                margin-right: 8px;
+            }
+
+            .next-btn i {
+                margin-left: 8px;
+            }
+
+            .page-numbers {
+                display: inline-flex;
+                gap: 10px;
+            }
+
+            .page-number {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                line-height: 40px;
+                text-align: center;
+                font-family: 'Source Sans Pro', sans-serif;
+                font-size: 16px;
+                color: #3c404a;
+                text-decoration: none;
+                border-radius: 50%;
+                transition: all 0.3s ease;
+            }
+
+            .page-number:hover {
+                background: #9a8067;
+                color: #fff;
+            }
+
+            .page-number.active {
+                background: #9a8067;
+                color: #fff;
+                font-weight: bold;
+            }
         </style>
     </head>
     <body>
@@ -295,6 +364,39 @@
                     <h3 style="text-align: center; color: red">There are no rooms available</h3>
                 </c:if>
 
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination-section">
+                <div class="pagination-buttons">
+                    <!-- Previous Button -->
+                    <c:if test="${currentPage > 1}">
+                        <a href="villaAvailable?action=${(empty fromDate || empty toDate || empty numberOfGuest) ? 'listAll' : 'listCondition'}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}&page=${currentPage - 1}" class="pagination-btn previous-btn">
+                            <i class="lnr lnr-arrow-left"></i> Previous
+                        </a>
+                    </c:if>
+
+                    <!-- Page Numbers -->
+                    <div class="page-numbers">
+                        <c:forEach begin="1" end="${totalPages}" var="i">
+                            <c:choose>
+                                <c:when test="${i == currentPage}">
+                                    <span class="page-number active">${i}</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <a href="villaAvailable?action=${(empty fromDate || empty toDate || empty numberOfGuest) ? 'listAll' : 'listCondition'}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}&page=${i}" class="page-number">${i}</a>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
+
+                    <!-- Next Button -->
+                    <c:if test="${currentPage < totalPages}">
+                        <a href="villaAvailable?action=${(empty fromDate || empty toDate || empty numberOfGuest) ? 'listAll' : 'listCondition'}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}&page=${currentPage + 1}" class="pagination-btn next-btn">
+                            Next <i class="lnr lnr-arrow-right"></i>
+                        </a>
+                    </c:if>
+                </div>
             </div>
         </section>
         <!-- Rooms Section End -->

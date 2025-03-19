@@ -104,27 +104,26 @@ public class ChangeForgotPassword extends HttpServlet {
                 String currentPass = request.getParameter("currentPass");
 
                 if (currentPass.equals(user.getUserPass())) {
-                    
+
                     if (newPassword.equals(confirmPassword)) {
 
                         user.setUserPass(newPassword);
 
                         userDao.updateUser(user);
 
-                        session.removeAttribute("user");
-                        response.sendRedirect("profile.jsp");
+                        session.setAttribute("user", user);
+                        response.sendRedirect("profile");
 
                     } else {
                         request.setAttribute("errorMessage", "Not Correct Password!");
                         request.getRequestDispatcher("resetPassword.jsp?action=" + action).forward(request, response);
                     }
-                    
+
                 } else {
-                    
+
                     request.setAttribute("errorMessage", "Not Correct Current Password!");
                     request.getRequestDispatcher("resetPassword.jsp?action=" + action).forward(request, response);
                 }
-                
 
                 break;
             default:

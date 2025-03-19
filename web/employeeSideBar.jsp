@@ -55,7 +55,6 @@
                 <li class="nav-item"><a href=""><i class="bi bi-people"></i> Customer</a></li>
                 <li class="nav-item"><a href="bookingManagement"><i class="bi bi-file-earmark-text"></i></i> Booking List</a></li>
                 <li class="nav-item"><a href="#"><i class="bi bi-cup-hot"></i> Service</a></li>
-                <li class="nav-item"><a href="#"><i class="bi bi-envelope"></i> Contact</a></li>
             </ul>
         </div>
     </body>

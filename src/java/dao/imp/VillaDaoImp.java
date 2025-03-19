@@ -116,7 +116,7 @@ public class VillaDaoImp implements VillaDao {
                 + "AND v.VillaID NOT IN ( "
                 + "    SELECT b.VillaID "
                 + "    FROM Booking b "
-                + "    WHERE b.BookingStatus IN ('Pending', 'Confirmed', 'Completed') "
+                + "    WHERE b.BookingStatus IN ('Pending', 'Check-In', 'Check-Out', 'Confirmed') "
                 + "    AND ( ? < b.CheckOut AND ? > b.CheckIn) "
                 + ")";
 
@@ -187,7 +187,7 @@ public class VillaDaoImp implements VillaDao {
                 + "    SELECT b.VillaID\n"
                 + "    FROM Booking b\n"
                 + "    WHERE \n"
-                + "        b.BookingStatus IN ('Pending', 'Confirmed', 'Completed') \n"
+                + "        b.BookingStatus IN ('Pending', 'Check-In', 'Check-Out', 'Confirmed') \n"
                 + "        AND (\n"
                 + "            ? < b.CheckOut  \n"
                 + "            AND ? > b.CheckIn\n"
@@ -218,5 +218,51 @@ public class VillaDaoImp implements VillaDao {
             e.printStackTrace();
         }
         return v;
+    }
+
+    @Override
+    public ArrayList<Villa> getFiveVilla(int page, ArrayList<Villa> villaList) {
+        int startIndex = (page - 1) * 5;
+        int endIndex = Math.min(startIndex + 5, villaList.size());
+
+        if (startIndex >= villaList.size()) {
+            return new ArrayList<>();
+        }
+
+        return new ArrayList<>(villaList.subList(startIndex, endIndex));
+    }
+
+    @Override
+    public ArrayList<Villa> getVillaByWishlist(int userId) {
+        ArrayList<Villa> villaList = new ArrayList<>();
+        String sql = "SELECT v.* \n"
+                + "FROM Villas v\n"
+                + "JOIN Wishlist w ON v.VillaID = w.VillaID\n"
+                + "WHERE w.UserID = ?";
+
+        try (Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql)) {
+
+            preStatement.setInt(1, userId);
+
+            try (ResultSet resultSet = preStatement.executeQuery()) {
+                while (resultSet.next()) {
+                    Villa villa = new Villa();
+                    villa.setVillaId(resultSet.getInt("VillaID"));
+                    villa.setVillaName(resultSet.getString("VillaName"));
+                    villa.setVillaDescription(resultSet.getString("VillaDescription"));
+                    villa.setVillaPrice(resultSet.getDouble("VillaPrice"));
+                    villa.setVillaStatus(resultSet.getString("VillaStatus"));
+                    villa.setVillaIMG(resultSet.getString("VillaIMG"));
+                    villa.setVillaCapacity(resultSet.getInt("VillaCapacity"));
+
+                    villaList.add(villa);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return villaList;
     }
 }

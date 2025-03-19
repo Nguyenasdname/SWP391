@@ -137,6 +137,42 @@
         <servlet-name>ConfirmPayment</servlet-name>
         <servlet-class>control.payment.ConfirmPayment</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowContact</servlet-name>
+        <servlet-class>control.contact.ShowContact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmContact</servlet-name>
+        <servlet-class>control.contact.ConfirmContact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactManagement</servlet-name>
+        <servlet-class>control.contact.ContactManagement</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ContactDetails</servlet-name>
+        <servlet-class>control.contact.ContactDetails</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Profile</servlet-name>
+        <servlet-class>control.profile.Profile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmRefund</servlet-name>
+        <servlet-class>control.payment.ConfirmRefund</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ReplyContact</servlet-name>
+        <servlet-class>control.contact.ReplyContact</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AllVillaInWishlist</servlet-name>
+        <servlet-class>control.wishlist.AllVillaInWishlist</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Transaction</servlet-name>
+        <servlet-class>control.payment.Transaction</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -268,6 +304,42 @@
     <servlet-mapping>
         <servlet-name>ConfirmPayment</servlet-name>
         <url-pattern>/ConfirmPayment</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowContact</servlet-name>
+        <url-pattern>/ShowContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmContact</servlet-name>
+        <url-pattern>/ConfirmContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactManagement</servlet-name>
+        <url-pattern>/ContactManagement</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ContactDetails</servlet-name>
+        <url-pattern>/ContactDetails</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Profile</servlet-name>
+        <url-pattern>/Profile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmRefund</servlet-name>
+        <url-pattern>/ConfirmRefund</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReplyContact</servlet-name>
+        <url-pattern>/ReplyContact</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AllVillaInWishlist</servlet-name>
+        <url-pattern>/AllVillaInWishlist</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Transaction</servlet-name>
+        <url-pattern>/Transaction</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

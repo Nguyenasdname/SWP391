@@ -82,7 +82,7 @@
                 <c:forEach items="${bookingList}" var="booking">
                     <div class="col-md-6">
                         <div class="booking-card p-3">
-                            <h5 class="mb-2">${booking.userFullName}</h5>
+                            <h5 class="mb-2">${booking.userFullName ne "null null" ? booking.userFullName : booking.userName}</h5>
                             <p><strong>Villa: ${booking.villaName}</strong></p>
                             <p><strong>Guests:</strong> ${booking.numberOfGuest}</p>
                             <p><strong>Check-in:</strong> ${booking.checkIn} | <strong>Check-out:</strong> ${booking.checkOut}</p>

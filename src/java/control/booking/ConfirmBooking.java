@@ -91,7 +91,6 @@ public class ConfirmBooking extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        JavaMail jvm = new JavaMailImp();
 
         BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
         BookingDao bookingDao = new BookingDaoImp();

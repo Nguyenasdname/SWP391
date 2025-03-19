@@ -17,4 +17,6 @@ public interface PaymentDao {
     void addPayment(Payment payment); 
     void updatePayment(Payment payment); 
     void removePaymentById(int id);
+    Payment getPaymentByPaymentDesc(String paymentDescription);
+    ArrayList<Payment> getListPaymentByUserId(int userId);
 }

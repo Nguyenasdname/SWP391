@@ -156,7 +156,7 @@
 
                 <a href="editProfile.jsp" style="" class="site-btn mb-5">Edit Profile</a>   
 
-
+                <a href="${referer == 'http://localhost:8080/BookingResort/index.jsp' ? referer : 'dashboard'}" class="site-btn mb-5"><i class="fa fa-arrow-left"></i> Back</a>
             </div>
         </section>
         <!-- Checkout Section End -->

@@ -24,6 +24,7 @@ public class Booking {
     private ArrayList<BookingService> bookingService;
     private String villaName; 
     private String userFullName;
+    private String userName;
 
     public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal, int numberOfGuest) {
         this.bookingId = bookingId;
@@ -134,6 +135,14 @@ public class Booking {
 
     public void setUserFullName(String userFullName) {
         this.userFullName = userFullName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     @Override

@@ -4,6 +4,11 @@
  */
 package emailService;
 
+import java.util.ArrayList;
+import javax.mail.Session;
+import javax.mail.internet.MimeMessage;
+import model.Booking;
+import model.BookingService;
 import model.User;
 
 /**
@@ -11,6 +16,11 @@ import model.User;
  * @author Admin
  */
 public interface JavaMail {
-    boolean send(String to, String subject, String message, String emailType, User user);
     String generatedOTP();
+    boolean sendVerifyOTP(User user);
+    boolean sendForgotPassword(User user);
+    boolean sendDiscountNotification(String messageContent, User user);
+    boolean sendConfirmBooking(Booking booking, User user, ArrayList<BookingService> bookingServiceList);
+    boolean sendReplyContact(String title, String Content, String userEmail, String userContact);
+    boolean sendPaymentConfirmation(Booking booking, User user, ArrayList<BookingService> bookingServiceList);
 }

@@ -64,16 +64,37 @@ public class VillaAvailable extends HttpServlet {
         String action = request.getParameter("action");
 
         VillaDao villaDao = new VillaDaoImp();
-        
+
         ArrayList<Villa> availableVillas = new ArrayList();
+        int page = 1;
+
+        int totalVilla;
+        int totalPages;
         
+        ArrayList<Villa> paginationVilla = new ArrayList<>();
+
+        page = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+
         switch (action) {
             case "listAll":
-                
+
                 availableVillas = villaDao.getAllVillaList();
-                request.setAttribute("availableVillas", availableVillas);
+                paginationVilla = villaDao.getFiveVilla(page, availableVillas);
+
+                totalVilla = availableVillas.size();
+
+                if (totalVilla % 5 != 0) {
+                    totalPages = (totalVilla / 5) + 1;
+                } else {
+                    totalPages = (totalVilla / 10);
+                }
+
+                request.setAttribute("currentPage", page);
+                request.setAttribute("totalPages", totalPages);
+
+                request.setAttribute("availableVillas", paginationVilla);
                 request.getRequestDispatcher("rooms.jsp").forward(request, response);
-                
+
                 break;
             case "listCondition":
                 int villaCapacity = Integer.parseInt(request.getParameter("numberOfGuest"));
@@ -82,8 +103,21 @@ public class VillaAvailable extends HttpServlet {
                 String numberOfGuest = request.getParameter("numberOfGuest");
 
                 availableVillas = villaDao.getAllVillaAvailable(villaCapacity, fromDate, toDate);
+                paginationVilla = villaDao.getFiveVilla(page, availableVillas);
+                
+                
+                totalVilla = availableVillas.size();
 
-                request.setAttribute("availableVillas", availableVillas);
+                if (totalVilla % 5 != 0) {
+                    totalPages = (totalVilla / 5) + 1;
+                } else {
+                    totalPages = (totalVilla / 10);
+                }
+
+                
+                request.setAttribute("currentPage", page);
+                request.setAttribute("totalPages", totalPages);
+                request.setAttribute("availableVillas", paginationVilla);
                 request.setAttribute("fromDate", fromDate);
                 request.setAttribute("toDate", toDate);
                 request.setAttribute("numberOfGuest", numberOfGuest);
@@ -92,6 +126,7 @@ public class VillaAvailable extends HttpServlet {
                 request.getRequestDispatcher("rooms.jsp").forward(request, response);
                 break;
         }
+
     }
 
     /**

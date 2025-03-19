@@ -5,8 +5,10 @@
 package control.booking;
 
 import dao.BookingDao;
+import dao.ContactDao;
 import dao.VillaDao;
 import dao.imp.BookingDaoImp;
+import dao.imp.ContactDaoImp;
 import dao.imp.VillaDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,6 +17,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Contact;
+import model.User;
 
 /**
  *
@@ -75,17 +80,58 @@ public class CancelBooking extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
         int bookingId = Integer.parseInt(request.getParameter("bookingId"));
 
         BookingDao bookingDao = new BookingDaoImp();
 
         VillaDao villaDao = new VillaDaoImp();
 
-        bookingDao.setBookingStatusCancel(bookingId);
+        ContactDao contactDao = new ContactDaoImp();
 
-        villaDao.setAvailableVilla(bookingDao.getBookingByID(bookingId).getVillaId());
+        Contact contact = new Contact();
 
-        response.sendRedirect("bookingHistory?alertMessage=Cancel Successfuly!");
+        String contactTitle = "Cancel_Booking_User_"+ user.getUserId()+ "_" + user.getUserName() + "_BookingID_" + bookingId;
+
+        String reasonCancel = request.getParameter("reason");
+        String action = request.getParameter("action");
+
+        contact.setUserId(user.getUserId());
+
+        contact.setContactContent(reasonCancel);
+
+        switch (action) {
+            case "refund":
+                contactTitle += "_Refund";
+                contact.setContactTitle(contactTitle);
+                contact.setRefundStatus("NotRefunded");
+                
+                contactDao.addContact(contact);
+                
+                bookingDao.setBookingStatusCancel(bookingId);
+
+                villaDao.setAvailableVilla(bookingDao.getBookingByID(bookingId).getVillaId());
+
+                response.sendRedirect("bookingHistory?alertMessage=Cancel Successfuly!");
+                break;
+            case "lose all":
+                contactTitle += "_LoseAll";
+                contact.setContactTitle(contactTitle);
+                contactDao.addContact(contact);
+
+                bookingDao.setBookingStatusCancel(bookingId);
+
+                villaDao.setAvailableVilla(bookingDao.getBookingByID(bookingId).getVillaId());
+
+                response.sendRedirect("bookingHistory?alertMessage=Cancel Successfuly!");
+                break;
+            default:
+                break;
+        }
     }
 
     /**

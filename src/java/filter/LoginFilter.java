@@ -11,8 +11,9 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.User;
 
-@WebFilter({"/confirmBooking", "/bookingHistory", "/bookingDetails"}) // Chặn nhiều Servlet nếu cần
+@WebFilter({"/confirmBooking", "/bookingHistory", "/bookingDetails", "/showContact", "/login"}) // Chặn nhiều Servlet nếu cần
 public class LoginFilter implements Filter {
 
     @Override
@@ -23,14 +24,18 @@ public class LoginFilter implements Filter {
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
 
-        // Kiểm tra xem user có đăng nhập không
         if (session == null || session.getAttribute("user") == null) {
             String originalURL = req.getHeader("Referer");
-            session.setAttribute("originalURL", originalURL);
-            res.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!");
-        } else {
-            chain.doFilter(request, response); // Cho phép request tiếp tục nếu đã đăng nhập
+            if (session != null) {
+                session.setAttribute("originalURL", originalURL);
+            }
+            res.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!&originalURL=" + originalURL);
+            return;
         }
+
+        // Lấy userStatus từ session
+
+        chain.doFilter(request, response); // Cho phép request tiếp tục nếu đã đăng nhập hợp lệ
     }
 
     @Override
