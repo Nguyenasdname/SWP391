@@ -125,7 +125,7 @@
                 <div class="inner-header">
                     <div class="logo">
                         <!--<a href="home"><img src="img/logo.png" alt="" /></a>-->
-                        <a href="home"><img class="logo-img" src="img/beach-resort-logo-palm-tree-element-chalet-roof-cottage-icon-minimalist_171487-350.png" alt=""/></a>
+                        <a href="./index.jsp"><img class="logo-img" src="img/beach-resort-logo-palm-tree-element-chalet-roof-cottage-icon-minimalist_171487-350.png" alt=""/></a>
                       
                     </div>
 
@@ -190,8 +190,9 @@
                                 </c:if>
                                     <input type="hidden" class="revenue">
 
-                                    <li><a href="./service.jsp">Services</a></li>
+                                    <li><a href="./get-all-service">Services</a></li>
                                 <li><a href="showContact">Contact</a></li>
+
                                 
                             </ul>
                         </nav>

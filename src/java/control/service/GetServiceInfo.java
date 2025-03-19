@@ -2,28 +2,33 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package control.booking;
+package control.service;
 
-import dao.BookingDao;
-import dao.imp.BookingDaoImp;
+import dao.imp.ServiceDaoImp;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import model.User;
-import model.Booking;
-         
+import model.Service;
+
 /**
  *
- * @author Admin
+ * @author ACER
  */
-@WebServlet("/bookingHistory")
-public class BookingHistory extends HttpServlet  {
+@WebServlet(name = "GetServiceInfo", urlPatterns = {"/get-service"})
+public class GetServiceInfo extends HttpServlet {
+
+    private ServiceDaoImp serviceDaoImp;
+
+    @Override
+    public void init() throws ServletException {
+
+        serviceDaoImp = new ServiceDaoImp();
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +47,10 @@ public class BookingHistory extends HttpServlet  {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet BookingHistory</title>");
+            out.println("<title>Servlet GetServiceInfo</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet BookingHistory at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GetServiceInfo at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,16 +68,29 @@ public class BookingHistory extends HttpServlet  {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-        
-        String alertMessage = request.getParameter("alertMessage");
-        
-        BookingDao bookingDao = new BookingDaoImp();
-        ArrayList<Booking> bookingList = bookingDao.getListBookingByUserId(user.getUserId());
 
-        request.setAttribute("bookingList", bookingList);
-        request.getRequestDispatcher("bookingHistory.jsp?alertMessage="+alertMessage).forward(request, response);
+        String idService = (String) request.getParameter("id");
+
+        try {
+            int intId = Integer.valueOf(idService);
+
+            Service service = serviceDaoImp.getServiceByID(intId);
+            if (Objects.isNull(service)) {
+                System.err.println("Service not founded..");
+                request.setAttribute("message", "Service not founded !");
+                request.getRequestDispatcher("servicedetail.jsp").forward(request, response);
+            }
+            
+             request.setAttribute("service", service);
+            request.getRequestDispatcher("servicedetail.jsp").forward(request, response);
+
+        } catch (Exception e) {
+            System.err.println("Has error in get service data by id process..");
+            System.err.println(e.getMessage());
+
+            request.setAttribute("message", "Has error in get service data by id process..");
+            request.getRequestDispatcher("servicedetail.jsp").forward(request, response);
+        }
     }
 
     /**
