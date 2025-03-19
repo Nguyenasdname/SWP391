@@ -70,13 +70,13 @@ public class ResendVerifyOTP extends HttpServlet {
 
         switch (action) {
             case "register":
-                boolean sendRegisterMail = jvm.send(user.getUserEmail(), "Verify YourEmail", user.getUserCode(), "Verify_OTP", user);
+                boolean sendRegisterMail = jvm.sendVerifyOTP(user);
                 if (sendRegisterMail) {
                     response.sendRedirect("verify.jsp?action=register");
                 }
                 break;
             case "forgotPassword":
-                boolean sendForgotMail = jvm.send(user.getUserEmail(), "Change Your Password", user.getUserCode(), "Forgot_Password", user);
+                boolean sendForgotMail = jvm.sendForgotPassword(user);
                 if (sendForgotMail) {
                     response.sendRedirect("verify.jsp?action=forgotPassword");
                 }

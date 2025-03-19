@@ -159,8 +159,10 @@
                                     <img src="${sessionScope.user.userIMG}" alt="${sessionScope.user.userIMG}" class="avatar" id="avatar" />
 
                                     <div class="dropdownmenu" id="dropdownmenu">
-                                        <a href="profile.jsp">Profile</a>
+                                        <a href="profile">Profile</a>
                                         <a href="bookingHistory">Booking History</a>
+                                        <a href="transaction">Transaction History</a>
+                                        <a href="allVillaInWishlist">Wishlist</a>
                                         <a href="logout">Logout</a>
                                     </div>
                                 </div>
@@ -177,12 +179,6 @@
                                 <c:if test="${sessionScope.user != null && sessionScope.user.roleId == 3}">
                                     <li>
                                         <a href="dashboard">Employee</a>
-                                        <ul class="drop-menu">
-                                            <li><a href="viewcustomer">View Customer</a></li>
-                                            <li><a href="managerservice">Manager Service</a></li>
-                                            <li><a href="ManageCancelBookingServlet?choice=pending">Manage Cancel Booking</a></li>
-                                            <li><a href="statusroomservlet">Status Room</a></li>
-                                        </ul>
                                     </li>
                                 </c:if>
 
@@ -195,7 +191,8 @@
                                     <input type="hidden" class="revenue">
 
                                     <li><a href="./get-all-service">Services</a></li>
-                                <li><a href="./contact.jsp">Contact</a></li>
+                                <li><a href="showContact">Contact</a></li>
+
                                 
                             </ul>
                         </nav>

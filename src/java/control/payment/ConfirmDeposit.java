@@ -5,11 +5,16 @@
 package control.payment;
 
 import dao.BookingDao;
+import dao.BookingServiceDao;
 import dao.PaymentDao;
 import dao.imp.BookingDaoImp;
+import dao.imp.BookingServiceDaoImp;
 import dao.imp.PaymentDaoImp;
+import emailService.JavaMail;
+import emailService.JavaMailImp;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Booking;
+import model.BookingService;
 import model.Payment;
 import model.User;
 
@@ -79,36 +85,47 @@ public class ConfirmDeposit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+
         int bookingId = Integer.parseInt(request.getParameter("bookingId"));
         String bankNumber = request.getParameter("bankNumber");
         String depositCode = request.getParameter("depositCode");
         String bankBin = request.getParameter("bankBin");
         double depositAmount = Double.parseDouble(request.getParameter("depositAmount"));
-        
-        String paymentDescription = depositCode+"-"+bankNumber+"-"+bankBin;
-        
+
+        String paymentDescription = depositCode + "-" + bankNumber + "-" + bankBin;
+
         PaymentDao paymentDao = new PaymentDaoImp();
-        
         BookingDao bookingDao = new BookingDaoImp();
-        
         Booking booking = bookingDao.getBookingByID(bookingId);
-        
+
         double price = booking.getBookingTotal();
-        
         booking.setBookingTotal(price - depositAmount);
         booking.setBookingStatus("Confirmed");
-        
+
         Payment payment = new Payment(1, user.getUserId(), bookingId, depositAmount, "Bank Transfer", "Completed", null, 0, paymentDescription);
-        
+
         paymentDao.addPayment(payment);
-        
         bookingDao.updateBooking(booking);
-        
+
+        BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
+        Booking bookingMail = bookingDao.getBookingDetailByID(bookingId);
+        ArrayList<BookingService> bookingServiceList = bookingServiceDao.getListBookingServiceDetailsByBookingId(bookingId);
+
+        // Chạy gửi email trong một thread riêng
+        new Thread(() -> {
+            JavaMail jvm = new JavaMailImp();
+            boolean sendEmail = jvm.sendConfirmBooking(bookingMail, user, bookingServiceList);
+            if (!sendEmail) {
+                System.out.println("Failed to send confirmation email for booking ID: " + bookingId);
+            }
+        }).start();
+
+        // Chuyển hướng ngay lập tức mà không chờ gửi email
         response.sendRedirect("index.jsp?alertMessage=Booking successful! Please check your email or booking history.");
-        
+
     }
 
     /**

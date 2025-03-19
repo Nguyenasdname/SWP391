@@ -136,7 +136,7 @@
 
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
-                <a href="bookingHistory" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
+                <a href="villaAvailable?action=listAll" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                 <button class="btn btn-primary" 
                         onclick="openDepositPopup()">
                     <i class="fa fa-money-bill-wave"></i> Deposit Now
@@ -159,7 +159,7 @@
         <script>
             let countdownTimer;
 
-            const openDepositPopup = () => {                
+            const openDepositPopup = () => {
                 var depositPopup = document.getElementById("depositPopup");
                 var countdownEvent = document.getElementById("countdown");
                 let totalBooking = ${booking.bookingTotal};
@@ -219,11 +219,15 @@
                     const lastPaid = data.data[data.data.length - 1];
                     lastPrice = lastPaid["Giá trị"];
                     lastContent = lastPaid["Mô tả"];
-                    bankNumber = lastPaid["Số tài khoản"];
+                    bankNumber = lastPaid["Số tài khoản đối ứng"];
                     bankBin = lastPaid["Mã BIN ngân hàng đối ứng"];
 
                     if (lastPrice === depositAmount && lastContent.includes(depositCode)) {
-                        alert("Deposit Sucessful!")
+                        if (!localStorage.getItem("depositAlertShow")) {
+                            alert("Deposit Successful!")
+                            localStorage.setItem("depositAlertShow", "true");
+                        }
+
                         let form = document.createElement("form");
                         form.method = "POST";
                         form.action = "confirmDeposit";
@@ -251,6 +255,10 @@
                     console.error("Error");
                 }
             }
+
+            window.addEventListener("load", () => {
+                localStorage.removeItem("depositAlertShow");
+            });
         </script>
     </body>
 

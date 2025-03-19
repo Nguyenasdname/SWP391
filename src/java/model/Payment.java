@@ -20,6 +20,7 @@ public class Payment {
     private Date createDate;
     private int promotionId;
     private String paymentDescription;
+    private String paymentType;
 
     public Payment() {
     }
@@ -106,6 +107,14 @@ public class Payment {
 
     public void setPaymentDescription(String paymentDescription) {
         this.paymentDescription = paymentDescription;
+    }
+    
+    public String getPaymentType(){
+        return paymentType;
+    }
+    
+    public void setPaymentType(String paymentType){
+        this.paymentType = paymentType;
     }
     
     @Override

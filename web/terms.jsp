@@ -30,7 +30,7 @@
             <h2>Terms & Conditions</h2>
             <hr>
             <p>To confirm your booking, a **30% deposit** of the total villa price is required.</p>
-            <p>If you decide to cancel your booking, **only 70% of your deposit** will be refunded.</p>
+            <p>If you decide to cancel your booking, **you will lose all your deposit**.</p>
             <p>The remaining **70% balance** must be paid upon check-out.</p>
             <p>By booking with us, you agree to these terms.</p>
             <hr>

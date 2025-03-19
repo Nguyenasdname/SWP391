@@ -21,5 +21,7 @@ public interface VillaDao {
     void setBookedVilla(int villaId);
     void setAvailableVilla(int villaId);
     Villa getAvailableVilla(int villaId, String fromDate, String toDate);
+    ArrayList<Villa> getFiveVilla(int page, ArrayList<Villa> villaList);
+    ArrayList<Villa> getVillaByWishlist(int userId);
 }
     

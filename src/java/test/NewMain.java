@@ -6,7 +6,9 @@ package test;
 
 import dao.BookingDao;
 import dao.BookingServiceDao;
+import dao.ContactDao;
 import dao.FeedbackDao;
+import dao.PaymentDao;
 import dao.PromotionDao;
 import dao.ServiceDao;
 import dao.UserDao;
@@ -14,7 +16,9 @@ import dao.VillaDao;
 import dao.WishlistDao;
 import dao.imp.BookingDaoImp;
 import dao.imp.BookingServiceDaoImp;
+import dao.imp.ContactDaoImp;
 import dao.imp.FeedbackDaoImp;
+import dao.imp.PaymentDaoImp;
 import dao.imp.PromotionDaoImp;
 import dao.imp.ServiceDaoImp;
 import dao.imp.UserDaoImp;
@@ -71,7 +75,7 @@ public class NewMain {
 //            
 //            System.out.print(feedbackDao.getAllFeedBackListByVillaID(1));
 //
-//            VillaDao villaDao = new VillaDaoImp();
+            VillaDao villaDao = new VillaDaoImp();
 //            
 //            Villa listVilla = villaDao.getAvailableVilla(2, "2025-02-28", "2025-01-02");
 //            
@@ -85,7 +89,11 @@ public class NewMain {
 
         PromotionDao promotionDao = new PromotionDaoImp();
         
-        System.out.print(promotionDao.getAllPromotionList());
+        ContactDao contactDao = new ContactDaoImp();
+        
+        PaymentDao paymentDao = new PaymentDaoImp();
+        
+        System.out.print(paymentDao.getListPaymentByUserId(1));
 
     }
 

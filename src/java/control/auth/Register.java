@@ -109,10 +109,11 @@ public class Register extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 newUser = new User(1, userName.toLowerCase(), userEmail.toLowerCase(), userPass, null, null, "Active", 2, null, null, null, null);
-
+                
+                newUser.setUserIMG("https://www.whiskas.in/sites/g/files/fnmzdf2051/files/2024-10/cat-play.png");
                 newUser.setUserCode(jvm.generatedOTP());
 
-                boolean sendMail = jvm.send(userEmail, "Verify YourEmail", newUser.getUserCode(), "Verify_OTP", newUser);
+                boolean sendMail = jvm.sendVerifyOTP(newUser);
 
                 if (sendMail) {
                     HttpSession session = request.getSession();

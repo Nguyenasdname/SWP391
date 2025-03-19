@@ -109,6 +109,7 @@
                                             <a href="forgot.jsp">Forgot Password</a>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="originalURL" value="${param.originalURL}">
                                 </form>
                                 <p class="text-center">
                                     Not a member?
@@ -136,12 +137,12 @@
                                         const goToHome = () => {
                                             window.location = "index.jsp";
                                         };
-                                        
-            var alertMessage = "${param.alertMessage}";
-            if (alertMessage !== null && alertMessage !=="") {
-                alert(alertMessage);
-                alertMessage = null;
-            }
+
+                                        var alertMessage = "${param.alertMessage}";
+                                        if (alertMessage !== null && alertMessage !== "") {
+                                            alert(alertMessage);
+                                            alertMessage = null;
+                                        }
         </script>
     </body>
 </html>

@@ -210,11 +210,11 @@
                     const lastPaid = data.data[data.data.length - 1];
                     lastPrice = lastPaid["Giá trị"];
                     lastContent = lastPaid["Mô tả"];
-                    bankNumber = lastPaid["Số tài khoản"];
+                    bankNumber = lastPaid["Số tài khoản đối ứng"];
                     bankBin = lastPaid["Mã BIN ngân hàng đối ứng"];
 
                     if (lastPrice === paymentAmount && lastContent.includes(paymentCode)) {
-                        alert("Payment Sucessful!Please Check Your Email Or Payment History.");
+                        alert("Payment Successful!Please Check Your Email Or Payment History.");
                         let form = document.createElement("form");
                         form.method = "POST";
                         form.action = "confirmPayment";
