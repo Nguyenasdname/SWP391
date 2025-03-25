@@ -61,9 +61,19 @@
                     <form action="updateRole?userId=${user.userId}" method="post">
                         <button type="submit" class="btn btn-warning"><i class="bi bi-pencil-square"></i> Update Role</button>
                     </form>
-                    <form action="banAccount?userId=${user.userId}" method="post">
-                        <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> Ban</button>
-                    </form>
+
+                    <c:choose>
+                        <c:when test="${user.userStatus eq 'Active'}">
+                            <form action="banAccount?userId=${user.userId}" method="post">
+                                <button type="submit" class="btn btn-danger"><i class="bi bi-x-circle"></i> Ban</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <form action="UnBanAccount?userId=${user.userId}" method="post">
+                                <button type="submit" class="btn btn-success"><i class="bi bi-check-circle"></i> Active</button>
+                            </form>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
