@@ -101,6 +101,7 @@ public class AddNewVilla extends HttpServlet {
             ServletFileUpload fileUpload = new ServletFileUpload(dfif);
 
             List<FileItem> fileItems = fileUpload.parseRequest(request);
+            System.out.println(fileItems);
             for (FileItem fileItem : fileItems) {
                 if (fileItem.isFormField()) {
                     if (fileItem.getFieldName().equals("villaName")) {

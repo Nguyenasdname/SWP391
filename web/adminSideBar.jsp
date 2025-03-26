@@ -55,7 +55,7 @@
                 <li class="nav-item"><a href="listAccount"><i class="bi bi-people"></i> Account</a></li>
                 <li class="nav-item"><a href="listVilla"><i class="bi bi-houses"></i> Villa</a></li>
                 <li class="nav-item"><a href="bookingManagement"><i class="bi bi-file-earmark-text"></i></i> Booking List</a></li>
-                <li class="nav-item"><a href="#"><i class="bi bi-cup-hot"></i> Service</a></li>
+                <li class="nav-item"><a href="./admin-get-services"><i class="bi bi-cup-hot"></i> Service</a></li>
                 <li class="nav-item"><a href="contactManagement"><i class="bi bi-envelope"></i> Contact</a></li>
             </ul>
         </div>
