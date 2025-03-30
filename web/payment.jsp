@@ -67,7 +67,7 @@
                 background-repeat: no-repeat;
                 background-attachment: fixed;
             }
-            
+
         </style>
     </head>
     <body>
@@ -109,7 +109,7 @@
             let countdownTimer;
             let timeLeft;
             let promotionId = 0;
-            
+
             const openPaymentPopup = () => {
                 console.log("con vợ này vừa được gọi!");
 
@@ -151,12 +151,12 @@
                         alert("⚠️ Payment Failed! Time expired.");
                         closePaymentPopup();
                     } else {
-                        
+
                         timeLeft--;
-                        
+
                     }
-                    
-                    
+
+
                 }, 1000);
 
             };
@@ -203,7 +203,7 @@
             async function checkPayment(paymentAmount, paymentCode) {
                 let bookingId = ${booking.bookingId}
                 let bankNumber;
-               
+
                 try {
                     const response = await fetch("https://script.google.com/macros/s/AKfycbxj-3eYlCmTW63LxUUPVi9QEUMA4kbb8tyWRoeVeslFY8Ymo0Yu6Sa_wmt3rQbfxrbP/exec");
                     const data = await response.json();
@@ -214,7 +214,11 @@
                     bankBin = lastPaid["Mã BIN ngân hàng đối ứng"];
 
                     if (lastPrice === paymentAmount && lastContent.includes(paymentCode)) {
-                        alert("Payment Successful!Please Check Your Email Or Payment History.");
+
+                        if (!localStorage.getItem("paymentAlertShow")) {
+                            alert("Payment Successful!Please Check Your Email Or Payment History.");
+                            localStorage.setItem("paymentAlertShow", "true");
+                        }
                         let form = document.createElement("form");
                         form.method = "POST";
                         form.action = "confirmPayment";
@@ -243,6 +247,9 @@
                     console.error("Error");
                 }
             }
+            window.addEventListener("load", () => {
+                localStorage.removeItem("paymentAlertShow");
+            });
         </script>
     </body>
 </html>

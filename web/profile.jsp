@@ -96,7 +96,7 @@
                     <h3 style="color: red">${error}</h3>
                 <h3 style="color: green">${msg}</h3>
 
-                <button class="site-btn" onclick="changePassword()">Change password</button> 
+                <a class="site-btn" href="resetPassword.jsp?action=${sessionScope.user.userPass != null ? 'notNullPass' : 'nullPass'}">Change password</a> 
                 <button class="site-btn" onclick="logout()">Logout</button> 
                 <form action="updateinfor" class="checkout__form" method="post" enctype="multipart/form-data">
                     <div class="row">
@@ -156,7 +156,7 @@
 
                 <a href="editProfile.jsp" style="" class="site-btn mb-5">Edit Profile</a>   
 
-                <a href="${referer == 'http://localhost:8080/BookingResort/index.jsp' ? referer : 'dashboard'}" class="site-btn mb-5"><i class="fa fa-arrow-left"></i> Back</a>
+                <a href="${referer}" class="site-btn mb-5"><i class="fa fa-arrow-left"></i> Back</a>
             </div>
         </section>
         <!-- Checkout Section End -->

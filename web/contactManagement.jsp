@@ -12,23 +12,36 @@
             .content {
                 margin-left: 250px;
                 padding: 20px;
-                /*                width: 100%;*/
+                width: 100%;
             }
-            .contact-card {
-                background: white;
-                padding: 15px;
-                border-radius: 10px;
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-                margin-bottom: 20px;
-            }
-            .badge{
-                height: 22px
-            }
-
             .search-container {
                 display: flex;
-                justify-content: space-between;
+                gap: 20px;
                 margin-bottom: 20px;
+            }
+            table {
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                width: 100%;
+            }
+            th, td {
+                vertical-align: middle;
+                text-align: left;
+            }
+            .status-badge {
+                padding: 5px 10px;
+                border-radius: 5px;
+                color: white;
+                font-size: 0.9em;
+                height: 22px;
+                display: inline-block;
+            }
+            .status-seen {
+                background-color: #28a745; /* Màu xanh cho Seen */
+            }
+            .status-unseen {
+                background-color: #ffc107; /* Màu vàng cho Unseen */
             }
         </style>
     </head>
@@ -37,10 +50,10 @@
             <jsp:include page="adminSideBar.jsp"></jsp:include>
         </c:if>
 
-
         <div class="content">
-
-            <div class="search-container">
+            <h2 class="text-center">Contact Management</h2>
+            <div class="search-container d-flex justify-content-between">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by name or email" style="width: 70%;">
                 <select id="statusFilter" class="form-control" style="width: 20%;">
                     <option value="">All Status</option>
                     <option value="Seen">Seen</option>
@@ -48,41 +61,60 @@
                 </select>
             </div>
 
-            <h2 class="text-center">Contact Management</h2>
-            <div class="row">
-                <c:forEach items="${contactList}" var="contact">
-
-                    <div class="col-md-6 contact">
-                        <div class="contact-card p-3">
-                            <div class="d-flex justify-content-between">
-                                <h5><i class="fa fa-user"></i> ${contact.userFullName}</h5>
-                                <div class="contact-status badge bg-${contact.contactStatus eq 'Unseen' ? 'warning' : 'success'}">${contact.contactStatus}</div>
-                            </div>
-                            <p><i class="fa fa-envelope"></i> ${contact.userEmail}</p>
-                            <p><i class="fa fa-tag"></i> ${contact.contactTitle}</p>
-                            <a href="contactDetails?contactId=${contact.contactId}" class="btn btn-info btn-sm">
-                                <i class="fa fa-eye"></i> View More
-                            </a>
-                        </div>
-                    </div>
-
-                </c:forEach>
+            <div id="contactList">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${contactList}" var="contact">
+                            <tr>
+                                <td><i class="fa fa-user"></i> ${contact.userFullName}</td>
+                                <td><i class="fa fa-envelope"></i> ${contact.userEmail}</td>
+                                <td><i class="fa fa-tag"></i> ${contact.contactTitle}</td>
+                                <td>
+                                    <span class="status-badge pb-4 status-${contact.contactStatus.toLowerCase()}">
+                                        ${contact.contactStatus}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="contactDetails?contactId=${contact.contactId}" class="btn btn-info btn-sm">
+                                        <i class="fa fa-eye"></i> View More
+                                    </a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <script>
-            document.getElementById("statusFilter").addEventListener("change", function () {
-                let status = this.value.toLowerCase();
-                let cards = document.querySelectorAll(".contact");
-                cards.forEach(card => {
-                    let cardStatus = card.querySelector(".contact-status").textContent.trim().toLowerCase();
-                    if (status === "" || cardStatus === status) {
-                        card.style.removeProperty("display"); // Trả về trạng thái CSS gốc
-                    } else {
-                        card.style.display = "none";
-                    }
-                });
-            });
 
+        <script>
+            function filterTable() {
+                let searchFilter = document.getElementById("searchInput").value.toLowerCase();
+                let statusFilter = document.getElementById("statusFilter").value.toLowerCase();
+                let rows = document.querySelectorAll("table tbody tr");
+
+                rows.forEach(row => {
+                    let name = row.cells[0].textContent.toLowerCase();
+                    let email = row.cells[1].textContent.toLowerCase();
+                    let rowStatus = row.querySelector(".status-badge").textContent.trim().toLowerCase();
+
+                    let matchesSearch = name.includes(searchFilter) || email.includes(searchFilter);
+                    let matchesStatus = (statusFilter === "" || rowStatus === statusFilter);
+
+                    row.style.display = (matchesSearch && matchesStatus) ? "" : "none";
+                });
+            }
+
+            document.getElementById("searchInput").addEventListener("keyup", filterTable);
+            document.getElementById("statusFilter").addEventListener("change", filterTable);
         </script>
     </body>
 </html>
