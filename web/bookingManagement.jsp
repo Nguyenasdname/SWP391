@@ -17,16 +17,10 @@
                 padding: 20px;
                 width: calc(100% - 250px);
             }
-            .booking-card {
-                background: white;
-                padding: 15px;
-                border-radius: 10px;
-                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-                margin-bottom: 20px;
-            }
             .status-badge {
                 padding: 5px 10px;
                 border-radius: 5px;
+                display: inline-block;
             }
             .status-confirmed {
                 background-color: darkgreen;
@@ -50,8 +44,16 @@
             }
             .search-container {
                 display: flex;
-                justify-content: space-between;
+                gap: 20px;
                 margin-bottom: 20px;
+            }
+            table {
+                background: white;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            }
+            th, td {
+                vertical-align: middle;
             }
         </style>
     </head>
@@ -66,7 +68,7 @@
 
         <div class="content">
             <h2 class="text-center">Booking Management</h2>
-            <div class="search-container">
+            <div class="search-container d-flex justify-content-between">
                 <input type="text" id="searchInput" class="form-control" placeholder="Search by user or villa name" style="width: 50%;">
                 <select id="statusFilter" class="form-control" style="width: 20%;">
                     <option value="">All Status</option>
@@ -78,55 +80,73 @@
                     <option value="Completed">Completed</option>
                 </select>
             </div>
-            <div id="bookingList" class="row">
-                <c:forEach items="${bookingList}" var="booking">
-                    <div class="col-md-6">
-                        <div class="booking-card p-3">
-                            <h5 class="mb-2">${booking.userFullName ne "null null" ? booking.userFullName : booking.userName}</h5>
-                            <p><strong>Villa: ${booking.villaName}</strong></p>
-                            <p><strong>Guests:</strong> ${booking.numberOfGuest}</p>
-                            <p><strong>Check-in:</strong> ${booking.checkIn} | <strong>Check-out:</strong> ${booking.checkOut}</p>
-                            <p><strong>Booking Date:</strong> ${booking.createDate}</p>
-                            <p><strong>Price:</strong> $${booking.bookingTotal}</p>
-                            <span class="status-badge status-${booking.bookingStatus.toLowerCase()}">${booking.bookingStatus}</span>
-                            <div class="mt-3 d-flex justify-content-between">
-                                <a href="bookingDetails?bookingId=${booking.bookingId}" class="btn btn-warning"><i class="fa fa-eye"></i> View Details</a>
-                                <c:if test="${booking.bookingStatus == 'Confirmed'}">
-                                    <form action="checkIn" method="post">
-                                        <input type="hidden" name="bookingId" value="${booking.bookingId}">
-                                        <button  class="btn btn-warning"><i class="fa fa-sign-in-alt"></i> Check-In</button>
-                                    </form>
-                                </c:if>
-                                <c:if test="${booking.bookingStatus == 'Check-In'}">
-                                    <form action="checkOut" method="post">
-                                        <input type="hidden" name="bookingId" value="${booking.bookingId}">
-                                        <button class="btn btn-success"><i class="fa fa-sign-out-alt"></i> Check-Out</button>
-                                    </form>
-                                </c:if>
-                            </div>
-                        </div>
-                    </div>
-                </c:forEach>
+            <div id="bookingList">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>User</th>
+                            <th>Villa</th>
+                            <th>Guests</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Booking Date</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                            <th>View More</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${bookingList}" var="booking">
+                            <tr>
+                                <td>${booking.userFullName ne "null null" ? booking.userFullName : booking.userName}</td>
+                                <td>${booking.villaName}</td>
+                                <td>${booking.numberOfGuest}</td>
+                                <td>${booking.checkIn}</td>
+                                <td>${booking.checkOut}</td>
+                                <td>${booking.createDate}</td>
+                                <td>$${booking.bookingTotal}</td>
+                                <td><span class="status-badge status-${booking.bookingStatus.toLowerCase()}">${booking.bookingStatus}</span></td>
+                                <td>
+                                    <c:if test="${booking.bookingStatus == 'Confirmed'}">
+                                        <form action="checkIn" method="post" class="d-inline">
+                                            <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                                            <button class="btn btn-warning btn-sm"><i class="fa fa-sign-in-alt"></i>Check-In</button>
+                                        </form>
+                                    </c:if>
+                                    <c:if test="${booking.bookingStatus == 'Check-In'}">
+                                        <form action="checkOut" method="post" class="d-inline">
+                                            <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                                            <button class="btn btn-success btn-sm"><i class="fa fa-sign-out-alt"></i>Check-Out</button>
+                                        </form>
+                                    </c:if>
+                                </td>
+                                <td><a href="bookingDetails?bookingId=${booking.bookingId}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> View</a></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
             </div>
         </div>
         <script>
-            document.getElementById("searchInput").addEventListener("keyup", function () {
-                let filter = this.value.toLowerCase();
-                let cards = document.querySelectorAll(".booking-card");
-                cards.forEach(card => {
-                    let text = card.innerText.toLowerCase();
-                    card.style.display = text.includes(filter) ? "block" : "none";
-                });
-            });
+            function filterTable() {
+                let searchFilter = document.getElementById("searchInput").value.toLowerCase();
+                let statusFilter = document.getElementById("statusFilter").value.toLowerCase();
+                let rows = document.querySelectorAll("table tbody tr");
 
-            document.getElementById("statusFilter").addEventListener("change", function () {
-                let status = this.value.toLowerCase();
-                let cards = document.querySelectorAll(".booking-card");
-                cards.forEach(card => {
-                    let cardStatus = card.querySelector(".status-badge").innerText.toLowerCase();
-                    card.style.display = (status === "" || cardStatus === status) ? "block" : "none";
+                rows.forEach(row => {
+                    let text = row.innerText.toLowerCase();
+                    let rowStatus = row.querySelector(".status-badge").innerText.toLowerCase();
+
+                    let matchesSearch = text.includes(searchFilter);
+                    let matchesStatus = (statusFilter === "" || rowStatus === statusFilter);
+
+                    row.style.display = (matchesSearch && matchesStatus) ? "" : "none";
                 });
-            });
+            }
+
+            document.getElementById("searchInput").addEventListener("keyup", filterTable);
+            document.getElementById("statusFilter").addEventListener("change", filterTable);
         </script>
     </body>
 </html>

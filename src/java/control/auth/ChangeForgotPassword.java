@@ -81,7 +81,7 @@ public class ChangeForgotPassword extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         UserDao userDao = new UserDaoImp();
-
+        
         switch (action) {
             case "nullPass":
 

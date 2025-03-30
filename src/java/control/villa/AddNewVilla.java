@@ -140,7 +140,7 @@ public class AddNewVilla extends HttpServlet {
 
             boolean addVilla = villaDao.addVilla(villa);
             if (addVilla) {
-                response.sendRedirect("profile.jsp");
+                response.sendRedirect("listVilla");
             } else {
                 response.getWriter().print("Đéo ổn bro ơi");
             }

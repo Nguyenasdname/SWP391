@@ -12,7 +12,13 @@
     </head>
     <body>
         <!-- Include Sidebar -->
-        <jsp:include page="adminSideBar.jsp"/>
+        <c:if test="${sessionScope.user.roleId == 1}">
+            <jsp:include page="adminSideBar.jsp"></jsp:include>
+        </c:if>
+        
+        <c:if test="${sessionScope.user.roleId == 3}">
+            <jsp:include page="employeeSideBar.jsp"></jsp:include>
+        </c:if>
 
         <div class="container mt-5" style="margin-left: 250px;">
             <h2>Edit Service</h2>

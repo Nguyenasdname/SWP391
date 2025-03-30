@@ -230,7 +230,7 @@ public class BookingDaoImp implements BookingDao {
         Booking b = null;
         String sql = "Select * \n"
                 + "From Villas v, Booking b, Users u\n"
-                + "Where b.VillaID = v.VillaID and u.UserID = b.VillaID and b.BookingID = ?";
+                + "Where b.VillaID = v.VillaID and u.UserID = b.UserID and b.BookingID = ?";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
             preStatement.setInt(1, bookingId);
