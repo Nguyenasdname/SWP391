@@ -56,12 +56,18 @@ public class AdminAddService extends HttpServlet {
             System.out.println(fileItems);
             for (FileItem fileItem : fileItems) {
                 if (fileItem.isFormField()) {
-                    if (fileItem.getFieldName().equals("serviceName")) {
-                        serviceName = fileItem.getString("UTF-8");
-                    } else if (fileItem.getFieldName().equals("servicePrice")) {
-                        servicePrice = Double.parseDouble(fileItem.getString("UTF-8"));
-                    } else if (fileItem.getFieldName().equals("serviceDescription")) {
-                        serviceDescription = fileItem.getString("UTF-8");
+                    switch (fileItem.getFieldName()) {
+                        case "serviceName":
+                            serviceName = fileItem.getString("UTF-8");
+                            break;
+                        case "servicePrice":
+                            servicePrice = Double.parseDouble(fileItem.getString("UTF-8"));
+                            break;
+                        case "serviceDescription":
+                            serviceDescription = fileItem.getString("UTF-8");
+                            break;
+                        default:
+                            break;
                     }
                 } else {
                     if (fileItem.getFieldName().equals("image") && fileItem.getSize() > 0) {
@@ -85,7 +91,7 @@ public class AdminAddService extends HttpServlet {
             }
 
         // Create a new service object
-        Service newService = new Service(0, serviceDescription, serviceName, servicePrice, new Date(), serviceIMG);
+        Service newService = new Service(0, serviceName, serviceDescription, servicePrice, new Date(), serviceIMG);
 
         // Add the service to the database using ServiceDao
         serviceDaoImp.addService(newService);

@@ -102,7 +102,7 @@
                     <div class="row">
                         <div class="col-lg-8">
                             <br>
-                            <h5>Account detail</h5>
+                            <h5>Edit profile</h5>
                             <div class="row">
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="checkout__form__input">
