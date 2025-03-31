@@ -77,14 +77,21 @@ public class AdminEditService extends HttpServlet {
             System.out.println(fileItems);
             for (FileItem fileItem : fileItems) {
                 if (fileItem.isFormField()) {
-                    if (fileItem.getFieldName().equals("serviceId")) {
-                        serviceName = fileItem.getString("UTF-8");
-                    } else if (fileItem.getFieldName().equals("serviceName")) {
-                        serviceName = fileItem.getString("UTF-8");
-                    } else if (fileItem.getFieldName().equals("servicePrice")) {
-                        servicePrice = Double.parseDouble(fileItem.getString("UTF-8"));
-                    } else if (fileItem.getFieldName().equals("serviceDescription")) {
-                        serviceDescription = fileItem.getString("UTF-8");
+                    switch (fileItem.getFieldName()) {
+                        case "serviceId":
+                            serviceId = Integer.parseInt(fileItem.getString("UTF-8"));
+                            break;
+                        case "serviceName":
+                            serviceName = fileItem.getString("UTF-8");
+                            break;
+                        case "servicePrice":
+                            servicePrice = Double.parseDouble(fileItem.getString("UTF-8"));
+                            break;
+                        case "serviceDescription":
+                            serviceDescription = fileItem.getString("UTF-8");
+                            break;
+                        default:
+                            break;
                     }
                 } else {
                     if (fileItem.getFieldName().equals("image") && fileItem.getSize() > 0) {
@@ -111,17 +118,21 @@ public class AdminEditService extends HttpServlet {
         }
 
         // Create a Service object with the updated data
-        Service Service = serviceDaoImp.getServiceByID(serviceId);
+        Service service = serviceDaoImp.getServiceByID(serviceId);
 
-        if (Service == null) {
+        if (service == null) {
             request.setAttribute("error", "Service not fault");
             request.getRequestDispatcher("editService").forward(request, response);
         }
 
         try {
-
+            service.setServiceName(serviceName);
+            service.setServiceDescription(serviceDescription);
+            service.setServiceIMG(serviceIMG);
+            service.setServicePrice(servicePrice);
+            
             // Update the service in the database
-            serviceDaoImp.updateService(Service);
+            serviceDaoImp.updateService(service);
 
         } catch (Exception e) {
             request.setAttribute("error", e);

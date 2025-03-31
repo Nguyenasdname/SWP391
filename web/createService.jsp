@@ -36,7 +36,7 @@
                         <div class="image-upload">
                             <input name="image" type="file" accept="image/*" id="serviceImage">
                             <i class="bi bi-camera"></i>
-                            <img id="previewImage">
+                            <img id="previewImage" style="display: block; width: 200px">
                         </div>
                     </div>
                 </div>
