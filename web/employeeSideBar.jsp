@@ -48,13 +48,13 @@
             }
         </style>
         <div class="sidebar">
-            <h3><a style="text-decoration: none; color: white" href="adminDashboard"><i class="bi bi-tools"></i> Employee</a></h3>
+            <h3><a style="text-decoration: none; color: white" href="dashboard"><i class="bi bi-tools"></i> Employee</a></h3>
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="index.jsp"><i class="bi bi-house-door"></i> Home</a></li>
                 <li class="nav-item"><a href="profile.jsp"><i class="bi bi-person-circle"></i> Profile</a></li>
-                <li class="nav-item"><a href=""><i class="bi bi-people"></i> Customer</a></li>
+                <li class="nav-item"><a href="listAccount"><i class="bi bi-people"></i> Customer</a></li>
                 <li class="nav-item"><a href="bookingManagement"><i class="bi bi-file-earmark-text"></i></i> Booking List</a></li>
-                <li class="nav-item"><a href="#"><i class="bi bi-cup-hot"></i> Service</a></li>
+                <li class="nav-item"><a href="./admin-get-services"><i class="bi bi-cup-hot"></i> Service</a></li>
             </ul>
         </div>
     </body>

@@ -75,12 +75,13 @@ public class UpdateRole extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int userId = Integer.parseInt(request.getParameter("userId"));
+        int roleId = Integer.parseInt(request.getParameter("newRole"));
         
         UserDao userDao = new UserDaoImp();
         
         User user = userDao.getUserByID(userId);
         
-        user.setRoleId(3);
+        user.setRoleId(roleId);
         
         userDao.updateUser(user);
         

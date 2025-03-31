@@ -100,7 +100,26 @@ public class VillaDaoImp implements VillaDao {
 
     @Override
     public void updateVilla(Villa villa) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "Update Villas set VillaName = ?, VillaDescription = ?, VillaPrice = ?, VillaIMG = ?, VillaCapacity = ?, VillaLocation = ? Where VillaID = ?";
+        try (
+                Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);){
+            
+            preStatement.setString(1, villa.getVillaName());
+            preStatement.setString(2, villa.getVillaDescription());
+            preStatement.setDouble(3, villa.getVillaPrice());
+            preStatement.setString(4, villa.getVillaIMG());
+            preStatement.setInt(5, villa.getVillaCapacity());
+            preStatement.setString(6, villa.getVillaLocation());
+            preStatement.setInt(7, villa.getVillaId());
+            
+            
+            preStatement.executeUpdate();
+            
+            
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        
     }
 
     @Override

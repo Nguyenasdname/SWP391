@@ -101,6 +101,8 @@ public class VillaDetails extends HttpServlet {
             totalStart += feedback.getRating();
         }
         averageRating = (double) totalStart / feedbackList.size();
+        averageRating = Math.round(averageRating * 10.0) / 10.0;
+
         
         request.setAttribute("villa", villa);
         request.setAttribute("feedbackList", feedbackList);

@@ -361,7 +361,7 @@
                 </c:forEach>
 
                 <c:if test="${empty availableVillas}">
-                    <h3 style="text-align: center; color: red">There are no rooms available</h3>
+                    <h3 style="text-align: center; color: red">There are no villas available</h3>
                 </c:if>
 
             </div>

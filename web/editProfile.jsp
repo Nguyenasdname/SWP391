@@ -107,27 +107,27 @@
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="checkout__form__input">
                                         <p>First Name <span>*</span></p>
-                                        <input type="text" name="userFirstName" value="${sessionScope.user.userFirstName}"/>
+                                        <input type="text" name="userFirstName" value="${sessionScope.user.userFirstName}" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="checkout__form__input">
                                         <p>Last Name <span>*</span></p>
-                                        <input type="text" name="userLastName" value="${sessionScope.user.userLastName}"/>
+                                        <input type="text" name="userLastName" value="${sessionScope.user.userLastName}" required/>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="checkout__form__input">
                                         <p>Address <span>*</span></p>
-                                        <input type="text" name="userAddress" required="" value="${sessionScope.user.userAddress}"/>
+                                        <input type="text" name="userAddress" required="" value="${sessionScope.user.userAddress}"required/>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12 col-sm-12">
                                     <div class="checkout__form__input">
                                         <p>Phone <span>*</span></p>
-                                        <input type="text" name="userPhone" value="${sessionScope.user.userPhone}" required=""/>
+                                        <input type="text" name="userPhone" value="${sessionScope.user.userPhone}" required/>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">

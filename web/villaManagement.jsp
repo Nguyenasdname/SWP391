@@ -11,7 +11,6 @@
             body {
                 display: flex;
             }
-
             .content {
                 margin-left: 250px;
                 padding: 20px;
@@ -22,7 +21,6 @@
                 gap: 10px;
                 margin-bottom: 20px;
                 width: 100%;
-                ;
             }
             .villa-card {
                 display: flex;
@@ -47,30 +45,46 @@
                 display: flex;
                 gap: 10px;
             }
-            .addBtn{
+            .addBtn {
                 height: 37.5px;
                 width: 200px;
+            }
+            .status-badge {
+                padding: 5px 10px;
+                border-radius: 5px;
+                color: white;
+                font-size: 0.9em;
+                margin-left: 10px;
+            }
+            .status-available {
+                background-color: #28a745; /* Màu xanh cho Available */
+            }
+            .status-booked {
+                background-color: #dc3545; /* Màu ?? cho Booked */
             }
         </style>
     </head>
     <body>
         <jsp:include page="adminSideBar.jsp"></jsp:include>
 
-            <div class="content">
-                <h2>Villa Management</h2>
-                <div class="search-bar">
-                    <input type="text" id="search" class="form-control mb-3" placeholder="Search...">
-                    <a href="addNewVilla.jsp" class="addBtn btn btn-success"><i class="bi bi-plus"></i> Add New Villa</a>
-                </div>
+        <div class="content">
+            <h2>Villa Management</h2>
+            <div class="search-bar">
+                <input type="text" id="search" class="form-control mb-3" placeholder="Search...">
+                <a href="addNewVilla.jsp" class="addBtn btn btn-success"><i class="bi bi-plus"></i> Add New Villa</a>
+            </div>
             <c:forEach items="${villaList}" var="villa">
                 <div class="villa-card">
                     <img src="${villa.villaIMG}" alt="Villa Image">
                     <div class="villa-info">
-                        <h5>${villa.villaName}</h5>
+                        <h5>
+                            ${villa.villaName}
+                            <span class="status-badge status-${villa.villaStatus.toLowerCase()}">${villa.villaStatus}</span>
+                        </h5>
                     </div>
                     <div class="villa-actions">
-                        <a href="" class="btn btn-info">View More Details</a>
-                        <a class="btn btn-warning">Edit Villa</a>
+                        <a href="villaDetails?villaId=${villa.villaId}" class="btn btn-info">View More Details</a>
+                        <a href="editVilla?villaId=${villa.villaId}" class="btn btn-warning">Edit Villa</a>
                     </div>
                 </div>
             </c:forEach>
