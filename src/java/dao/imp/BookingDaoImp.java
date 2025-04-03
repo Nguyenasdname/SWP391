@@ -38,7 +38,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                 }
             }
@@ -80,7 +82,7 @@ public class BookingDaoImp implements BookingDao {
 
     @Override
     public void updateBooking(Booking booking) {
-        String sql = "UPDATE Booking SET UserID = ?, VillaID = ?, CheckIn = ?, CheckOut = ?, BookingTotal = ?, BookingStatus = ?, NumberOfGuest = ? WHERE BookingID = ?";
+        String sql = "UPDATE Booking SET UserID = ?, VillaID = ?, CheckIn = ?, CheckOut = ?, BookingTotal = ?, BookingStatus = ?, NumberOfGuest = ?, OriginalPrice = ?, PaidAmount = ?, WHERE BookingID = ?";
         try (
                 Connection con = ConnectionDatabase.getConnection(); PreparedStatement preStatement = con.prepareStatement(sql);) {
             preStatement.setInt(1, booking.getUserId());
@@ -90,7 +92,9 @@ public class BookingDaoImp implements BookingDao {
             preStatement.setDouble(5, booking.getBookingTotal());
             preStatement.setString(6, booking.getBookingStatus());
             preStatement.setInt(7, booking.getNumberOfGuest());
-            preStatement.setInt(8, booking.getBookingId());
+            preStatement.setDouble(8, booking.getOriginalPrice());
+            preStatement.setDouble(9, booking.getPaidAmount());
+            preStatement.setInt(10, booking.getBookingId());
 
             preStatement.executeUpdate();
         } catch (Exception e) {
@@ -123,7 +127,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                 }
             }
@@ -151,7 +157,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                 }
             }
@@ -180,7 +188,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                 }
             }
@@ -193,7 +203,7 @@ public class BookingDaoImp implements BookingDao {
     @Override
     public ArrayList<Booking> getListBookingByUserId(int userId) {
         ArrayList<Booking> bookingList = new ArrayList<>();
-        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName, b.NumberOfGuest\n"
+        String sql = "SELECT b.BookingID, b.VillaID, b.UserID, b.CheckIn, b.CheckOut, b.BookingStatus, b.CreateDate,  b.BookingTotal, v.VillaName, b.NumberOfGuest, b.OriginalPrice, b.PaidAmount\n"
                 + "FROM Booking b  \n"
                 + "JOIN Villas v ON b.VillaID = v.VillaID \n"
                 + "WHERE b.UserID = ? ORDER BY b.CreateDate DESC";
@@ -213,7 +223,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                     b.setVillaName(resultSet.getString("VillaName"));
                     bookingList.add(b);
@@ -245,7 +257,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                     b.setVillaName(resultSet.getString("VillaName"));
                     b.setUserFullName(resultSet.getString("UserLastName") + " " + resultSet.getString("UserFirstName"));
@@ -314,7 +328,9 @@ public class BookingDaoImp implements BookingDao {
                             resultSet.getString("BookingStatus"),
                             resultSet.getDate("CreateDate"),
                             resultSet.getDouble("BookingTotal"),
-                            resultSet.getInt("NumberOfGuest")
+                            resultSet.getInt("NumberOfGuest"),
+                            resultSet.getDouble("OriginalPrice"),
+                            resultSet.getDouble("PaidAmount")
                     );
                     b.setVillaName(resultSet.getString("VillaName"));
                     b.setUserFullName(resultSet.getString("UserLastName") + " " + resultSet.getString("UserFirstName"));

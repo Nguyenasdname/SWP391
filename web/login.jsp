@@ -49,7 +49,7 @@
                                 style="background-image: url(img/bg-1.jpg)"
                                 ></div>
                             <h3 style="text-align: center; color: green">${success}</h3>
-                            <h5 class="fs-5" style="text-align: center; color: red">${accountMessage}</h5>
+                            <h5 class="fs-5" style="text-align: center; color: red">${accountMessage != null ? accountMessage : param.accountMessage}</h5>
                             <div class="login-wrap p-4 p-md-5">
                                 <div class="d-flex">
                                     <div class="w-100">
@@ -58,7 +58,7 @@
                                     <div class="w-100">
                                         <p class="social-media d-flex justify-content-end">
                                             <a
-                                                href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingResort/loginViaGoogle&response_type=code&client_id=737984428384-jtleetlqjdtt74u7jd38usd88i1b5dsm.apps.googleusercontent.com&approval_prompt=force"
+                                                href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=https://close-sponge-excited.ngrok-free.app/BookingResort/loginViaGoogle&response_type=code&client_id=737984428384-jtleetlqjdtt74u7jd38usd88i1b5dsm.apps.googleusercontent.com&approval_prompt=force"
                                                 class="social-icon d-flex align-items-center justify-content-center"
                                                 ><span class="fa-brands fa-google"></span
                                                 ></a>

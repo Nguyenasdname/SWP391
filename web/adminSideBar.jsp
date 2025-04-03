@@ -51,7 +51,7 @@
             <h3><a style="text-decoration: none; color: white" href="dashboard"><i class="bi-shield-lock"></i> Admin</a></h3>
             <ul class="nav flex-column">
                 <li class="nav-item"><a href="index.jsp"><i class="bi bi-house-door"></i> Home</a></li>
-                <li class="nav-item"><a href="profile.jsp"><i class="bi bi-person-circle"></i> Profile</a></li>
+                <li class="nav-item"><a href="profile"><i class="bi bi-person-circle"></i> Profile</a></li>
                 <li class="nav-item"><a href="listAccount"><i class="bi bi-people"></i> Account</a></li>
                 <li class="nav-item"><a href="listVilla"><i class="bi bi-houses"></i> Villa</a></li>
                 <li class="nav-item"><a href="bookingManagement"><i class="bi bi-file-earmark-text"></i></i> Booking List</a></li>

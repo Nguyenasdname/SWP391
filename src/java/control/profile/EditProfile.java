@@ -92,8 +92,8 @@ public class EditProfile extends HttpServlet {
         String userLastName = user.getUserLastName();
         String userAddress = user.getUserAddress();
         String userPhone = user.getUserPhone();
-
         UserDao userDao = new UserDaoImp();
+        String referer = "index.jsp";
 
         String imgUrl = user.getUserIMG();
         try {
@@ -113,6 +113,8 @@ public class EditProfile extends HttpServlet {
                         userAddress = fileItem.getString("UTF-8");
                     } else if (fileItem.getFieldName().equals("userPhone")) {
                         userPhone = fileItem.getString("UTF-8");
+                    } else if (fileItem.getFieldName().equals("referer")) {
+                        referer = fileItem.getString("UTF-8");
                     }
                 } else {
 
@@ -142,10 +144,11 @@ public class EditProfile extends HttpServlet {
             user.setUserIMG(imgUrl);
 
             userDao.updateUser(user);
-            
+
             session.setAttribute("user", user);
 
-            response.sendRedirect("profile");
+            request.setAttribute("referer", referer);
+            request.getRequestDispatcher("profile.jsp?").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();

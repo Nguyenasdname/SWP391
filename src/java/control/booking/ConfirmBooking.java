@@ -113,7 +113,7 @@ public class ConfirmBooking extends HttpServlet {
 
             VillaDao villaDao = new VillaDaoImp();
 
-            Booking newbooking = new Booking(1, user.getUserId(), villaId, fromDate, toDate, "Pending", null, totalPrice, numberOfGuest);
+            Booking newbooking = new Booking(1, user.getUserId(), villaId, fromDate, toDate, "Pending", null, totalPrice, numberOfGuest, totalPrice, 0);
 
             boolean bookingCheck = bookingDao.addBooking(newbooking);
 

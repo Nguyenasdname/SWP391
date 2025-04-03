@@ -63,6 +63,22 @@
                 <a href="${param.referer}" class="btn btn-primary mt-3">Back</a>
             </div>
         </c:if>
+        <c:if test="${param.action == '404'}">
+            <div class="notification-card">
+                <h3 class="text-danger">Oops! Page Not Found</h3>
+                <p>This Feature Will Comming Soon</p>
+                <p>You will be redirected in <span id="countdown">10</span> seconds...</p>
+                <a href="index.jsp" class="btn btn-primary mt-3">Back</a>
+            </div>
+        </c:if>
+        <c:if test="${param.action == '500'}">
+            <div class="notification-card">
+                <h3 class="text-danger">Internal Server Error!</h3>
+                <p>Some Thing Is Missing!</p>
+                <p>You will be redirected in <span id="countdown">10</span> seconds...</p>
+                <a href="index.jsp" class="btn btn-primary mt-3">Back</a>
+            </div>
+        </c:if>
 
 
 

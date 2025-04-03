@@ -141,6 +141,8 @@
                         <th>Check-in</th>
                         <th>Check-out</th>
                         <th>Booking Date</th>
+                        <th>Original Price</th>
+                        <th>Paid Amount</th>
                         <th>Total Price</th>
                     </tr>
                 </thead>
@@ -151,6 +153,8 @@
                         <td>${booking.checkIn}</td>
                         <td>${booking.checkOut}</td>
                         <td>${booking.createDate}</td>
+                        <td>$${booking.originalPrice}</td>
+                        <td>$${booking.paidAmount}</td>
                         <td>$${booking.bookingTotal}</td>
                     </tr>
                 </tbody>
@@ -180,7 +184,8 @@
             </table>
 
             <hr>
-            <h4 class="mt-4">Total: $${booking.bookingTotal}</h4>
+            <h3 class="mt-4">Original Price: $${booking.originalPrice}</h3>
+            <h4 class="mt-2">Total: $${booking.bookingTotal}</h4>
             <!-- Buttons -->
             <div class="d-flex justify-content-between mt-4">
                 <a href="${referer}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
@@ -208,11 +213,13 @@
                             <button  class="btn btn-warning"><i class="fa fa-sign-in-alt"></i> Check-In</button>
                         </form>
                     </c:if>
-                    <c:if test="${booking.bookingStatus == 'Check-In'}">
-                        <form action="checkOut" method="post">
-                            <input type="hidden" name="bookingId" value="${booking.bookingId}">
-                            <button class="btn btn-success"><i class="fa fa-sign-out-alt"></i> Check-Out</button>
-                        </form>
+                    <c:if test="${sessionScope.user.roleId eq 2}">
+                        <c:if test="${booking.bookingStatus == 'Check-In'}">
+                            <form action="checkOut" method="post">
+                                <input type="hidden" name="bookingId" value="${booking.bookingId}">
+                                <button class="btn btn-success"><i class="fa fa-sign-out-alt"></i> Check-Out</button>
+                            </form>
+                        </c:if>
                     </c:if>
                 </c:if>
             </div>

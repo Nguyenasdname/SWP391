@@ -95,6 +95,8 @@ public class ConfirmAddMoreService extends HttpServlet {
         BookingServiceDao bookingServiceDao = new BookingServiceDaoImp();
 
         if (selectedServices != null) {
+            double newOriginalPrice = booking.getOriginalPrice() + (totalPrice - booking.getBookingTotal());
+            booking.setOriginalPrice(newOriginalPrice);
             booking.setBookingTotal(totalPrice);
             bookingDao.updateBooking(booking);
 

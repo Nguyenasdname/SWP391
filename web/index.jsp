@@ -54,7 +54,8 @@
                 box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
             }
         </style>
-
+        
+        
     </head>
     <body>
 
@@ -160,19 +161,6 @@
                                 <div class="facilities-img set-bg" data-setbg="${item.image}" style="background-image: url(&quot;${item.image}&quot;);"></div>
                             </div>
                         </c:forEach>
-                        <!--                                                    <div class="col-lg-6 p-0 order-lg-1 order-2">
-                                                                                <div class="facilities-text-warp">
-                                                                                    <div class="facilities-text">
-                                                                                        <h2>Wellness Center</h2>
-                                                                                        <p>Lorem ipsum dolor sit amet, consectetur adipis-cing elit. Mauris tincidunt consectetur
-                                                                                            turpis, eget consequat.</p>
-                                                                                        <a href="#" class="primary-btn fac-btn">Visit Center <i class="lnr lnr-arrow-right"></i></a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="col-lg-6 p-0 order-lg-2 order-1">
-                                                                                <div class="facilities-img set-bg" data-setbg="img/facilities-2.jpg"></div>
-                                                                            </div>-->
                     </div>
                 </div>
             </div>

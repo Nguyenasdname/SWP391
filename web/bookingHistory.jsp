@@ -129,6 +129,8 @@
                             <th style="width: 190px">Check-in</th>
                             <th style="width: 190px">Check-out</th>
                             <th style="width: 120px">People</th>
+                            <th style="width: 120px">Original Price</th>
+                            <th style="width: 120px">Total Paid</th>
                             <th style="width: 180px">Total Price</th>
                             <th>Status</th>
                             <th>Booking Date</th>
@@ -143,6 +145,8 @@
                                 <td>${booking.checkIn}</td>
                                 <td>${booking.checkOut}</td>
                                 <td>${booking.numberOfGuest}</td>
+                                <td>${booking.originalPrice}</td>
+                                <td class="text-success">${booking.paidAmount}</td>
                                 <td>$${booking.bookingTotal}</td>
                                 <td>
                                     <c:choose>

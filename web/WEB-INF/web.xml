@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet-name>ConfirmBooking</servlet-name>
-    <filter-mapping>
-        <filter-name>CharacterEncodingFilter</filter-name>
-        <url-pattern/>
-    </filter-mapping>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/check.jsp?action=404</location>
+    </error-page>
+
+    <!-- Xử lý lỗi 500 -->
+    <error-page>
+        <error-code>500</error-code>
+        <location>/check.jsp?action=500</location>
+    </error-page>
+
+    <!-- Xử lý lỗi 401 -->
+    <error-page>
+        <error-code>401</error-code>
+        <location>/check.jsp?action=401</location>
+    </error-page>
+
+    <!-- Xử lý ngoại lệ chung (ví dụ: NullPointerException) -->
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/error500.jsp</location>
+    </error-page>
     <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>control.auth.Login</servlet-class>
@@ -363,8 +381,10 @@
         </filter-mapping>
     </filter>
     <multipart-config>
-        <max-file-size>10485760</max-file-size>  <!-- 10MB -->
-        <max-request-size>20971520</max-request-size>  <!-- 20MB -->
+        <max-file-size>10485760</max-file-size>
+        <!-- 10MB -->
+        <max-request-size>20971520</max-request-size>
+        <!-- 20MB -->
         <file-size-threshold>0</file-size-threshold>
     </multipart-config>
 </web-app>

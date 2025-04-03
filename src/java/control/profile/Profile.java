@@ -58,9 +58,6 @@ public class Profile extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String referer = request.getHeader("referer");
-        if(referer.contains("editProfile")){
-            referer = "index.jsp";
-        }
         
         request.setAttribute("referer", referer);
         
