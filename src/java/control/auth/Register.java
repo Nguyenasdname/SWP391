@@ -75,54 +75,63 @@ public class Register extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String userName = request.getParameter("userName");
-        String userPass = request.getParameter("userPass");
-        String confirmPass = request.getParameter("confirmPass");
-        String userEmail = request.getParameter("userEmail");
 
-        JavaMail jvm = new JavaMailImp();
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String userName = request.getParameter("userName");
+    String userPass = request.getParameter("userPass");
+    String confirmPass = request.getParameter("confirmPass");
+    String userEmail = request.getParameter("userEmail");
 
-        UserDao userDao = new UserDaoImp();
+    JavaMail jvm = new JavaMailImp();
+    UserDao userDao = new UserDaoImp();
 
-        User checkUser = null;
+    User checkUser = null;
+    User newUser = null;
 
-        User newUser = null;
+    // Kiểm tra xem email có phải là @gmail.com không
+    if (!userEmail.toLowerCase().endsWith("@gmail.com")) {
+        request.setAttribute("errorMessage", "Email phải có đuôi @gmail.com!");
+        request.setAttribute("thisUserName", userName);
+        request.setAttribute("thisUserEmail", userEmail);
+        request.getRequestDispatcher("register.jsp").forward(request, response);
+        return;
+    }
 
-        if (!userPass.equals(confirmPass)) {
-            request.setAttribute("confirmPassError", "Not Correct Password!");
+    if (!userPass.equals(confirmPass)) {
+        request.setAttribute("confirmPassError", "Not Correct Password!");
+        request.setAttribute("thisUserName", userName);
+        request.setAttribute("thisUserEmail", userEmail);            
+        request.getRequestDispatcher("register.jsp").forward(request, response);
+    } else {
+        checkUser = userDao.isUserExists(userName.toLowerCase(), userEmail.toLowerCase());
+
+        if (checkUser != null) {
+            if (userName.equals(checkUser.getUserName())) {
+                request.setAttribute("errorMessage", "Already have this username, please choose another!");
+            } else if (userEmail.equals(checkUser.getUserEmail())) {
+                request.setAttribute("errorMessage", "Already have this email, please choose another!");
+            }
             request.setAttribute("thisUserName", userName);
-            request.setAttribute("thisUserEmail", userEmail);            
+            request.setAttribute("thisUserEmail", userEmail);
             request.getRequestDispatcher("register.jsp").forward(request, response);
         } else {
-            checkUser = userDao.isUserExists(userName.toLowerCase(), userEmail.toLowerCase());
+            newUser = new User(1, userName.toLowerCase(), userEmail.toLowerCase(), userPass, null, null, "Active", 2, null, null, null, null);
+            
+            newUser.setUserIMG("https://www.whiskas.in/sites/g/files/fnmzdf2051/files/2024-10/cat-play.png");
+            newUser.setUserCode(jvm.generatedOTP());
 
-            if (checkUser != null) {
-                if (userName.equals(checkUser.getUserName())) {
-                    request.setAttribute("errorMessage", "Already have this username, please choose another!");
-                } else if (userEmail.equals(checkUser.getUserEmail())) {
-                    request.setAttribute("errorMessage", "Already have this email, please choose another!");
-                }
-                request.setAttribute("thisUserName", userName);
-                request.setAttribute("thisUserEmail", userEmail);
-                request.getRequestDispatcher("register.jsp").forward(request, response);
-            } else {
-                newUser = new User(1, userName.toLowerCase(), userEmail.toLowerCase(), userPass, null, null, "Active", 2, null, null, null, null);
-                
-                newUser.setUserIMG("https://www.whiskas.in/sites/g/files/fnmzdf2051/files/2024-10/cat-play.png");
-                newUser.setUserCode(jvm.generatedOTP());
+            boolean sendMail = jvm.sendVerifyOTP(newUser);
 
-                boolean sendMail = jvm.sendVerifyOTP(newUser);
-
-                if (sendMail) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", newUser);
-                    response.sendRedirect("verify.jsp?action=register");
-                }
+            if (sendMail) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", newUser);
+                response.sendRedirect("verify.jsp?action=register");
             }
         }
     }
+}
+
 
     /**
      * Returns a short description of the servlet.
