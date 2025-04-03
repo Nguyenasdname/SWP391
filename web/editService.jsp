@@ -22,7 +22,7 @@
 
         <div class="container mt-5" style="margin-left: 250px;">
             <h2>Edit Service</h2>
-            <form action="./createServiceAction" method="post" enctype="multipart/form-data">
+            <form action="./admin-edit-service" method="post" enctype="multipart/form-data">
                 <input type="hidden" name="serviceId" value="${service.serviceId}" />
                 <div class="mb-3">
                     <label for="serviceName" class="form-label">Service Name</label>
