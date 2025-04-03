@@ -11,15 +11,12 @@ import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
@@ -83,7 +80,6 @@ public class AdminAddService extends HttpServlet {
                                     "overwrite", true,
                                     "resource_type", "image"
                             ));
-                            System.out.println(uploadResult);
                             serviceIMG = (String) uploadResult.get("secure_url");
                         }
                     }

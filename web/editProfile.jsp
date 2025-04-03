@@ -152,35 +152,63 @@
         </section>
         <!-- Checkout Section End -->
 
-        <script>
-//         
-            document.addEventListener("DOMContentLoaded", function () {
-                var imageUrl = "${sessionScope.user.userIMG}";
-                var preview = document.getElementById("preview");
-                var placeholder = document.getElementById("placeholder");
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var imageUrl = "${sessionScope.user.userIMG}";
+        var preview = document.getElementById("preview");
+        var placeholder = document.getElementById("placeholder");
 
-                if (imageUrl) {
-                    preview.src = imageUrl;
-                    preview.style.display = "block";
-                    placeholder.style.display = "none";
-                }
-            });
+        if (imageUrl) {
+            preview.src = imageUrl;
+            preview.style.display = "block";
+            placeholder.style.display = "none";
+        }
 
-            function changeAvatar() {
-                var input = document.querySelector("#avatar");
-                var preview = document.querySelector("#preview");
-                var placeholder = document.querySelector("#placeholder");
-                var avatarValue = document.querySelector("#avatarValue");
+        // Bắt sự kiện kiểm tra số điện thoại khi nhập
+        document.querySelector("input[name='userPhone']").addEventListener("input", function () {
+            validatePhoneNumber(this);
+        });
 
-                if (input.files && input.files[0]) {
-                    preview.src = URL.createObjectURL(input.files[0]);
-                    preview.style.display = "block";
-                    placeholder.style.display = "none";
-                    avatarValue.value = "img/" + input.files[0].name;
-                }
+        // Kiểm tra số điện thoại khi gửi form
+        document.querySelector(".checkout__form").addEventListener("submit", function (event) {
+            var phoneInput = document.querySelector("input[name='userPhone']");
+            if (!validatePhoneNumber(phoneInput)) {
+                event.preventDefault(); // Ngăn chặn việc gửi form nếu số điện thoại không hợp lệ
             }
+        });
+    });
 
-        </script>
+    function validatePhoneNumber(input) {
+        var phonePattern = /^[0-9]{10}$/;
+        var phoneValue = input.value;
+        var isValid = phonePattern.test(phoneValue);
+
+        if (!isValid) {
+            input.style.borderColor = "red";
+            input.setCustomValidity("Số điện thoại không đúng");
+        } else {
+            input.style.borderColor = "";
+            input.setCustomValidity("");
+        }
+
+        return isValid;
+    }
+
+    function changeAvatar() {
+        var input = document.querySelector("#avatar");
+        var preview = document.querySelector("#preview");
+        var placeholder = document.querySelector("#placeholder");
+        var avatarValue = document.querySelector("#avatarValue");
+
+        if (input.files && input.files[0]) {
+            preview.src = URL.createObjectURL(input.files[0]);
+            preview.style.display = "block";
+            placeholder.style.display = "none";
+            avatarValue.value = "img/" + input.files[0].name;
+        }
+    }
+</script>
+
 
     </body>
 </html> 
