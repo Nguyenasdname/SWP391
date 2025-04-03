@@ -92,7 +92,7 @@ public class Login extends HttpServlet {
                 request.setAttribute("accountMessage", "Your Account Has Been Banned!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-            else {
+            else{
 
                 HttpSession session = request.getSession(false);
                 if (session == null) {

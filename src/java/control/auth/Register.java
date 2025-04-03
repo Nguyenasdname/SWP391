@@ -93,7 +93,7 @@ public class Register extends HttpServlet {
         if (!userPass.equals(confirmPass)) {
             request.setAttribute("confirmPassError", "Not Correct Password!");
             request.setAttribute("thisUserName", userName);
-            request.setAttribute("thisUserEmail", userEmail);            
+            request.setAttribute("thisUserEmail", userEmail);
             request.getRequestDispatcher("register.jsp").forward(request, response);
         } else {
             checkUser = userDao.isUserExists(userName.toLowerCase(), userEmail.toLowerCase());
@@ -109,17 +109,23 @@ public class Register extends HttpServlet {
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             } else {
                 newUser = new User(1, userName.toLowerCase(), userEmail.toLowerCase(), userPass, null, null, "Active", 2, null, null, null, null);
-                
-                newUser.setUserIMG("https://www.whiskas.in/sites/g/files/fnmzdf2051/files/2024-10/cat-play.png");
+
+                newUser.setUserIMG("https://phongvu.vn/cong-nghe/wp-content/uploads/2024/09/Meme-meo-gian-doi.jpg");
                 newUser.setUserCode(jvm.generatedOTP());
 
-                boolean sendMail = jvm.sendVerifyOTP(newUser);
+                User u = newUser;
 
-                if (sendMail) {
-                    HttpSession session = request.getSession();
-                    session.setAttribute("user", newUser);
-                    response.sendRedirect("verify.jsp?action=register");
-                }
+                new Thread(() -> {
+                    boolean sendMail = jvm.sendVerifyOTP(u);
+
+                    if (sendMail) {
+
+                    }
+                }).start();
+
+                HttpSession session = request.getSession();
+                session.setAttribute("user", newUser);
+                response.sendRedirect("verify.jsp?action=register");
             }
         }
     }

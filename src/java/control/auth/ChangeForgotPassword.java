@@ -96,7 +96,7 @@ public class ChangeForgotPassword extends HttpServlet {
 
                 } else {
                     request.setAttribute("errorMessage", "Not Correct Password!");
-                    request.getRequestDispatcher("resetPass.jsp?action=" + action).forward(request, response);
+                    request.getRequestDispatcher("resetPassword.jsp?action=" + action).forward(request, response);
                 }
 
                 break;

@@ -144,6 +144,7 @@
 
                     </div>
                     <input type="hidden" value="user" name="status">
+                    <input type="hidden" value="${param.referer}" name="referer">
                     <button type="submit" class="site-btn">Update</button>
 
                 </form>

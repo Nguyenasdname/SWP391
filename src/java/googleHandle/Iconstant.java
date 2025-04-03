@@ -14,7 +14,7 @@ public class Iconstant {
 
     public static final String GOOGLE_CLIENT_SECRET = "";
 
-    public static final String GOOGLE_REDIRECT_URI = "http://localhost:8080/BookingResort/loginViaGoogle";
+    public static final String GOOGLE_REDIRECT_URI = "https://close-sponge-excited.ngrok-free.app/BookingResort/loginViaGoogle";
 
     public static final String GOOGLE_GRANT_TYPE = "authorization_code";
 

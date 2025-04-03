@@ -47,7 +47,7 @@
                 align-items: center; /* Căn giữa icon theo chiều dọc */
                 justify-content: center; /* Căn giữa icon theo chiều ngang */
                 transition: 0.6s ease
-                
+
             }
             .addWishlist:hover{
                 box-shadow: 0 0 10px rgba(0, 0, 0, 5);
@@ -179,7 +179,7 @@
                         <div class="villa-image">
                             <img src="${villa.villaIMG}" alt="Villa Image">
                             <c:if test="${sessionScope.user ne null}">
-                                <form action="addToWishlist?userId=${sessionScope.user.userId}&villaId=${villa.villaId}" method="post">
+                                <form action="addToWishlist?userId=${sessionScope.user.userId}&villaId=${villa.villaId}&referer=${referer}" method="post">
                                     <button type="submit" class="addWishlist"><i class="iconWishlist fa-heart ${isInWishlist ? 'fas' : 'far'} heart-wishlish"></i></button>
                                 </form>
                             </c:if>
@@ -256,7 +256,7 @@
 
                 <!-- Nút Back và Book Now -->
                 <div class="mt-4 d-flex justify-content-between">
-                    <a href="${originalURL}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
+                    <a href="${referer}" class="btn btn-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                     <!--<a href="booking?villaId=${villa.villaId}&fromDate=${fromDate}&toDate=${toDate}&numberOfGuest=${numberOfGuest}" class="btn btn-primary">Book Now</a>-->
                     <a href="javascript:void(0);" id="bookNowBtn" class="btn btn-primary">Book Now</a>
 
@@ -323,11 +323,11 @@
                             </div>
 
                             <p id="comment-${feedback.feedbackId}">${feedback.comment}</p>
-
+                            <input type="text" name="feedbackId" value="${feedback.feedbackId}">
                             <!-- Form chỉnh sửa (ẩn mặc định) -->
                             <div id="edit-form-${feedback.feedbackId}" style="display: none;">
                                 <form action="editFeedBack" method="post">
-                                    <input type="hidden" name="feedbackId" value="${feedback.feedbackId}">
+                                    <input type="text" name="feedbackId" value="${feedback.feedbackId}">
                                     <input type="hidden" name="villaId" value="${villa.villaId}">
                                     <input type="hidden" name="userId" value="${sessionScope.user.userId}">
                                     <input type="hidden" name="fromDate" value="${param.fromDate}">
@@ -342,7 +342,7 @@
                                         <span class="star" data-value="4"></span>
                                         <span class="star" data-value="5"></span>
                                     </div>
-                                    <input type="hidden" name="rating" id="rating-value-edit">
+                                    <input type="hidden" name="rating" id="rating-value-edit" value="${feedback.rating}">
 
 
                                     <label>Comment:</label>

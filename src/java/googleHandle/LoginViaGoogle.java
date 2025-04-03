@@ -39,8 +39,7 @@ public class LoginViaGoogle extends HttpServlet {
         GoogleLogin gg = new GoogleLogin();
         String accessToken = gg.getToken(code);
         GoogleAccount acc = gg.getUserInfor(accessToken);
-        
-        
+
         UserDao userDao = new UserDaoImp();
 
         User user = userDao.isUserExists(acc.getName(), acc.getEmail());
@@ -48,11 +47,18 @@ public class LoginViaGoogle extends HttpServlet {
 
         if (user != null) {
 
-            session.setAttribute("user", user);
-            response.sendRedirect("index.jsp?RoleId=" + user.getRoleId());
+            if (user.getUserStatus().equals("Banned")) {
+                request.setAttribute("accountMessage", "Your Account Has Been Banned!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            } else {
+                session.setAttribute("user", user);
+                response.sendRedirect("index.jsp");
+            }
+
         } else {
             String userName = acc.getEmail().split("@")[0];
             User newUser = new User(1, userName, acc.getEmail(), null, null, null, "Active", 2, null, null, null, null);
+            newUser.setUserIMG("https://phongvu.vn/cong-nghe/wp-content/uploads/2024/09/Meme-meo-gian-doi.jpg");
             userDao.addUser(newUser);
 
             user = userDao.getUserByUserName(newUser.getUserName());

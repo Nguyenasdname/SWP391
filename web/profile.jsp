@@ -150,11 +150,10 @@
                         <div style="width: 300px;height: 300px;border-radius: 50px; overflow:hidden" class="col-lg-4">
                             <img style="width: 300px; height: 300px; object-fit: cover;" class="avatar" src="${sessionScope.user.userIMG}" alt=""/>  
                         </div>
-
                     </div>
                 </form>
 
-                <a href="editProfile.jsp" style="" class="site-btn mb-5">Edit Profile</a>   
+                <a href="editProfile.jsp?referer=${referer}" style="" class="site-btn mb-5">Edit Profile</a>   
 
                 <a href="${referer}" class="site-btn mb-5"><i class="fa fa-arrow-left"></i> Back</a>
             </div>

@@ -76,10 +76,10 @@ public class VillaDetails extends HttpServlet {
         String fromDate = request.getParameter("fromDate");
         String toDate = request.getParameter("toDate");
         String numberOfGuest = request.getParameter("numberOfGuest");
-        String originalURL = request.getHeader("Referer");
+        String referer = request.getHeader("Referer");
         
-        if(originalURL.contains("villaDetails?")){
-            originalURL = "villaAvailable?action=listAll";
+        if(referer.contains("villaDetails?")){
+            referer = "villaAvailable?action=listAll";
         }
         
         VillaDao villaDao = new VillaDaoImp();
@@ -111,7 +111,7 @@ public class VillaDetails extends HttpServlet {
         request.setAttribute("averageRating", averageRating);
         request.setAttribute("numberOfGuest", numberOfGuest);
         request.setAttribute("reviews", feedbackList.size());
-        request.setAttribute("originalURL", originalURL);
+        request.setAttribute("referer", referer);
         request.setAttribute("wishlist", wishlist);
         
         request.getRequestDispatcher("villaDetails.jsp").forward(request, response);

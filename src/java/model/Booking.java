@@ -25,8 +25,10 @@ public class Booking {
     private String villaName; 
     private String userFullName;
     private String userName;
+    private double originalPrice;
+    private double paidAmount;
 
-    public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal, int numberOfGuest) {
+    public Booking(int bookingId, int userId, int villaId, Date checkIn, Date checkOut, String bookingStatus, Date createDate, double bookingTotal, int numberOfGuest, double originalPrice, double paidAmount) {
         this.bookingId = bookingId;
         this.userId = userId;
         this.villaId = villaId;
@@ -36,6 +38,8 @@ public class Booking {
         this.createDate = createDate;
         this.bookingTotal = bookingTotal;
         this.numberOfGuest = numberOfGuest;
+        this.originalPrice = originalPrice;
+        this.paidAmount = paidAmount;
     }
 
     public Booking() {
@@ -144,6 +148,24 @@ public class Booking {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+
+    public double getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(double originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
+    public double getPaidAmount() {
+        return paidAmount;
+    }
+
+    public void setPaidAmount(double paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+    
+    
 
     @Override
     public String toString() {

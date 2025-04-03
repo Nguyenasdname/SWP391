@@ -13,7 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.User;
 
-@WebFilter({"/confirmBooking", "/bookingHistory", "/bookingDetails", "/showContact", "/login"}) // Chặn nhiều Servlet nếu cần
+@WebFilter({"/confirmBooking", "/bookingHistory", "/bookingDetails", "/showContact", "/login", "/listVilla", "/bookingManagement", "/contactManagement", "/contactDetails", "/transaction", "/listAccount", "/allVillaInWishlist"})
+
 public class LoginFilter implements Filter {
 
     @Override
@@ -25,17 +26,11 @@ public class LoginFilter implements Filter {
         HttpSession session = req.getSession(false);
 
         if (session == null || session.getAttribute("user") == null) {
-            String originalURL = req.getHeader("Referer");
-            if (session != null) {
-                session.setAttribute("originalURL", originalURL);
-            }
-            res.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!&originalURL=" + originalURL);
+           
+            res.sendRedirect("login.jsp?alertMessage=You Need To Login To Continue!");
             return;
         }
-
-        // Lấy userStatus từ session
-
-        chain.doFilter(request, response); // Cho phép request tiếp tục nếu đã đăng nhập hợp lệ
+        chain.doFilter(request, response);
     }
 
     @Override

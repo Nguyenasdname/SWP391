@@ -80,31 +80,33 @@ public class ReplyContact extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        
+
         int contactId = Integer.parseInt(request.getParameter("contactId"));
-        
+
         String subtitle = request.getParameter("subtitle");
-        
+
         String replyContent = request.getParameter("replyContent");
-        
+
         ContactDao contactDao = new ContactDaoImp();
-        
+
         UserDao userDao = new UserDaoImp();
-        
+
         JavaMail jvm = new JavaMailImp();
-        
+
         Contact contact = contactDao.getContactByID(contactId);
-        
+
         String userEmail = userDao.getUserByID(contact.getUserId()).getUserEmail();
-        
+
         contactDao.setSeenContactByID(contactId);
-        boolean sendEmail = jvm.sendReplyContact(subtitle, replyContent, userEmail, contact.getContactContent());
-        
-        if(sendEmail){
-            response.sendRedirect("contactDetails?contactId="+contactId);
-        }
-        
-        
+
+        new Thread(() -> {
+            boolean sendEmail = jvm.sendReplyContact(subtitle, replyContent, userEmail, contact.getContactContent());
+
+            if (sendEmail) {
+                
+            }
+        }).start();
+        response.sendRedirect("contactDetails?contactId=" + contactId);
     }
 
     /**

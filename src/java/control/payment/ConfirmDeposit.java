@@ -104,6 +104,7 @@ public class ConfirmDeposit extends HttpServlet {
         double price = booking.getBookingTotal();
         booking.setBookingTotal(price - depositAmount);
         booking.setBookingStatus("Confirmed");
+        booking.setPaidAmount(depositAmount);
 
         Payment payment = new Payment(1, user.getUserId(), bookingId, depositAmount, "Bank Transfer", "Completed", null, 0, paymentDescription);
 
